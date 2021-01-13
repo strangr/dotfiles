@@ -1,0 +1,36 @@
+#!/bin/bash
+# changeVolume
+
+# Arbitrary but unique message id
+msgId="991049"
+
+if [ $1 = plus ]
+then
+	amixer set Master 5%+ unmute > /dev/null
+elif [ $1 = minus ]
+then
+	amixer set Master 5%- unmute > /dev/null
+elif [ $1 = mute ]
+then
+	amixer set Master toggle > /dev/null
+elif [ $1 = 120 ]
+then
+	#pactl -- set-sink-volume 0 120% > /dev/null
+	pactl -- set-sink-volume @DEFAULT_SINK@ 120% > /dev/null
+fi
+
+# Query amixer for the current volume and whether or not the speaker is muted
+volume="$(amixer sget Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g')"
+mute="$(amixer sget Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
+
+if [[ $volume == 0 || "$mute" == "off" ]]; then
+	# Show the sound muted notification
+	dunstify -a "changeVolume" -u low -i audio-volume-muted -r "$msgId" "Volume muted" 
+else
+	# Show the volume notification
+	dunstify -a "changeVolume" -u low -i audio-volume-high -r "$msgId" \
+	"Volume: ${volume}%" "$($HOME/bin/getProgressString 10 "<b> </b>" " " $volume)"
+fi
+
+# Play the volume changed sound
+canberra-gtk-play -i audio-volume-change -d "changeVolume"
