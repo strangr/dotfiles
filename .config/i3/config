@@ -3,7 +3,6 @@
 
 set $mod Mod4
 
-
 #############################################################
 #					VISUAL DECORATIONS						#
 #############################################################
@@ -16,9 +15,9 @@ font pango:Source Sans Pro 10
 
 # decorating windows/tiles
 # class						border  backgr  text    indicat
-client.focused				#00CC00 #00CC00 #000000 #0000FF
-client.focused_inactive		#00CC00 #000000 #00CC00 #0000FF
-client.unfocused			#00CC00 #000000 #00CC00 #0000FF
+client.focused				#00CC00 #00CC00 #000000 #C8E7A8
+client.focused_inactive		#00CC00 #000000 #00CC00 #C8E7A8
+client.unfocused			#00CC00 #000000 #00CC00 #C8E7A8
 client.urgent				#2f343a #900000 #ffffff #900000
 #client.placeholder			#000000 #0c0c0c #ffffff #000000
 
@@ -26,22 +25,22 @@ client.urgent				#2f343a #900000 #ffffff #900000
 new_window pixel 1
 
 # window border settings
-#default_border          none
-#default_floating_border none
+# default_border          none
+# default_floating_border none
 
 # hiding borders adjacent to the screen edges
-#hide_edge_borders none
+# hide_edge_borders none
 
 # Add gaps between windows
-#gaps inner 5
-#gaps outer 5
+# gaps inner 5
+# gaps outer 5
 
 # Make the currently focused window a scratchpad
-#bindsym $mod+Shift+F2 move scratchpad
+# bindsym $mod+Shift+F2 move scratchpad
 # Show the first scratchpad window
-#bindsym $mod+Shift+F3 scratchpad show
-#lets design this scratchpad for some handy terminal
-#bindsym mod4+s [title="^Sup ::"] scratchpad show
+# bindsym $mod+Shift+F3 scratchpad show
+# lets design this scratchpad for some handy terminal
+# bindsym mod4+s [title="^Sup ::"] scratchpad show
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -75,32 +74,19 @@ bindsym $mod+d exec rofi -show run
 bindsym $mod+Tab exec rofi -show window
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+h					focus left
+bindsym $mod+l					focus right
+bindsym $mod+k					focus up
+bindsym $mod+j					focus down
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+h			move left
+bindsym $mod+Shift+l			move right
+bindsym $mod+Shift+k			move up
+bindsym $mod+Shift+j			move down
 
 # split in horizontal orientation
-bindsym $mod+h split h
-
+bindsym $mod+b split h
 # split in vertical orientation
 bindsym $mod+v split v
 
@@ -121,7 +107,7 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-# name workspaces
+# Name workspaces
 # Monitor 1
 set $ws1						"1:www"
 set $ws2						"2:work"
@@ -142,7 +128,7 @@ set $ws15						"15:f6"
 set $ws16						"16:f7"
 set $ws17						"17:f8"
 
-# switch to workspace
+# Switch to workspace
 # Monitor 1
 bindsym $mod+1					workspace $ws1
 bindsym $mod+2					workspace $ws2
@@ -163,8 +149,8 @@ bindsym $mod+F6					workspace $ws15
 bindsym $mod+F7					workspace $ws16
 bindsym $mod+F8					workspace $ws17
 
-# move focused container to workspace
-#Monitor 1
+# Move focused container to workspace
+# Monitor 1
 bindsym $mod+Shift+exclam		move container to workspace $ws1
 bindsym $mod+Shift+at			move container to workspace $ws2
 bindsym $mod+Shift+numbersign	move container to workspace $ws3
@@ -174,7 +160,7 @@ bindsym $mod+Shift+asciicircum 	move container to workspace $ws6
 bindsym $mod+Shift+ampersand	move container to workspace $ws7
 bindsym $mod+Shift+asterisk		move container to workspace $ws8
 bindsym $mod+Shift+parenleft	move container to workspace $ws9
-#Monitor 2
+# Monitor 2
 bindsym $mod+Shift+F1			move container to workspace $ws10
 bindsym $mod+Shift+F2			move container to workspace $ws11
 bindsym $mod+Shift+F3			move container to workspace $ws12
@@ -188,25 +174,25 @@ bindsym $mod+Shift+F8			move container to workspace $ws17
 set $mon1 "DVI-I-1"
 set $mon2 "VGA-0"
 
-#Monitor 1
-workspace $ws1 output $mon1
-workspace $ws2 output $mon1
-workspace $ws3 output $mon1
-workspace $ws4 output $mon1
-workspace $ws5 output $mon1
-workspace $ws6 output $mon1
-workspace $ws7 output $mon1
-workspace $ws8 output $mon1
-workspace $ws9 output $mon1
-#Monitor 2
-workspace $ws10 output $mon2
-workspace $ws11 output $mon2
-workspace $ws12 output $mon2
-workspace $ws13 output $mon2
-workspace $ws14 output $mon2
-workspace $ws15 output $mon2
-workspace $ws16 output $mon2
-workspace $ws17 output $mon2
+# Monitor 1
+workspace $ws1					output $mon1
+workspace $ws2					output $mon1
+workspace $ws3					output $mon1
+workspace $ws4					output $mon1
+workspace $ws5					output $mon1
+workspace $ws6					output $mon1
+workspace $ws7					output $mon1
+workspace $ws8					output $mon1
+workspace $ws9					output $mon1
+# Monitor 2
+workspace $ws10					output $mon2
+workspace $ws11					output $mon2
+workspace $ws12					output $mon2
+workspace $ws13					output $mon2
+workspace $ws14					output $mon2
+workspace $ws15					output $mon2
+workspace $ws16					output $mon2
+workspace $ws17					output $mon2
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -215,8 +201,11 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+
+#############################################################
+#						i3 BAR								#
+#############################################################
+
 bar {
 	font pango:Roboto FontAwesome 9
 	colors {
@@ -244,21 +233,15 @@ bar {
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-		# These bindings trigger as soon as you enter the resize mode
-		bindsym j resize shrink width 10 px or 10 ppt
-		bindsym k resize grow height 10 px or 10 ppt
-		bindsym l resize shrink height 10 px or 10 ppt
-		bindsym semicolon resize grow width 10 px or 10 ppt
+	# These bindings trigger as soon as you enter the resize mode
+	bindsym h resize shrink width 10 px or 10 ppt
+	bindsym l resize grow width 10 px or 10 ppt
+	bindsym k resize shrink height 10 px or 10 ppt
+	bindsym j resize grow height 10 px or 10 ppt
 
-		# same bindings, but for the arrow keys
-		# bindsym Left resize shrink width 10 px or 10 ppt
-		# bindsym Down resize grow height 10 px or 10 ppt
-		# bindsym Up resize shrink height 10 px or 10 ppt
-		# bindsym Right resize grow width 10 px or 10 ppt
-
-		# back to normal: Enter or Escape
-		bindsym Return mode "default"
-		bindsym Escape mode "default"
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
 
@@ -267,14 +250,9 @@ mode "move" {
 	bindsym $mod+Tab focus right
 
 	bindsym h     move left
-	bindsym j     move down
-	bindsym k     move up
 	bindsym l     move right
-
-	# bindsym Left  move left
-	# bindsym Down  move down
-	# bindsym Up    move up
-	# bindsym Right move right
+	bindsym k     move up
+	bindsym j     move down
 
 	# back to normal: Enter or Escape
 	bindsym Return mode "default"
@@ -299,18 +277,12 @@ mode "$mode_system" {
 bindsym $mod+Pause mode "$mode_system"
 
 
-
-
-
 # Enable floating dialogs application window
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
 # Switch to urgent window
 bindsym $mod+x [urgent=latest] focus
-
-
-# Mpa4Hu
 
 
 #############################################################
@@ -323,11 +295,11 @@ bindsym --release Num_Lock exec pkill -SIGRTMIN+11 i3blocks
 # Update blocks on Kbd Layout change with Alt+Shift
 bindcode Mod1+50 exec pkill -SIGRTMIN+12 i3blocks
 
-#bind volume keys
-bindsym $mod+Prior exec "/home/st/bin/changeVolume plus; pkill -SIGRTMIN+10 i3blocks"
-bindsym $mod+Next exec "/home/st/bin/changeVolume minus; pkill -SIGRTMIN+10 i3blocks"
-bindsym --release $mod+End exec "/home/st/bin/changeVolume mute; pkill -SIGRTMIN+10 i3blocks"
-bindsym --release $mod+Home exec "/home/st/bin/changeVolume 120; pkill -SIGRTMIN+10 i3blocks"
+# bind volume keys
+bindsym $mod+Prior exec "~/bin/changeVolume plus; pkill -SIGRTMIN+10 i3blocks"
+bindsym $mod+Next exec "~/bin/changeVolume minus; pkill -SIGRTMIN+10 i3blocks"
+bindsym --release $mod+End exec "~/bin/changeVolume mute; pkill -SIGRTMIN+10 i3blocks"
+bindsym --release $mod+Home exec "~/bin/changeVolume 120; pkill -SIGRTMIN+10 i3blocks"
 
 # lock screen
 bindsym --release $mod+F12 exec "i3lock -beui ~/Pictures/system/lock.png --keylayout 2 --layoutcolor=FFFFFF --timecolor=FFFFFF --datecolor=FFFFFF --greetertext='@strangr' --greetercolor=FFFFFF"
@@ -350,12 +322,13 @@ bindsym $mod+Ctrl+r exec --no-startup-id urxvt -e ranger
 #assign [class="^Teams$"] → $ws13
 #assign [class="discord"] → $ws14
 
-#autostart applications
+#############################################################
+#					Autostart Applications					#
+#############################################################
 exec --no-startup-id dunst
 #exec --no-startup-id dropbox start
 #exec --no-startup-id urxvt -name 'WE ARE GREEN'
 #exec --no-startup-id google-chrome
-#exec --no-startup-id skype
 #exec --no-startup-id /opt/urserver/urserver-start
 #exec --no-startup-id /opt/urserver/urserver --daemon
 #exec --no-startup-id i3-msg 'workspace $ws13; exec discord'

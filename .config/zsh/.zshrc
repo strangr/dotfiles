@@ -21,17 +21,29 @@ export BROWSER=google-chrome-stable
 eval $(keychain --eval --quiet ~/.ssh/id_ed25519)
 
 
+
+#############################################
+#  Aliases
+#############################################
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+alias ls='ls --color=auto'
+
+
+
+
 # The following lines were added by compinstall (automatically)
 
 zstyle ':completion:*' completer _complete _ignored _approximate
 zstyle ':completion:*' format 'EDIT '\''%d'\'''
 zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' matcher-list ''
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 
 zstyle ':completion:*' max-errors 2
 zstyle ':completion:*' original true
 zstyle ':completion:*' prompt '$'
 zstyle ':completion:*' use-compctl true
-zstyle :compinstall filename '/home/st/.zshrc'
+#zstyle :compinstall filename '/home/st/.config/zsh/.zshrc'
 
 autoload -Uz compinit promptinit
 compinit

@@ -6,22 +6,39 @@
 !Xft.hintstyle: hintslight
 !Xft.lcdfilter: lcddefault
 
-
-
-
 ! special
 *.foreground: #93a1a1
 *.background: #141c21
 
-!colors
-urxvt*color0:    #000000
-urxvt*color1:    #00CC00
-urxvt*color2:    #FFFF00
-urxvt*color3:    #ecebbe
-urxvt*color4:    #a9cdeb
-urxvt*color5:    #ea96eb
-urxvt*color6:    #c9caec
-urxvt*color7:    #ffffff
+
+!Most Xorg terminals, including xterm and urxvt, support at least 16 basic colors.
+!The colors 0-7 are the 'normal' colors. Colors 8-15 are their 'bright' counterparts, used for highlighting.
+
+! Black + DarkGrey
+*color0:		#000000
+*color8:		#555753
+! Green + Green
+*color1:		#00CC00
+*color9:		#c8e7a8
+! DarkRed + Red
+*color2:		#ff6565
+*color10:		#ff8d8d
+! DarkYellow + Yellow
+*color3:		#eab93d
+*color11:		#ffc123
+! DarkBlue + Blue
+*color4:		#204a87
+*color12:		#3465a4
+! DarkMagenta + Magenta
+*color5:		#ce5c00
+*color13:		#f57900
+!DarkCyan + Cyan (both not tango)
+*color6:		#89b6e2
+*color14:		#46a4ff
+! LightGrey + White
+*color7:		#cccccc
+!*color15:		#ffffff
+*color15: #00FF00
 
 !Background
 URxvt.transparent: true
@@ -55,6 +72,11 @@ URxvt.cursorColor2:      #FFFFFF
 URxvt.underlineColor:    #999999
 URxvt*cursorBlink:     true
 URxvt*urgentOnBell:    true
+
+URxvt.colorIT:      #87af5f
+URxvt.colorBD:      #d7d7d7
+URxvt.colorUL:      #87afd7
+
 
 ! When new output appears and it jumps to the bottom
 URxvt*scrollTtyOutput: false
@@ -105,3 +127,11 @@ URxvt.keysym.Control-Up:          \033[1;5A
 URxvt.keysym.Shift-Control-Up:    \033[1;6A
 URxvt.keysym.Control-Down:        \033[1;5B
 URxvt.keysym.Shift-Control-Down:  \033[1;6B
+
+
+! Add colors to man pages
+*VT100.colorBDMode:     true
+*VT100.colorBD:         red
+*VT100.colorULMode:     true
+*VT100.colorUL:         cyan
+*VT100.veryBoldColors: 6
