@@ -17,10 +17,10 @@
 ! Black + DarkGrey
 *color0:		#000000
 *color8:		#555753
-! Green + Green
+! Green + LightGreen
 *color1:		#00CC00
 *color9:		#c8e7a8
-! DarkRed + Red
+! DarkRed + Red (@TODO this shouldnt be red, find which one is used by errors)
 *color2:		#ff6565
 *color10:		#ff8d8d
 ! DarkYellow + Yellow

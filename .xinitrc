@@ -3,8 +3,7 @@
 # merge Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 
-# @TODO test if works
-#disable screensaver and blank screen
+# disable screensaver and blank screen
 xset -dpms; xset s off
 
 # Monitor
@@ -13,16 +12,15 @@ xset -dpms; xset s off
 #xrandr --output VGA-1 --right-of HDMI-1
 
 # Keyboard
-setxkbmap -option caps:none
-setxkbmap -layout "us,ru,ge"
+setxkbmap -option caps:escape
+setxkbmap -layout "us,ge,ru"
 setxkbmap -option "grp:alt_shift_toggle"
 
 # Activate num lock on boot
 numlockx &
 
-# Background (@TODO not really a config, sadme xo ar gavitano)
-#feh --bg-fil '~/bg.png'
-~/.config/fehbg &
+# Background
+~/bin/fehbg &
 
 # Start Desktop
 exec i3
