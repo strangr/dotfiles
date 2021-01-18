@@ -223,7 +223,6 @@ bar {
         urgent_workspace   #aa0000 #990000 #ffffff
 
         binding_mode       #00CC00 #00CC00 #000000
-
     }
 
     #tray_padding 0

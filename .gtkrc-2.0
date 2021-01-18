@@ -1,6 +1,6 @@
 gtk-icon-theme-name = "Arc"
 gtk-theme-name = "Arc-Dark"
-gtk-font-name = "Roboto Mono Bold 11"
+gtk-font-name = "Hack Nerd Font 11"
 gtk-application-prefer-dark-theme = "true"
 gtk-decoration-layout="menu:"
 gtk-xft-antialias=1

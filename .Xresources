@@ -1,10 +1,9 @@
-!Xft.dpi: 96
-!Xft.antialias: true
-!Xft.hinting: true
-!Xft.rgba: rgb
-!Xft.autohint: false
-!Xft.hintstyle: hintslight
-!Xft.lcdfilter: lcddefault
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
 
 ! special
 *.foreground: #93a1a1
@@ -13,31 +12,30 @@
 
 !Most Xorg terminals, including xterm and urxvt, support at least 16 basic colors.
 !The colors 0-7 are the 'normal' colors. Colors 8-15 are their 'bright' counterparts, used for highlighting.
-
 ! Black + DarkGrey
-*color0:		#000000
-*color8:		#555753
+*color0:        #000000
+*color8:        #555753
 ! Green + LightGreen
-*color1:		#00CC00
-*color9:		#c8e7a8
+*color1:        #00CC00
+*color9:        #c8e7a8
 ! DarkRed + Red (@TODO this shouldnt be red, find which one is used by errors)
-*color2:		#ff6565
-*color10:		#ff8d8d
+*color2:        #ff6565
+*color10:       #ff8d8d
 ! DarkYellow + Yellow
-*color3:		#eab93d
-*color11:		#ffc123
+*color3:        #eab93d
+*color11:       #ffc123
 ! DarkBlue + Blue
-*color4:		#204a87
-*color12:		#3465a4
+*color4:        #204a87
+*color12:       #3465a4
 ! DarkMagenta + Magenta
-*color5:		#ce5c00
-*color13:		#f57900
+*color5:        #ce5c00
+*color13:       #f57900
 !DarkCyan + Cyan (both not tango)
-*color6:		#89b6e2
-*color14:		#46a4ff
+*color6:        #89b6e2
+*color14:       #46a4ff
 ! LightGrey + White
-*color7:		#cccccc
-!*color15:		#ffffff
+*color7:        #cccccc
+!*color15:      #ffffff
 *color15: #00FF00
 
 !Background
@@ -48,23 +46,27 @@ URxvt.background: [50]#000000
 URxvt.foreground: 1
 
 !Fonts
-!@TODO roboto mono?
+!URxvt*letterSpace: -2
 !URxvt.font:  -misc-fixed-bold-r-normal--15-140-75-75-c-90-iso8859-1
 !URxvt.font:     xft:bitstream vera sans mono:size=9:antialias=true
 !URxvt.font:     xft:bitstream vera sans mono:size=9:antialias=true
 !URxvt.boldFont: xft:bitstream vera sans mono:bold:size=9:antialias=true
-URxvt*font: xft:Source Code Pro:size=10:antialias=true:hinting=true
-URxvt*boldFont: xft:Source Code Pro:size=10:antialias=true:hinting=true
-URxvt*italicFont: xft:Source Code Pro:style=Oblique:size=10:antialias=true:hinting=true
-URxvt*boldItalicFont: xft:Source Code Pro:style=Bold Oblique:size=10:antialias=true:hinting=true
-!URxvt*letterSpace: -2
+!URxvt*font: xft:Hack:size=10:antialias=true:hinting=true
+!URxvt*boldFont: xft:Hack:size=10:antialias=true:hinting=true
+!URxvt*italicFont: xft:Source Code Pro:style=Oblique:size=10:antialias=true:hinting=true
+!URxvt*boldItalicFont: xft:Source Code Pro:style=Bold Oblique:size=10:aitialias=true:hinting=true
+
+URxvt*font:             xft:Hack Nerd Font:size=10:antialias=true:hinting=true:style=Regular
+URxvt*boldFont:         xft:Hack Nerd Font:size=10:antialias=true:hinting=true:style=Bold
+URxvt*italicFont:       xft:Hack Nerd Font:size=10:antialias=true:hinting=true:style=Italic
+URxvt*boldItalicFont:   xft:Hack Nerd Font:size=10:antialias=true:hinting=true:style=Bold Italic
 
 !scrollbar styles
-URxvt*scrollBar:		false
-URxvt.scrollstyle:		plain
-URxvt.scrollBar_right:		true
-URxvt.scrollBar_floating:	false
-URxvt.scrollColor:		green
+URxvt*scrollBar:        false
+!URxvt.scrollstyle:      plain
+!URxvt.scrollBar_right:      true
+!URxvt.scrollBar_floating:   false
+!URxvt.scrollColor:      green
 
 !EXperimenting
 URxvt.cursorColor:       1
@@ -104,14 +106,12 @@ URxvt.keysym.Control-t: perl:tabbedex:new_tab
 URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
 URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
 
-
-
 !add clickable urls
-URxvt.url-launcher: /usr/bin/firefox
+URxvt.url-launcher: /usr/bin/google-chrome-stable
 URxvt.matcher.button: 1
+URxvt.matcher.rend.0: Uline Bold fg3
 URxvt.keysym.C-Delete: perl:matcher:last
 URxvt.keysym.M-Delete: perl:matcher:list
-URxvt.matcher.rend.0: Uline Bold fg3
 
 
 ! Normal copy-paste keybindings without perls

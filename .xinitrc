@@ -12,9 +12,10 @@ xset -dpms; xset s off
 #xrandr --output VGA-1 --right-of HDMI-1
 
 # Keyboard
-setxkbmap -option caps:escape
+#setxkbmap -option caps:escape
+#setxkbmap -option "grp:alt_shift_toggle"
 setxkbmap -layout "us,ge,ru"
-setxkbmap -option "grp:alt_shift_toggle"
+setxkbmap -option "grp:caps_toggle"
 
 # Activate num lock on boot
 numlockx &
