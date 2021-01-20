@@ -9,7 +9,6 @@ Xft.rgba: rgb
 *.foreground: #93a1a1
 *.background: #141c21
 
-
 !Most Xorg terminals, including xterm and urxvt, support at least 16 basic colors.
 !The colors 0-7 are the 'normal' colors. Colors 8-15 are their 'bright' counterparts, used for highlighting.
 ! Black + DarkGrey
@@ -31,12 +30,11 @@ Xft.rgba: rgb
 *color5:        #ce5c00
 *color13:       #f57900
 !DarkCyan + Cyan (both not tango)
-*color6:        #89b6e2
+*color6:        #89b6e2 
 *color14:       #46a4ff
 ! LightGrey + White
 *color7:        #cccccc
-!*color15:      #ffffff
-*color15: #00FF00
+*color15:       #00FF00
 
 !Background
 URxvt.transparent: true
@@ -56,8 +54,8 @@ URxvt*scrollBar:        false
 
 !EXperimenting
 URxvt.cursorColor:       2
-URxvt.cursorColor2:      magenta
-URxvt.underlineColor:    magenta
+URxvt.cursorColor2:      0
+URxvt.underlineColor:    #999999
 URxvt*cursorBlink:     true
 URxvt*urgentOnBell:    true
 
@@ -81,28 +79,28 @@ URxvt.secondaryScroll: 0
 URxvt.perl-ext-common: default,tabbed,matcher,url-select,keyboard-select
 
 ! add tabs
-URxvt.tabbed.new-button:	false
-URxvt.tabbed.tabbar-fg:		2
-URxvt.tabbed.tabbar-bg:		0
-URxvt.tabbed.tab-fg:		0
-URxvt.tabbed.tab-bg:		2
+URxvt.tabbed.new-button:    false
+URxvt.tabbed.tabbar-fg:     2
+URxvt.tabbed.tabbar-bg:     0
+URxvt.tabbed.tab-fg:        0
+URxvt.tabbed.tab-bg:        2
 
 ! add clickable urls
-URxvt.keysym.C-Delete:		perl:matcher:last
-URxvt.keysym.M-Delete:		perl:matcher:list
-URxvt.url-launcher:			/usr/bin/xdg-open
-URxvt.matcher.rend.0:		Uline Bold fg3
-URxvt.matcher.button:		1
+URxvt.keysym.C-Delete:      perl:matcher:last
+URxvt.keysym.M-Delete:      perl:matcher:list
+URxvt.url-launcher:         /usr/bin/xdg-open
+URxvt.matcher.rend.0:       Uline Bold fg3
+URxvt.matcher.button:       1
 
 ! url-select
-URxvt.keysym.M-u:			perl:url-select:select_next
+URxvt.keysym.M-u:           perl:url-select:select_next
 URxvt.url-select.launcher:  /usr/bin/xdg-open
 URxvt.url-select.underline: true
 URvxt.url-select.button:    1
 
 ! keyboard-select
-URvxt.keysym.M-d:			perl:keyboard-select:activate
-URxvt.keysym.M-s:			perl:keyboard-select:search
+URvxt.keysym.M-d:           perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
 ! The following line overwrites the default Meta-s binding and allows to
 ! activate keyboard-select directly in backward search mode:
 !   URxvt.keysym.M-s: perl:keyboard-select:search
