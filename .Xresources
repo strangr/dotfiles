@@ -15,12 +15,12 @@ Xft.rgba: rgb
 ! Black + DarkGrey
 *color0:        #000000
 *color8:        #555753
+! DarkRed + Red
+*color1:        #ff6565
+*color9:        #ff8d8d
 ! Green + LightGreen
-*color1:        #00CC00
-*color9:        #c8e7a8
-! DarkRed + Red (@TODO this shouldnt be red, find which one is used by errors)
-*color2:        #ff6565
-*color10:       #ff8d8d
+*color2:        #00CC00
+*color10:       #c8e7a8
 ! DarkYellow + Yellow
 *color3:        #eab93d
 *color11:       #ffc123
@@ -43,35 +43,21 @@ URxvt.transparent: true
 URxvt.shading: 10
 URxvt.depth: 32
 URxvt.background: [50]#000000
-URxvt.foreground: 1
+URxvt.foreground: 2
 
 !Fonts
-!URxvt*letterSpace: -2
-!URxvt.font:  -misc-fixed-bold-r-normal--15-140-75-75-c-90-iso8859-1
-!URxvt.font:     xft:bitstream vera sans mono:size=9:antialias=true
-!URxvt.font:     xft:bitstream vera sans mono:size=9:antialias=true
-!URxvt.boldFont: xft:bitstream vera sans mono:bold:size=9:antialias=true
-!URxvt*font: xft:Hack:size=10:antialias=true:hinting=true
-!URxvt*boldFont: xft:Hack:size=10:antialias=true:hinting=true
-!URxvt*italicFont: xft:Source Code Pro:style=Oblique:size=10:antialias=true:hinting=true
-!URxvt*boldItalicFont: xft:Source Code Pro:style=Bold Oblique:size=10:aitialias=true:hinting=true
-
-URxvt*font:             xft:Hack Nerd Font:size=10:antialias=true:hinting=true:style=Regular
-URxvt*boldFont:         xft:Hack Nerd Font:size=10:antialias=true:hinting=true:style=Bold
-URxvt*italicFont:       xft:Hack Nerd Font:size=10:antialias=true:hinting=true:style=Italic
-URxvt*boldItalicFont:   xft:Hack Nerd Font:size=10:antialias=true:hinting=true:style=Bold Italic
+URxvt.font:             xft:Hack Nerd Font Mono:size=10:antialias=true:hinting=true:style=Regular,xft:Noto Color Emoji
+URxvt*boldFont:         xft:Hack Nerd Font Mono:size=10:antialias=true:hinting=true:style=Bold
+URxvt*italicFont:       xft:Hack Nerd Font Mono:size=10:antialias=true:hinting=true:style=Italic
+URxvt*boldItalicFont:   xft:Hack Nerd Font Mono:size=10:antialias=true:hinting=true:style=Bold Italic
 
 !scrollbar styles
 URxvt*scrollBar:        false
-!URxvt.scrollstyle:      plain
-!URxvt.scrollBar_right:      true
-!URxvt.scrollBar_floating:   false
-!URxvt.scrollColor:      green
 
 !EXperimenting
-URxvt.cursorColor:       1
-URxvt.cursorColor2:      #FFFFFF
-URxvt.underlineColor:    #999999
+URxvt.cursorColor:       2
+URxvt.cursorColor2:      magenta
+URxvt.underlineColor:    magenta
 URxvt*cursorBlink:     true
 URxvt*urgentOnBell:    true
 
@@ -91,27 +77,46 @@ URxvt*scrollTtyKeypress: true
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
-!plugins
-URxvt.perl-ext-common: default,tabbed,matcher
+! plugins (@TODO font-resize doesnt work for now because of tabbed + laggy because of no compiz)
+URxvt.perl-ext-common: default,tabbed,matcher,url-select,keyboard-select
 
-!add tabs
-URxvt.tabbed.new-button: false
-URxvt.tabbed.tabbar-fg: 1
-URxvt.tabbed.tabbar-bg: 0
-URxvt.tabbed.tab-fg: 0
-URxvt.tabbed.tab-bg: 1
+! add tabs
+URxvt.tabbed.new-button:	false
+URxvt.tabbed.tabbar-fg:		2
+URxvt.tabbed.tabbar-bg:		0
+URxvt.tabbed.tab-fg:		0
+URxvt.tabbed.tab-bg:		2
 
-!tab controls
-URxvt.keysym.Control-t: perl:tabbedex:new_tab
-URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
-URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
+! add clickable urls
+URxvt.keysym.C-Delete:		perl:matcher:last
+URxvt.keysym.M-Delete:		perl:matcher:list
+URxvt.url-launcher:			/usr/bin/xdg-open
+URxvt.matcher.rend.0:		Uline Bold fg3
+URxvt.matcher.button:		1
 
-!add clickable urls
-URxvt.url-launcher: /usr/bin/google-chrome-stable
-URxvt.matcher.button: 1
-URxvt.matcher.rend.0: Uline Bold fg3
-URxvt.keysym.C-Delete: perl:matcher:last
-URxvt.keysym.M-Delete: perl:matcher:list
+! url-select
+URxvt.keysym.M-u:			perl:url-select:select_next
+URxvt.url-select.launcher:  /usr/bin/xdg-open
+URxvt.url-select.underline: true
+URvxt.url-select.button:    1
+
+! keyboard-select
+URvxt.keysym.M-d:			perl:keyboard-select:activate
+URxvt.keysym.M-s:			perl:keyboard-select:search
+! The following line overwrites the default Meta-s binding and allows to
+! activate keyboard-select directly in backward search mode:
+!   URxvt.keysym.M-s: perl:keyboard-select:search
+! Use Meta-Escape to activate selection mode, then use the following keys:
+!   h/j/k/l:    Move cursor left/down/up/right (also with arrow keys)
+!   g/G/0/^/$/H/M/L/f/F/;/,/w/W/b/B/e/E: More vi-like cursor movement keys
+!   '/'/?:      Start forward/backward search
+!   n/N:        Repeat last search, N: in reverse direction
+!   Ctrl-f/b:   Scroll down/up one screen
+!   Ctrl-d/u:   Scroll down/up half a screen
+!   v/V/Ctrl-v: Toggle normal/linewise/blockwise selection
+!   y/Return:   Copy selection to primary buffer, Return: quit afterwards
+!   Y:          Copy selected lines to primary buffer or cursor line and quit
+!   q/Escape:   Quit keyboard selection mode
 
 
 ! Normal copy-paste keybindings without perls
