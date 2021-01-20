@@ -1,1 +1,0 @@
-/home/st/.dotfiles/.config/zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme
