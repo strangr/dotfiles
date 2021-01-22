@@ -101,13 +101,13 @@ export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 # for more info see fzf/shell/completion.zsh
-_fzf_compgen_path() {
-    fd . "$1"
-}
-_fzf_compgen_dir() {
-    fd --type d . "$1"
-}
-#export FZF_COMPLETION_TRIGGER='**' # change ** to whatever you like 
+#_fzf_compgen_path() {
+#    fd . "$1"
+#}
+#_fzf_compgen_dir() {
+#    fd --type d . "$1"
+#}
+export FZF_COMPLETION_TRIGGER='!!'
 export FZF_DEFAULT_OPTS='
 --exact
 --height 60%
@@ -182,6 +182,9 @@ alias yarem='yay -Rns'
 
 # EXPERIMENTAL! (read moar)
 bindkey -v
+
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 
 bindkey "^[h" dirhistory_zle_dirhistory_back
 bindkey "^[l" dirhistory_zle_dirhistory_future
