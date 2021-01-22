@@ -1,14 +1,17 @@
+community/urxvt-perls
 community/numlockx
 community/arc-icon-theme
 community/arc-gtk-theme
 community/ttf-roboto
 community/ttf-roboto-mono
+community/fd
+community/bat
 
 extra/feh
+extra/adobe-source-sans-pro-fonts
 extra/adobe-source-code-pro-fonts
-extra/adobe-source-code-pro-fonts
+extra/tree
 
 aur/xkb-switch-i3
-aur/nerd-fonts-hack
 aur/oh-my-zsh-git
-aur/zsh-autosuggestions-git
+aur/nerd-fonts-hack

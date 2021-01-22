@@ -103,7 +103,7 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-# Name workspaces
+# Name workspaces (@TODO change names to better fit my new workflow)
 # Monitor 1
 set $ws1                        "1:www"
 set $ws2                        "2:work"

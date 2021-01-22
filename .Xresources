@@ -75,7 +75,7 @@ URxvt*scrollTtyKeypress: true
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
-! plugins (@TODO font-resize doesnt work for now because of tabbed + laggy because of no compiz)
+! plugins (@TODO font-resize doesnt work w/ tabbed + laggy transparency w/out picom)
 URxvt.perl-ext-common: default,tabbed,matcher,url-select,keyboard-select
 
 ! add tabs
