@@ -75,6 +75,7 @@ ZSH_CUSTOM=$ZDOTDIR/custom
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+	vi-mode
 	dirhistory
 	fzf
 	git # maybe replace with gitfast? faster but less descriptive
@@ -89,11 +90,14 @@ plugins=(
 
 # User configuration
 
-ZSH_AUTOSUGGEST_STRATEGY=(history completion) # completion makes it little slower, experiment for now
+#VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+#MODE_INDICATOR="%F{yellow}+%f"
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion) # @TODO! completion makes it little slower, experiment for now
 
 ZSH_ALIAS_FINDER_AUTOMATIC=true
 
-DISABLE_FZF_AUTO_COMPLETION="true"
+#DISABLE_FZF_AUTO_COMPLETION="true"
 export FZF_BASE=/usr/bin/fzf
 # @TODO FZF shortcuts not working, **, CTRL+C, CTRL+R ..
 #export FZF_DEFAULT_COMMAND='fd --type f'
