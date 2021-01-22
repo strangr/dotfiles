@@ -95,9 +95,21 @@ ZSH_ALIAS_FINDER_AUTOMATIC=true
 
 DISABLE_FZF_AUTO_COMPLETION="true"
 export FZF_BASE=/usr/bin/fzf
+# @TODO FZF shortcuts not working, **, CTRL+C, CTRL+R ..
 #export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git'"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
+# for more info see fzf/shell/completion.zsh
+_fzf_compgen_path() {
+    fd . "$1"
+}
+_fzf_compgen_dir() {
+    fd --type d . "$1"
+}
 #export FZF_COMPLETION_TRIGGER='**' # change ** to whatever you like 
 export FZF_DEFAULT_OPTS='
+--exact
 --height 60%
 --layout=reverse
 --border=sharp
