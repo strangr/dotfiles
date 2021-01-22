@@ -21,20 +21,6 @@ export BROWSER=google-chrome-stable
 
 eval $(keychain --eval --quiet ~/.ssh/id_ed25519)
 
-# EXPERIMENTAL! (read moar)
-#bindkey -v
-
-############################
-# Aliases  chaitane qvemot #
-############################
-alias diff='diff --color=auto'
-alias grep='grep --color=auto'
-alias ip='ip -color=auto'
-alias ls='ls --color=auto'
-
-alias pacrem='pacman -Rns'
-alias yarem='yay -Rns'
-
 
 HISTFILE=$ZDOTDIR/.zsh_history
 
@@ -78,13 +64,7 @@ DISABLE_AUTO_UPDATE="true"
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$ZDOTDIR/custom
@@ -95,10 +75,13 @@ ZSH_CUSTOM=$ZDOTDIR/custom
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+	dirhistory
+	fzf
 	git # maybe replace with gitfast? faster but less descriptive
 	sudo # press escape twice to repeat command with sudo
 	#sublime #
 	#wd -- bookmark (warp) dirs and jump, disabled for now as I dont need it
+	alias-finder # testing for now
 	zsh-autosuggestions # fish like suggestions
 	history-substring-search # fish like history search (experiment if I need it)
 	zsh-syntax-highlighting # fish like hightlight, suggested to be last
@@ -107,6 +90,32 @@ plugins=(
 # User configuration
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion) # completion makes it little slower, experiment for now
+
+ZSH_ALIAS_FINDER_AUTOMATIC=true
+
+DISABLE_FZF_AUTO_COMPLETION="true"
+export FZF_BASE=/usr/bin/fzf
+#export FZF_DEFAULT_COMMAND='fd --type f'
+#export FZF_COMPLETION_TRIGGER='**' # change ** to whatever you like 
+export FZF_DEFAULT_OPTS='
+--height 60%
+--layout=reverse
+--border=sharp
+--cycle
+--info=inline
+--multi
+--preview-window=:hidden
+--preview-window=:sharp
+--preview-window=:right
+--preview "([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200"
+--color="hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008"
+--prompt="~ "
+--pointer="▶"
+--marker="✗"
+--bind "?:toggle-preview"
+--bind "ctrl-a:select-all"
+--bind "ctrl-e:execute(echo {+} | xargs -o vim)"
+--bind "ctrl-v:execute(code {+})"'
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -141,3 +150,28 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+
+
+###########
+# Aliases #
+###########
+
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+alias ls='ls --color=auto'
+
+alias pacrem='pacman -Rns'
+alias yarem='yay -Rns'
+
+###############
+# keybindings # @TODO move to a different file
+###############
+
+# EXPERIMENTAL! (read moar)
+bindkey -v
+
+bindkey "^[h" dirhistory_zle_dirhistory_back
+bindkey "^[l" dirhistory_zle_dirhistory_future
+bindkey "^[k" dirhistory_zle_dirhistory_up
+bindkey "^[j" dirhistory_zle_dirhistory_down
