@@ -131,6 +131,10 @@ URxvt.keysym.Shift-Control-Up:    \033[1;6A
 URxvt.keysym.Control-Down:        \033[1;5B
 URxvt.keysym.Shift-Control-Down:  \033[1;6B
 
+! "Monitor id to show on" Set from: Default
+! This way it follows focued window,
+! -4  will always default to main screen
+rofi.m:                              -1
 
 ! Add colors to man pages
 *VT100.colorBDMode:     true
