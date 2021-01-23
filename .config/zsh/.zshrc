@@ -12,6 +12,7 @@ fi
 # Add bin directory in home
 typeset -U path
 path=("$HOME/bin" $path)
+path=("$HOME/Android/Sdk/platform-tools" $path)
 export PATH
 
 # Default Variables
