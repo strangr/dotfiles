@@ -171,6 +171,8 @@ source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=magenta,bold'
 ZSH_HIGHLIGHT_STYLES[path]='fg=magenta,bold'
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=magenta,bold'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=magenta,bold'
 
 ###########
 # Aliases #
