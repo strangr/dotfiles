@@ -85,7 +85,6 @@ plugins=(
 	alias-finder # testing for now
 	zsh-autosuggestions # fish like suggestions
 	history-substring-search # fish like history search (experiment if I need it)
-	zsh-syntax-highlighting # fish like hightlight, suggested to be last
 )
 
 # User configuration
@@ -167,6 +166,11 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
+# Syntax Highlighter must be last to be sourced
+source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=magenta,bold'
+ZSH_HIGHLIGHT_STYLES[path]='fg=magenta,bold'
 
 ###########
 # Aliases #
