@@ -10,13 +10,17 @@ set $mod Mod4
 # Font for window titles. Will also be used by the bar unless a different font
 font pango:Source Sans Pro 10
 
+# @TODO #f5df3b make this yellow oppo
+# @TODO urxvt can have a bg. make it some pattern with dots
+# ex. https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e487b135131657.56eaaef1419f9.jpg
+
 # decorating windows/tiles
 # class                     border  backgr  text    indicat
-client.focused              #00CC00 #00CC00 #000000 #C8E7A8
-client.focused_inactive     #00CC00 #000000 #00CC00 #C8E7A8
-client.unfocused            #00CC00 #000000 #00CC00 #C8E7A8
-client.urgent               #2f343a #900000 #ffffff #C8E7A8
-#client.placeholder         #000000 #0c0c0c #ffffff #C8E7A8
+client.focused              #00CC00 #00CC00 #000000 #f5df3b
+client.focused_inactive     #00CC00 #000000 #00CC00 #f5df3b
+client.unfocused            #00CC00 #000000 #00CC00 #f5df3b
+client.urgent               #2f343a #900000 #ffffff #f5df3b
+#client.placeholder         #000000 #0c0c0c #ffffff #f5df3b
 
 # window border
 new_window pixel 1
@@ -66,6 +70,7 @@ bindsym $mod+Shift+q kill
 # start rofi
 bindsym $mod+d exec rofi -show run
 bindsym $mod+Tab exec rofi -show window
+bindsym $mod+e exec rofimoji
 
 # change focus
 bindsym $mod+h                  focus left
@@ -85,6 +90,8 @@ bindsym $mod+Shift+j            move down
 bindsym $mod+b split h
 # split in vertical orientation
 bindsym $mod+v split v
+# split orientation toggle
+bindsym $mod+t layout toggle split
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -92,7 +99,6 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -215,7 +221,7 @@ bar {
 
         # Type             border  background font
         focused_workspace  #00CC00 #00CC00 #000000
-        active_workspace   #333333 #5f676a #ffffff
+        active_workspace   #f5df3b #000000 #f5df3b
         inactive_workspace #00CC00 #000000 #00CC00
         urgent_workspace   #aa0000 #990000 #ffffff
 
