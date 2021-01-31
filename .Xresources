@@ -17,9 +17,10 @@ Xft.rgba: rgb
 ! DarkRed + Red
 *color1:        #ff6565
 *color9:        #ff8d8d
-! Green + LightGreen
+! Green + LightGreen (@TODO compliment is yellowish)
 *color2:        #00CC00
-*color10:       #c8e7a8
+*color10:       #003200
+!*color10:       #c8e7a8
 ! DarkYellow + Yellow
 *color3:        #eab93d
 *color11:       #ffc123
@@ -76,14 +77,16 @@ URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
 ! plugins (@TODO font-resize doesnt work w/ tabbed + laggy transparency w/out picom)
-URxvt.perl-ext-common: default,tabbed,matcher,url-select,keyboard-select
+URxvt.perl-ext-common: default,tabbedex,matcher,url-select,keyboard-select
 
 ! add tabs
-URxvt.tabbed.new-button:    false
-URxvt.tabbed.tabbar-fg:     2
-URxvt.tabbed.tabbar-bg:     0
-URxvt.tabbed.tab-fg:        0
-URxvt.tabbed.tab-bg:        2
+URxvt.tabbedex.title:           false
+URxvt.tabbedex.new-button:      false
+URxvt.tabbedex.tabbar-fg:       2
+URxvt.tabbedex.tabbar-bg:       0
+URxvt.tabbedex.tab-fg:          bold 2
+URxvt.tabbedex.tab-bg:          0
+URxvt.tabbedex.tabbar-timeouts: 0:*:20:{}:120:<>
 
 ! add clickable urls
 URxvt.keysym.C-Delete:      perl:matcher:last
