@@ -6,13 +6,18 @@ msgId="991049"
 
 if [ $1 = plus ]
 then
-	amixer set Master 5%+ unmute > /dev/null
+	#amixer set Master 5%+ unmute > /dev/null
+	pactl set-sink-mute @DEFAULT_SINK@ false > /dev/null
+	pactl -- set-sink-volume @DEFAULT_SINK@ +5% > /dev/null
 elif [ $1 = minus ]
 then
-	amixer set Master 5%- unmute > /dev/null
+	#amixer set Master 5%- unmute > /dev/null
+        pactl set-sink-mute @DEFAULT_SINK@ false > /dev/null
+	pactl -- set-sink-volume @DEFAULT_SINK@ -5% > /dev/null
 elif [ $1 = mute ]
 then
-	amixer set Master toggle > /dev/null
+#	amixer set Master toggle > /dev/null
+	pactl set-sink-mute @DEFAULT_SINK@ toggle > /dev/null
 elif [ $1 = 120 ]
 then
 	#pactl -- set-sink-volume 0 120% > /dev/null
