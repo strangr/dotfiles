@@ -52,7 +52,7 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 3
+myBorderWidth   = 1
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -103,7 +103,7 @@ myWorkspaces = workspacesLeft ++ workspacesRight
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "#333333"
-myFocusedBorderColor = "#CCCC00"
+myFocusedBorderColor = "#00CC00"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -170,14 +170,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     , ((modm           , xK_b        ), sendMessage ToggleStruts)
 
-    -- Quit xmonad
-    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    -- Quit xmonad (@TEMP ASSIGNMENT SINCE I ALWAY PRESS IT OUT OF HABBIT)
+    , ((modm .|. shiftMask, xK_o     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm,               xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
     -- X-selection-paste buffer (@TODO replace with ctrl+shift+v for better one hand handling)
-    , ((0, xK_Insert), pasteSelection)
+    , ((0,                  xK_Insert), pasteSelection)
+
+    -- Screenshots
+    , ((0,                  xK_Print),  spawn "scrot $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
+    , ((shiftMask,          xK_Print),  spawn "scrot -s $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
 
     , ((modm ,              xK_1),         windows (viewOnScreen 0 ws1))
     , ((modm ,              xK_2),         windows (viewOnScreen 0 ws2))
@@ -289,6 +293,7 @@ myManageHook = composeAll
     , className =? "vlc"            --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
+    , className =? "stalonetray"    --> doIgnore
     ]
 
  -- myManageHook ::  ManageHook
@@ -362,7 +367,8 @@ myStartupHook = return ()
 
 ------------------------------------------------------------------------
 main = do
-    xmproc <- spawnPipe "xmobar ~/.xmonad/xmobarrc"
+    xmproc0 <- spawnPipe "xmobar -x 0 ~/.xmonad/xmobarrc"
+    xmproc1 <- spawnPipe "xmobar -x 1 ~/.xmonad/xmobarrc"
     xmonad $ docks
            $ ewmh
            $ def {
@@ -386,8 +392,8 @@ main = do
         handleEventHook    = myEventHook,
         startupHook        = myStartupHook,
         logHook            = DL.dynamicLogWithPP $ xmobarPP
-                             { DL.ppOutput  = hPutStrLn xmproc
-                             , DL.ppTitle   = DL.xmobarColor "green" "" . DL.shorten 50
+                             { DL.ppOutput  = \x-> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
+                             , DL.ppTitle   = DL.xmobarColor "#00CC00" "" . DL.shorten 50
                              , DL.ppCurrent = \x -> "[" ++ x ++ "]"
                              }
         }

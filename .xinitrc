@@ -23,8 +23,14 @@ setxkbmap -option "grp:caps_toggle"
 # Activate num lock on boot
 numlockx &
 
-# Background
+# Set mouse cursor and background colour
+xsetroot -cursor_name left_ptr -solid '#CCCC00' &
+
+# Wallpaper
 ~/bin/fehbg &
+
+# System Tray
+stalonetray -c ~/.config/stalonetrayrc &
 
 # Start Desktop
 #exec i3

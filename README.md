@@ -64,3 +64,5 @@ https://www.reddit.com/r/unixporn/comments/glbl4v/oc_its_not_normal_to_want_my_f
 https://www.reddit.com/r/unixporn/comments/fvyix5/oc_blurry_discord_is_for_everyone_now/
 https://www.reddit.com/r/unixporn/comments/dlxtlg/gnome_dynamic_wallpaper/
 https://i.redd.it/y6ggh8x53yb61.png
+
+10. Try Qtile after Xmonad

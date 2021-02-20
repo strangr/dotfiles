@@ -1,20 +1,25 @@
-Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
+Config { font = "xft:Roboto:size=9:antialias=true:hinting=true:style=Regular,Hack Nerd Font:size=9:antialias=true:hinting=true:style=Regular"
         , borderColor = "black"
-        , border = TopB
+        , border = NoBorder
         , bgColor = "#2e3440"
-        , fgColor = "grey"
-        , position = TopW L 100
-        , commands = [ Run Weather "CYVR" ["-t","<tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
-                        , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                        , Run Network "eth1" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                        , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-                        , Run Memory ["-t","Mem: <usedratio>%"] 10
-                        , Run Swap [] 10
-                        , Run Com "uname" ["-s","-r"] "" 36000
-                        , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
-                        , Run StdinReader
-                        ]
+        , fgColor = "#00CC00"
+        , position = TopP 0 0
+        , commands = [ Run Weather "UGTB" ["-t","<tempC>C"] 36000
+                     , Run Memory ["-t","MEM <usedratio>%"] 10
+                     , Run Swap ["-t","SWAP <usedratio>%"] 10
+                     , Run Date "%a  %d%m  %H%M" "date" 10
+                     , Run Alsa "default" "Master" ["-t", "VOL <volume>%"
+                                                   , "-H", "70", "-h", "#00CC00"
+                                                   , "-L", "21", "-l", "#00CC00"
+                                                   ]
+                     , Run DiskU [("/", "ROOT <free>")]
+                                 ["-L", "20", "-H", "50", "-m", "1", "-p", "3"]
+                                 20
+                     , Run Kbd [("us", "US"), ("ge", "GE"), ("ru", "RU")]
+                     , Run Locks
+                     , Run StdinReader
+                     ]
         , sepChar = "%"
         , alignSep = "}{"
-        , template = "%StdinReader% | %cpu% | %memory% * %swap% | %eth0% - %eth1% }{<fc=#ee9a00>%date%</fc> | %uname% | %CYVR% "
+        , template = "%StdinReader% }{%locks%  %kbd%  %memory%  %swap%  %disku%  %alsa:default:Master%  <fc=#00CC00>%date%</fc>  %UGTB%                  "
         }
