@@ -183,7 +183,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm ,              xK_2),         windows (viewOnScreen 0 ws2))
     , ((modm ,              xK_3),         windows (viewOnScreen 0 ws3))
     , ((modm ,              xK_4),         windows (viewOnScreen 0 ws4))
-    , ((modm ,              xK_5),         windows (viewOnScreen 0 ws4))
+    , ((modm ,              xK_5),         windows (viewOnScreen 0 ws5))
 
     , ((modm ,              xK_F1),        windows (viewOnScreen 1 wsF1))
     , ((modm ,              xK_F2),        windows (viewOnScreen 1 wsF2))
@@ -198,8 +198,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_5),         windows $ shiftThenView 0 ws5)
 
     , ((modm .|. shiftMask, xK_F1),        windows $ shiftThenView 1 wsF1)
-    , ((modm .|. shiftMask, xK_F2),        windows $ shiftThenView 1 wsF1)
-    , ((modm .|. shiftMask, xK_F3),        windows $ shiftThenView 1 wsF1)
+    , ((modm .|. shiftMask, xK_F2),        windows $ shiftThenView 1 wsF2)
+    , ((modm .|. shiftMask, xK_F3),        windows $ shiftThenView 1 wsF3)
     , ((modm .|. shiftMask, xK_F4),        windows $ shiftThenView 1 wsF4)
     , ((modm .|. shiftMask, xK_F5),        windows $ shiftThenView 1 wsF5)
     ]
@@ -362,7 +362,7 @@ myStartupHook = return ()
 
 ------------------------------------------------------------------------
 main = do
-    xmproc <- spawnPipe "xmobar"
+    xmproc <- spawnPipe "xmobar ~/.xmonad/xmobarrc"
     xmonad $ docks
            $ ewmh
            $ def {

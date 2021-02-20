@@ -6,6 +6,8 @@ community/ttf-roboto
 community/ttf-roboto-mono
 community/fd
 community/bat
+community/rofimoji
+community/xdotool
 
 extra/feh
 extra/adobe-source-sans-pro-fonts
@@ -15,3 +17,12 @@ extra/tree
 aur/xkb-switch-i3
 aur/oh-my-zsh-git
 aur/nerd-fonts-hack
+aur/urxvt-tabbedex
+
+aur/rofication-git r17.8dbd06d-1 (+2 0.00)  <-- check out
+aur/rofi-greenclip 3.4-5 (+23 0.60) 
+
+#aur/rofimoji-git
+#community/rofimoji 4.3.0-4 (266.1 KiB 1.3 MiB) 
+#aur/rofi-emoji 2.1.2-2 (+6 1.48) 
+#aur/rofi-emoji 2.1.2-2 (+6 1.48) 

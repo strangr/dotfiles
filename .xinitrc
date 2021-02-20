@@ -7,9 +7,9 @@
 xset -dpms; xset s off
 
 # Monitor
-#xrandr --output HDMI-1 --primary
-#xrandr --output HDMI-1 --mode 1920x1080 --rate 60
-#xrandr --output VGA-1 --right-of HDMI-1
+xrandr --output DVI-I-1 --primary
+xrandr --output DVI-I-1 --mode 1920x1080 --rate 60
+xrandr --output VGA-0 --right-of DVI-I-1
 
 # Keyboard
 #setxkbmap -option caps:escape
@@ -27,4 +27,5 @@ numlockx &
 ~/bin/fehbg &
 
 # Start Desktop
-exec i3
+#exec i3
+exec xmonad

@@ -101,7 +101,7 @@ ZSH_ALIAS_FINDER_AUTOMATIC=true
 export FZF_BASE=/usr/bin/fzf
 # @TODO FZF shortcuts not working, **, CTRL+C, CTRL+R ..
 #export FZF_DEFAULT_COMMAND='fd --type f'
-export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git'"
+export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude '.android' --exclude '.cache' --exclude 'Android'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 # for more info see fzf/shell/completion.zsh
@@ -183,6 +183,8 @@ alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ip='ip -color=auto'
 alias ls='ls --color=auto'
+
+alias calc='bc -l'
 
 alias pacrem='pacman -Rns'
 alias yarem='yay -Rns'
