@@ -18,96 +18,61 @@ import System.IO
 
 import XMonad
 
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.Paste
+import XMonad.Layout.NoBorders
 
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.DynamicLog as DL
+
 import XMonad.Actions.OnScreen
 
-
--- experimentals
--- import XMonad.Layout.SimpleFloat
--- import XMonad.Layout.Spacing
--- import XMonad.Layout.Named
-import XMonad.Layout.NoBorders
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.Paste
+import XMonad.Util.NamedScratchpad
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
--- The preferred terminal program, which is used in a binding below and by
--- certain contrib modules.
---
-myTerminal      = "urxvt"
+------------------------------------------------------------------------
+-- Some Defaults
+------------------------------------------------------------------------
 
--- Whether focus follows the mouse pointer.
-myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = False
-
--- Whether clicking on a window to focus also passes the click to the window
-myClickJustFocuses :: Bool
-myClickJustFocuses = False
-
--- Width of the window border in pixels.
---
-myBorderWidth   = 1
-
--- modMask lets you specify which modkey you want to use. The default
--- is mod1Mask ("left alt").  You may also consider using mod3Mask
--- ("right alt"), which does not conflict with emacs keybindings. The
--- "windows key" is usually mod4Mask.
---
--- myModMask       = mod1Mask
 winKey :: KeyMask
 winKey = mod4Mask
-myModMask       = winKey
--- The default number of workspaces (virtual screens) and their names.
--- By default we use numeric strings, but any string may be used as a
--- workspace name. The number of workspaces is determined by the length
--- of this list.
---
--- A tagging example:
---
--- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
---
---myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
---myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
--- myWorkspaces1,myWorkspaces2 :: [String]
--- myWorkspaces1 = ["web1", "2", "3", "4"]
--- myWorkspaces2 = ["web2", "2", "3", "4"]
+myModMask = winKey
 
--- @TODO maybe I can remake this into a list of tags so I can get rid of independed screens
+myTerminal :: String
+myTerminal = "urxvt"
 
--- Name workspaces (@TODO change names to better fit my new workflow)
--- # Monitor 1
+------------------------------------------------------------------------
+-- Named workspaces (@TODO change names to better fit my new workflow)
+------------------------------------------------------------------------
+
+-- Monitor 1
 ws1 = "1:www"
 ws2 = "2:work"
 ws3 = "3:terms"
 ws4 = "4:mics"
 ws5 = "5:chat"
 
--- # Monitor 2
+-- Monitor 2
 wsF1 = "F1:/usr/www"
 wsF2 = "F2:/usr/terms"
 wsF3 = "F3:/usr/chat"
 wsF4 = "F4:/wrk/chat"
 wsF5 = "F5:f5"
 
-workspacesLeft  = [ws1,  ws2,  ws3,  ws4,  ws5]
+-- Workspaces
+workspacesLeft  = [ws1, ws2, ws3, ws4, ws5]
 workspacesRight = [wsF1, wsF2, wsF3, wsF4, wsF5]
 myWorkspaces = workspacesLeft ++ workspacesRight
 
--- Border colors for unfocused and focused windows, respectively.
---
-myNormalBorderColor  = "#333333"
-myFocusedBorderColor = "#00CC00"
-
 ------------------------------------------------------------------------
--- Key bindings. Add, modify or remove key bindings here.
---
+-- KEY BINDINGS
+------------------------------------------------------------------------
+
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
@@ -173,6 +138,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Quit xmonad (@TEMP ASSIGNMENT SINCE I ALWAY PRESS IT OUT OF HABBIT)
     , ((modm .|. shiftMask, xK_o     ), io (exitWith ExitSuccess))
 
+    -- Scratchpads
+    , ((0,                  xK_F10), namedScratchpadAction scratchpads "terminal-scratch")
+    , ((0,                  xK_F9),  namedScratchpadAction scratchpads "pavucontrol-scratch")
+
     -- Restart xmonad
     , ((modm,               xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
@@ -222,8 +191,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         shiftThenView scrnid wsid = (viewOnScreen scrnid wsid) . (W.shift wsid)
 
 ------------------------------------------------------------------------
--- Mouse bindings: default actions bound to mouse events
---
+-- MOUSE BINDINGS
+------------------------------------------------------------------------
+
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- mod-button1, Set the window to floating mode and move by dragging
@@ -241,16 +211,43 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     ]
 
 ------------------------------------------------------------------------
--- Layouts:
+-- Thanks to OODavo from #haskell on freenode; used for applications
+-- that do not doFullFloat well (they request a window size smaller
+-- then the widgets they contain)
+maxFloat = flip W.float $ rectWithBorder 0.05
+    where rectWithBorder x = let lt = x
+                                 wh = 1 - 2*x
+                                 in W.RationalRect lt lt wh wh
 
--- You can specify and transform your layouts by modifying these values.
--- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
--- defaults, as xmonad preserves your old layout settings by default.
---
--- The available layouts.  Note that each layout is separated by |||,
--- which denotes layout choice.
---
+-- maxFloat = flip W.float $ rectWithBorder 0.05
+--     where rectWithBorder x = let lt = x
+--                                 wh = 1 - 2*x
+--                                 in W.RationalRect lt lt wh wh
+
+doMaxFloat = ask >>= doF . maxFloat
+
+------------------------------------------------------------------------
+-- SCRATCHPADS
+------------------------------------------------------------------------
+-- scratchPads
+scratchpads :: [NamedScratchpad]
+scratchpads = [
+    NS "terminal-scratch" (myTerminal ++ " -name scratchpad") findTermScratch manageTermScratch,
+    NS "pavucontrol-scratch" spawnPavuScratch findPavuScratch managePavuScratch
+  ]
+  where
+  spawnPavuScratch  = "pavucontrol"
+
+  findTermScratch   = resource =? "scratchpad"
+  findPavuScratch   = resource =? "pavucontrol"
+
+  manageTermScratch = customFloating $ W.RationalRect 0.25 0.15 0.5 0.5
+  managePavuScratch = customFloating $ W.RationalRect 0.25 0.25 0.5 0.5
+
+------------------------------------------------------------------------
+-- LAYOUTS
+------------------------------------------------------------------------
+
 myLayout = avoidStruts $ smartBorders (tiled ||| Mirror tiled ||| Full)
   where
     -- default tiling algorithm partitions the screen into two panes
@@ -289,12 +286,12 @@ myManageHook = composeAll
     , isDialog                      --> doCenterFloat
     , className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
-    , className =? "Pavucontrol"    --> doFloat
+    --, className =? "Pavucontrol"    --> doFloat
     , className =? "vlc"            --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , className =? "stalonetray"    --> doIgnore
-    ]
+    ] <+> namedScratchpadManageHook scratchpads
 
  -- myManageHook ::  ManageHook
  -- myManageHook = composeAll . concat $
@@ -367,36 +364,32 @@ myStartupHook = return ()
 
 ------------------------------------------------------------------------
 main = do
-    xmproc0 <- spawnPipe "xmobar -x 0 ~/.xmonad/xmobarrc"
-    xmproc1 <- spawnPipe "xmobar -x 1 ~/.xmonad/xmobarrc"
+    xmproc0 <- spawnPipe "xmobar -x 0 ~/.xmonad/xmobarrc0"
+    xmproc1 <- spawnPipe "xmobar -x 1 ~/.xmonad/xmobarrc1"
     xmonad $ docks
            $ ewmh
-           $ def {
-        -- simple stuff
-        terminal           = myTerminal,
-        focusFollowsMouse  = myFocusFollowsMouse,
-        clickJustFocuses   = myClickJustFocuses,
-        borderWidth        = myBorderWidth,
-        modMask            = myModMask,
-        workspaces         = myWorkspaces,
-        normalBorderColor  = myNormalBorderColor,
-        focusedBorderColor = myFocusedBorderColor,
+           $ def { terminal           = myTerminal
+                 , focusFollowsMouse  = False
+                 , clickJustFocuses   = True
+                 , borderWidth        = 1
+                 , normalBorderColor  = "#333333"
+                 , focusedBorderColor = "#00CC00"
+                 , modMask            = myModMask
+                 , workspaces         = myWorkspaces
 
-        -- key bindings
-        keys               = myKeys,
-        mouseBindings      = myMouseBindings,
+                 , keys               = myKeys
+                 , mouseBindings      = myMouseBindings
 
-        -- hooks, layouts
-        layoutHook         = myLayout,
-        manageHook         = myManageHook,
-        handleEventHook    = myEventHook,
-        startupHook        = myStartupHook,
-        logHook            = DL.dynamicLogWithPP $ xmobarPP
-                             { DL.ppOutput  = \x-> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
-                             , DL.ppTitle   = DL.xmobarColor "#00CC00" "" . DL.shorten 50
-                             , DL.ppCurrent = \x -> "[" ++ x ++ "]"
-                             }
-        }
+                 , layoutHook         = myLayout
+                 , manageHook         = myManageHook
+                 , handleEventHook    = myEventHook
+                 , startupHook        = myStartupHook
+                 , logHook            = DL.dynamicLogWithPP $ xmobarPP
+                                        { DL.ppOutput  = \x-> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
+                                        , DL.ppTitle   = DL.xmobarColor "#00CC00" "" . DL.shorten 50
+                                        , DL.ppCurrent = \x -> "[" ++ x ++ "]"
+                                        }
+                 }
 ------------------------------------------------------------------------
 -- , DL.ppVisible = DL.xmobarColor "#fffff0" ""
 -- , DL.ppCurrent = DL.xmobarColor "#60ff45" ""

@@ -1,7 +1,7 @@
 Config { font = "xft:Roboto:size=9:antialias=true:hinting=true:style=Regular,Hack Nerd Font:size=9:antialias=true:hinting=true:style=Regular"
         , borderColor = "black"
         , border = NoBorder
-        , bgColor = "#2e3440"
+        , bgColor = "#000000"
         , fgColor = "#00CC00"
         , position = TopP 0 0
         , commands = [ Run Weather "UGTB" ["-t","<tempC>C"] 36000
