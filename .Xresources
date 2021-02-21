@@ -41,7 +41,8 @@ Xft.rgba: rgb
 !URxvt.transparent: true
 !URxvt.shading: 10
 !URxvt.depth: 32
-URxvt.background: [50]#000000
+!URxvt.background: [50]#000000
+URxvt.background: #000000
 URxvt.foreground: 2
 
 !Fonts
