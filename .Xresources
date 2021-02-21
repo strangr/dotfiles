@@ -38,9 +38,9 @@ Xft.rgba: rgb
 *color15:       #00FF00
 
 !Background
-URxvt.transparent: true
-URxvt.shading: 10
-URxvt.depth: 32
+!URxvt.transparent: true
+!URxvt.shading: 10
+!URxvt.depth: 32
 URxvt.background: [50]#000000
 URxvt.foreground: 2
 

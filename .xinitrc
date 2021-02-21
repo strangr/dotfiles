@@ -26,6 +26,9 @@ numlockx &
 # Set mouse cursor and background colour
 xsetroot -cursor_name left_ptr -solid '#CCCC00' &
 
+# Start compositioning
+picom -b
+
 # Wallpaper
 ~/bin/fehbg &
 
