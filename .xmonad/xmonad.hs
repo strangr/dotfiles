@@ -11,7 +11,6 @@
 -- https://github.com/strangr
 -- xmonad 0.15
 --
-
 import Data.Monoid
 import System.Exit
 import System.IO
@@ -19,6 +18,7 @@ import System.IO
 import XMonad
 
 import XMonad.Layout.NoBorders
+import XMonad.Layout.IndependentScreens
 
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
@@ -30,6 +30,9 @@ import XMonad.Actions.OnScreen
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.Paste
 import XMonad.Util.NamedScratchpad
+
+-- experimental
+import XMonad.Hooks.FadeInactive
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -51,23 +54,38 @@ myTerminal = "urxvt"
 ------------------------------------------------------------------------
 
 -- Monitor 1
-ws1 = "1:www"
-ws2 = "2:work"
-ws3 = "3:terms"
-ws4 = "4:mics"
-ws5 = "5:chat"
+-- ws1 = "1:www"
+-- ws2 = "2:work"
+-- ws3 = "3:terms"
+-- ws4 = "4:mics"
+-- ws5 = "5:chat"
+
+-- -- Monitor 2
+-- wsF1 = "F1:/usr/www"
+-- wsF2 = "F2:/usr/terms"
+-- wsF3 = "F3:/usr/chat"
+-- wsF4 = "F4:/wrk/chat"
+-- wsF5 = "F5:f5"
+
+-- Monitor 1
+ws1 = "0_1"
+ws2 = "0_2"
+ws3 = "0_3"
+ws4 = "0_4"
+ws5 = "0_5"
 
 -- Monitor 2
-wsF1 = "F1:/usr/www"
-wsF2 = "F2:/usr/terms"
-wsF3 = "F3:/usr/chat"
-wsF4 = "F4:/wrk/chat"
-wsF5 = "F5:f5"
+wsF1 = "1_1"
+wsF2 = "1_2"
+wsF3 = "1_3"
+wsF4 = "1_4"
+wsF5 = "1_5"
 
 -- Workspaces
 workspacesLeft  = [ws1, ws2, ws3, ws4, ws5]
 workspacesRight = [wsF1, wsF2, wsF3, wsF4, wsF5]
-myWorkspaces = workspacesLeft ++ workspacesRight
+--myWorkspaces = withScreens 2 (workspacesLeft ++ workspacesRight)
+myWorkspaces    = withScreens 2 ["1","2","3","4","5"]
 
 ------------------------------------------------------------------------
 -- KEY BINDINGS
@@ -211,25 +229,9 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     ]
 
 ------------------------------------------------------------------------
--- Thanks to OODavo from #haskell on freenode; used for applications
--- that do not doFullFloat well (they request a window size smaller
--- then the widgets they contain)
-maxFloat = flip W.float $ rectWithBorder 0.05
-    where rectWithBorder x = let lt = x
-                                 wh = 1 - 2*x
-                                 in W.RationalRect lt lt wh wh
-
--- maxFloat = flip W.float $ rectWithBorder 0.05
---     where rectWithBorder x = let lt = x
---                                 wh = 1 - 2*x
---                                 in W.RationalRect lt lt wh wh
-
-doMaxFloat = ask >>= doF . maxFloat
-
-------------------------------------------------------------------------
 -- SCRATCHPADS
 ------------------------------------------------------------------------
--- scratchPads
+
 scratchpads :: [NamedScratchpad]
 scratchpads = [
     NS "terminal-scratch" (myTerminal ++ " -name scratchpad") findTermScratch manageTermScratch,
@@ -292,45 +294,7 @@ myManageHook = composeAll
     , resource  =? "kdesktop"       --> doIgnore
     , className =? "stalonetray"    --> doIgnore
     ] <+> namedScratchpadManageHook scratchpads
-
- -- myManageHook ::  ManageHook
- -- myManageHook = composeAll . concat $
- --     [
- --      [isDialog --> doCenterFloat]
- --    --, [ isFullscreen --> (doF W.focusDown <+> doFullFloat) ]
- --    , [ isFullscreen --> doFullFloat ]
- --    --, [ composeOne [ isFullscreen -?> doFullFloat ] ]
- --    , [(className =? c <||> title =? c <||> resource =? c) --> doIgnore         | c <- bars ]
- --    , [(className =? c <||> title =? c <||> resource =? c) --> doFloat          | c <- float    ]
- --    , [(className =? c <||> title =? c <||> resource =? c) --> doCenterFloat        | c <- cfloat   ]
- --        , [(className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 0)  | c <- main ]   -- i
- --        , [(className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 1)  | c <- www  ]   -- ii
- --    , [(className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 2)  | c <- office   ]   -- iii
- --    , [(className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 3)  | c <- rdp  ]   -- iv
- --    , [(className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 4)  | c <- file ]   -- v
- --    , [(className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 5)  | c <- email    ]   -- vi
- --    , [(className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 6)  | c <- editor   ]   -- vii
- --    , [(className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 7)  | c <- media    ]   -- vii
- --    , [(className =? c <||> title =? c <||> resource =? c) --> doShift (myWorkspaces !! 8)  | c <- chat ]   -- ix
- --    , [role =? c --> doFloat | c <- im ]    -- place roles on im
- --    ]
- --    where   
- --        bars    = ["xmobar","dzen2","desktop_window"]
- --        float   = ["feh"]
- --        cfloat  = ["Xmessage","Gxmessage","Eog","Xscreensaver-demo","Brasero","xclock","Xscreensaver-demo","xfreerdp"]
- --            ++ ["SimpleScreenRecorder","Evolution-alarm-notify","Evolution","Gns3","Mtpaint"]
- --        main    = ["Wine","Pidgin","Skype"]
- --        media   = ["Pithos","Ario","Vlc","Ncmpcpp"]
- --        www = ["Chromium"]
- --        rdp = ["xfreerdp","rdesktop"]
- --        office  = ["libreoffice-calc","libreoffice-writer","VirtualBox","libreoffice"]
- --        editor  = ["Gvim","Xconfigs"]
- --        email   = ["Evolution"]
- --        file    = ["Brasero","spacefm","Xpdf"]
- --        chat    = ["Xchat","Gimp"]
- --        im  = ["nothing"]
- --        role    = stringProperty "WM_WINDOW_ROLE"
-
+    -- <+> manageDocks
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -362,15 +326,37 @@ myEventHook = fullscreenEventHook
 -- By default, do nothing.
 myStartupHook = return ()
 
+
+
+xmobarCommand (S s) = unwords ["xmobar", "-x", show s, template s] where
+    template 0 = "~/.xmonad/xmobarrc0"
+    template _ = "~/.xmonad/xmobarrc1"
+
+pp h s = marshallPP s (namedScratchpadFilterOutWorkspacePP $ defaultPP)
+    { DL.ppOutput            = hPutStrLn h
+    , DL.ppTitle   = DL.xmobarColor "#00CC00" "" . DL.shorten 50
+    , DL.ppCurrent = \x -> "[" ++ x ++ "]"
+    , ppLayout  = (\x -> case x of
+        "Tall"        -> "[ | ]"
+        "Mirror Tall" -> "[ - ]"
+        "Full" -> "[ X ]"
+        )
+    }
+    where color c = xmobarColor c ""
+
 ------------------------------------------------------------------------
 main = do
-    xmproc0 <- spawnPipe "xmobar -x 0 ~/.xmonad/xmobarrc0"
-    xmproc1 <- spawnPipe "xmobar -x 1 ~/.xmonad/xmobarrc1"
+    nScreens <- countScreens
+    -- xmproc0 <- spawnPipe "xmobar -x 0 ~/.xmonad/xmobarrc0"
+    -- xmproc1 <- spawnPipe "xmobar -x 1 ~/.xmonad/xmobarrc1"
+    -- screenNumber <- countScreens
+    -- handles <- mapM (spawnPipe . xmobarCommand) [0 .. screenNumber - 1]
+    hs <- mapM (spawnPipe . xmobarCommand) [0..nScreens-1]
     xmonad $ docks
            $ ewmh
            $ def { terminal           = myTerminal
                  , focusFollowsMouse  = False
-                 , clickJustFocuses   = True
+                 , clickJustFocuses   = False
                  , borderWidth        = 1
                  , normalBorderColor  = "#333333"
                  , focusedBorderColor = "#00CC00"
@@ -384,12 +370,19 @@ main = do
                  , manageHook         = myManageHook
                  , handleEventHook    = myEventHook
                  , startupHook        = myStartupHook
-                 , logHook            = DL.dynamicLogWithPP $ xmobarPP
-                                        { DL.ppOutput  = \x-> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
-                                        , DL.ppTitle   = DL.xmobarColor "#00CC00" "" . DL.shorten 50
-                                        , DL.ppCurrent = \x -> "[" ++ x ++ "]"
-                                        }
+                 , logHook            = mapM_ (dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP) $ zipWith pp hs [0..nScreens]
+
+
+            --     , logHook            = let log screen handle = dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP . marshallPP screen . pp $ handle
+          --in log 0 hLeft >> log 1 hRight
+                                        -- { DL.ppOutput  = \x-> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
+                                        -- , DL.ppTitle   = DL.xmobarColor "#00CC00" "" . DL.shorten 50
+                                        -- , DL.ppCurrent = \x -> "[" ++ x ++ "]"
+                                        -- , ppLayout  = (\x -> case x of
+                                        --     "Tall"        -> "[ | ]"
+                                        --     "Mirror Tall" -> "[ - ]"
+                                        --     "Full" -> "[ X ]"
+                                        --     )
+                                        -- }
                  }
 ------------------------------------------------------------------------
--- , DL.ppVisible = DL.xmobarColor "#fffff0" ""
--- , DL.ppCurrent = DL.xmobarColor "#60ff45" ""
