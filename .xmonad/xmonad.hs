@@ -11,11 +11,12 @@
 -- https://github.com/strangr
 -- xmonad 0.15
 --
+import XMonad
+
 import Data.Monoid
 import System.Exit
 import System.IO
-
-import XMonad
+import Control.Monad
 
 import XMonad.Layout.NoBorders
 import XMonad.Layout.IndependentScreens
@@ -26,6 +27,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.DynamicLog as DL
 
 import XMonad.Actions.OnScreen
+import XMonad.Actions.CopyWindow
 
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.SpawnOnce
@@ -82,11 +84,20 @@ wsF3 = "1_3"
 wsF4 = "1_4"
 wsF5 = "1_5"
 
+d = M.fromList [ ("0_1", "www")
+               , ("0_2", "dd")
+               , ("0_3", "bb")
+               , ("0_4", "bb")
+               , ("0_5", "bb")
+               ]
+
+ddd = ["www", "dd", "bb"]
 -- Workspaces
 workspacesLeft  = [ws1, ws2, ws3, ws4, ws5]
 workspacesRight = [wsF1, wsF2, wsF3, wsF4, wsF5]
 --myWorkspaces = withScreens 2 (workspacesLeft ++ workspacesRight)
 myWorkspaces    = withScreens 2 ["1","2","3","4","5"]
+
 
 ------------------------------------------------------------------------
 -- KEY BINDINGS
@@ -111,18 +122,20 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_n     ), refresh)
     -- Move focus to the next window
     , ((modm,               xK_Tab   ), windows W.focusDown)
+    -- Move focus to the previous window
+    , ((modm .|. shiftMask, xK_Tab   ), windows W.focusUp)
     -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,               xK_k     ), windows W.focusUp)
     -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
+    , ((modm,               xK_m     ), windows W.focusMaster)
     -- Swap the focused window and the master window
     , ((modm,               xK_Return), windows W.swapMaster)
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown)
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp)
     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
     -- Expand the master area
@@ -134,6 +147,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
+    -- @TODO Sticky
+    -- XMonad.Actions.CopyWindow
+    -- To make it work first I have to determine current screen and then copy to only current screen workspaces
+    -- , ((modm              , xK_a     ), windows copyToAll) -- Pin to all workspaces  (sticky)
+    -- , ((modm .|. shiftMask, xK_a     ), killAllOtherCopies) -- remove window from all but current (remove sticky)
+    --, ("M-S-a"          , kill1      ), -- remove window from current, kill if only one
     ------------------------------------------------------------------------
     -- Utils
     ------------------------------------------------------------------------
@@ -150,6 +169,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Scratchpads
     , ((0                 , xK_F10   ), namedScratchpadAction scratchpads "terminal-scratch")
+    , ((0                 , xK_F8    ), namedScratchpadAction scratchpads "ranger-scratch")
     , ((0                 , xK_F9    ), namedScratchpadAction scratchpads "pavucontrol-scratch")
 
     ------------------------------------------------------------------------
@@ -234,17 +254,20 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
 scratchpads :: [NamedScratchpad]
 scratchpads = [
-    NS "terminal-scratch" (myTerminal ++ " -name scratchpad") findTermScratch manageTermScratch,
+    NS "terminal-scratch" (myTerminal ++ " -name term-scratch") findTermScratch manageTermScratch,
+    NS "ranger-scratch" (myTerminal ++ " -name ranger-scratch -e ranger") findRangerScratch manageRangerScratch,
     NS "pavucontrol-scratch" spawnPavuScratch findPavuScratch managePavuScratch
   ]
   where
-  spawnPavuScratch  = "pavucontrol"
+  spawnPavuScratch    = "pavucontrol"
 
-  findTermScratch   = resource =? "scratchpad"
-  findPavuScratch   = resource =? "pavucontrol"
+  findTermScratch     = resource =? "term-scratch"
+  findRangerScratch   = resource =? "ranger-scratch"
+  findPavuScratch     = resource =? "pavucontrol"
 
-  manageTermScratch = customFloating $ W.RationalRect 0.25 0.15 0.5 0.5
-  managePavuScratch = customFloating $ W.RationalRect 0.25 0.25 0.5 0.5
+  manageTermScratch   = customFloating $ W.RationalRect 0.25 0.15 0.5 0.5
+  manageRangerScratch = customFloating $ W.RationalRect 0.10 0.10 0.8 0.8
+  managePavuScratch   = customFloating $ W.RationalRect 0.25 0.25 0.5 0.5
 
 ------------------------------------------------------------------------
 -- LAYOUTS
@@ -317,6 +340,9 @@ myEventHook = fullscreenEventHook
 -- myLogHook = return ()
 -- myLogHook = dynamicLog
 
+akaT :: String -> ScreenId -> String
+akaT x s = ddd!!0
+
 ------------------------------------------------------------------------
 -- Startup hook
 
@@ -329,27 +355,34 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "dunst &"
 
-xmobarCommand (S s) = unwords ["xmobar", "-x", show s, template s] where
-    template 0 = "~/.xmonad/xmobarrc0"
-    template _ = "~/.xmonad/xmobarrc1"
-
+xmobarCommand (S s) = unwords ["xmobar", "-x", show s, template s]
+    where template 0 = "~/.xmonad/xmobarrc0"
+          template _ = "~/.xmonad/xmobarrc1"
+-- ● ○
+pp :: Handle -> ScreenId -> PP
 pp h s = marshallPP s (namedScratchpadFilterOutWorkspacePP $ xmobarPP)
-    { DL.ppOutput  = hPutStrLn h
-    , DL.ppTitle   = DL.xmobarColor "#00CC00" "" . DL.shorten 50
-    , DL.ppCurrent = \x -> "[" ++ x ++ "]"
-    , DL.ppOrder   = \(ws:l:t:_) -> [ws ++ " : " ++ l]
-    , DL.ppLayout  = (\x -> case x of
+    { DL.ppCurrent          = \x -> "●"
+    , DL.ppVisible          = \x -> "●"
+    , DL.ppHidden           = \x -> "○"
+    , DL.ppHiddenNoWindows  = \x -> "○"
+    -- , DL.ppVisibleNoWindows = \x -> x
+    , DL.ppUrgent           = \x -> "<fc=#FF0000>" ++ x ++ "</fc>"
+    --, DL.ppSep = " "
+    , DL.ppTitle            = DL.xmobarColor "#00CC00" "" . DL.shorten 50
+    , DL.ppOrder            = \(ws:l:t:_) -> [ws ++ " : " ++ l]
+    , DL.ppOutput           = hPutStrLn h
+    , DL.ppLayout           = (\x -> case x of
         "Tall"        -> "[ | ]"
         "Mirror Tall" -> "[ - ]"
-        "Full" -> "[ X ]"
+        "Full"        -> "[ X ]"
         )
     }
     where color c = xmobarColor c ""
 
 ------------------------------------------------------------------------
 main = do
-    nScresens <- countScreens
-    hs <- mapM (spawnOnce . xmobarCommand) [0..nScreens-1]
+    nScreens <- countScreens
+    hs <- mapM (spawnPipe . xmobarCommand) [0..nScreens-1]
     xmonad $ docks
            $ ewmh
            $ def { terminal           = myTerminal
