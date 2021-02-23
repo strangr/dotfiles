@@ -97,110 +97,103 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
-    -- launch rofi
-    , ((modm,               xK_p     ), spawn "rofi -show run")
+    ------------------------------------------------------------------------
+    -- Control Workspace
+    ------------------------------------------------------------------------
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
-
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
-
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
-
     -- Resize viewed windows to the correct size
     , ((modm,               xK_n     ), refresh)
-
     -- Move focus to the next window
     , ((modm,               xK_Tab   ), windows W.focusDown)
-
     -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
-
     -- Move focus to the previous window
     , ((modm,               xK_k     ), windows W.focusUp  )
-
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
-
     -- Swap the focused window and the master window
     , ((modm,               xK_Return), windows W.swapMaster)
-
     -- Swap the focused window with the next window
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
-
     -- Swap the focused window with the previous window
     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
-
     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
-
     -- Expand the master area
     , ((modm,               xK_l     ), sendMessage Expand)
-
     -- Push window back into tiling
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
-
     -- Increment the number of windows in the master area
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
-
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
-    -- Toggle the status bar gap
-    -- Use this binding with avoidStruts from Hooks.ManageDocks.
-    -- See also the statusBar function from Hooks.DynamicLog.
-    --
-    , ((modm           , xK_b        ), sendMessage ToggleStruts)
+    ------------------------------------------------------------------------
+    -- Utils
+    ------------------------------------------------------------------------
 
-    -- Quit xmonad (@TEMP ASSIGNMENT SINCE I ALWAY PRESS IT OUT OF HABBIT)
+    -- Quit xmonad (@TEMP ASSIGNMENT SINCE I ALWAY PRESS IT OUT OF HABBIT) Make warning with rofi
     , ((modm .|. shiftMask, xK_o     ), io (exitWith ExitSuccess))
-
-    -- Scratchpads
-    , ((0,                  xK_F10), namedScratchpadAction scratchpads "terminal-scratch")
-    , ((0,                  xK_F9),  namedScratchpadAction scratchpads "pavucontrol-scratch")
-
+    -- Toggle the status bar gap
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
     -- Restart xmonad
-    , ((modm,               xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
     -- X-selection-paste buffer (@TODO replace with ctrl+shift+v for better one hand handling)
-    , ((0,                  xK_Insert), pasteSelection)
+    , ((0                 , xK_Insert), pasteSelection)
+
+    -- Scratchpads
+    , ((0                 , xK_F10   ), namedScratchpadAction scratchpads "terminal-scratch")
+    , ((0                 , xK_F9    ), namedScratchpadAction scratchpads "pavucontrol-scratch")
+
+    ------------------------------------------------------------------------
+    -- Launching Apps
+    ------------------------------------------------------------------------
+
+    -- launch rofi
+    , ((modm              , xK_p     ), spawn "rofi -show run")
+
 
     -- Screenshots
-    , ((0,                  xK_Print),  spawn "scrot $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
-    , ((shiftMask,          xK_Print),  spawn "scrot -s $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
+    , ((0                 , xK_Print ), spawn "scrot $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
+    , ((shiftMask         , xK_Print ), spawn "scrot -s $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
 
     -- Volume Control
-    , ((modm .|. shiftMask,  xK_period),  spawn "~/bin/changeVolume plus")
-    , ((modm .|. shiftMask,  xK_comma),  spawn "~/bin/changeVolume minus")
-    , ((modm .|. shiftMask,  xK_m),  spawn "~/bin/changeVolume mute")
-    , ((modm .|. shiftMask,  xK_n),  spawn "~/bin/changeVolume 120")
+    , ((modm .|. shiftMask, xK_period), spawn "~/bin/changeVolume plus")
+    , ((modm .|. shiftMask, xK_comma ), spawn "~/bin/changeVolume minus")
+    , ((modm .|. shiftMask, xK_m     ), spawn "~/bin/changeVolume mute")
+    , ((modm .|. shiftMask, xK_n     ), spawn "~/bin/changeVolume 120")
 
     -- Control Workspaces
-    , ((modm ,              xK_1),         windows (viewOnScreen 0 ws1))
-    , ((modm ,              xK_2),         windows (viewOnScreen 0 ws2))
-    , ((modm ,              xK_3),         windows (viewOnScreen 0 ws3))
-    , ((modm ,              xK_4),         windows (viewOnScreen 0 ws4))
-    , ((modm ,              xK_5),         windows (viewOnScreen 0 ws5))
+    , ((modm              , xK_1     ), windows (viewOnScreen 0 ws1))
+    , ((modm              , xK_2     ), windows (viewOnScreen 0 ws2))
+    , ((modm              , xK_3     ), windows (viewOnScreen 0 ws3))
+    , ((modm              , xK_4     ), windows (viewOnScreen 0 ws4))
+    , ((modm              , xK_5     ), windows (viewOnScreen 0 ws5))
 
-    , ((modm ,              xK_F1),        windows (viewOnScreen 1 wsF1))
-    , ((modm ,              xK_F2),        windows (viewOnScreen 1 wsF2))
-    , ((modm ,              xK_F3),        windows (viewOnScreen 1 wsF3))
-    , ((modm ,              xK_F4),        windows (viewOnScreen 1 wsF4))
-    , ((modm ,              xK_F5),        windows (viewOnScreen 1 wsF5))
+    , ((modm              , xK_F1    ), windows (viewOnScreen 1 wsF1))
+    , ((modm              , xK_F2    ), windows (viewOnScreen 1 wsF2))
+    , ((modm              , xK_F3    ), windows (viewOnScreen 1 wsF3))
+    , ((modm              , xK_F4    ), windows (viewOnScreen 1 wsF4))
+    , ((modm              , xK_F5    ), windows (viewOnScreen 1 wsF5))
 
-    , ((modm .|. shiftMask, xK_1),         windows $ shiftThenView 0 ws1)
-    , ((modm .|. shiftMask, xK_2),         windows $ shiftThenView 0 ws2)
-    , ((modm .|. shiftMask, xK_3),         windows $ shiftThenView 0 ws3)
-    , ((modm .|. shiftMask, xK_4),         windows $ shiftThenView 0 ws4)
-    , ((modm .|. shiftMask, xK_5),         windows $ shiftThenView 0 ws5)
+    , ((modm .|. shiftMask, xK_1     ), windows $ shiftThenView 0 ws1)
+    , ((modm .|. shiftMask, xK_2     ), windows $ shiftThenView 0 ws2)
+    , ((modm .|. shiftMask, xK_3     ), windows $ shiftThenView 0 ws3)
+    , ((modm .|. shiftMask, xK_4     ), windows $ shiftThenView 0 ws4)
+    , ((modm .|. shiftMask, xK_5     ), windows $ shiftThenView 0 ws5)
 
-    , ((modm .|. shiftMask, xK_F1),        windows $ shiftThenView 1 wsF1)
-    , ((modm .|. shiftMask, xK_F2),        windows $ shiftThenView 1 wsF2)
-    , ((modm .|. shiftMask, xK_F3),        windows $ shiftThenView 1 wsF3)
-    , ((modm .|. shiftMask, xK_F4),        windows $ shiftThenView 1 wsF4)
-    , ((modm .|. shiftMask, xK_F5),        windows $ shiftThenView 1 wsF5)
+    , ((modm .|. shiftMask, xK_F1    ), windows $ shiftThenView 1 wsF1)
+    , ((modm .|. shiftMask, xK_F2    ), windows $ shiftThenView 1 wsF2)
+    , ((modm .|. shiftMask, xK_F3    ), windows $ shiftThenView 1 wsF3)
+    , ((modm .|. shiftMask, xK_F4    ), windows $ shiftThenView 1 wsF4)
+    , ((modm .|. shiftMask, xK_F5    ), windows $ shiftThenView 1 wsF5)
     ]
 
     ++
@@ -225,7 +218,6 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-button1, Set the window to floating mode and move by dragging
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
                                        >> windows W.shiftMaster))
-
     -- mod-button2, Raise the window to the top of the stack
     , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
 
