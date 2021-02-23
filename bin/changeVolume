@@ -12,7 +12,7 @@ then
 elif [ $1 = minus ]
 then
 	#amixer set Master 5%- unmute > /dev/null
-        pactl set-sink-mute @DEFAULT_SINK@ false > /dev/null
+		pactl set-sink-mute @DEFAULT_SINK@ false > /dev/null
 	pactl -- set-sink-volume @DEFAULT_SINK@ -5% > /dev/null
 elif [ $1 = mute ]
 then

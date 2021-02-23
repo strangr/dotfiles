@@ -1,0 +1,11 @@
+#!/bin/bash
+# Start OpenVPN
+
+FOLDER=$HOME"/ovpn/"
+AUTHFILE=$FOLDER"/opnvpnvauth.txt"
+
+CHOSEN="$(echo -e "$(ls -A $FOLDER | grep '.*ovpn')" | rofi -dmenu -no-custom -p 'VPN Client' )"
+[ -f "$FOLDER$CHOSEN" ] && dunstify "Starting VPN" || dunstify "No such file"
+
+clear
+sudo openvpn --cd "$FOLDER" --config "$CHOSEN" --verb 1 --auth-user-pass "$AUTHFILE" --auth-nocache
