@@ -401,5 +401,5 @@ main = do
                  , manageHook         = myManageHook
                  , handleEventHook    = myEventHook
                  , startupHook        = myStartupHook
-                 , logHook            = mapM_ (dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP) $ zipWith pp hs [0..nScreens]
+                 , logHook            = mapM_ (dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP) $ zipWith pp hs [0..nScreens-1]
                  }
