@@ -28,6 +28,7 @@ import XMonad.Hooks.DynamicLog as DL
 import XMonad.Actions.OnScreen
 
 import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.SpawnOnce
 import XMonad.Util.Paste
 import XMonad.Util.NamedScratchpad
 
@@ -170,6 +171,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                  xK_Print),  spawn "scrot $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
     , ((shiftMask,          xK_Print),  spawn "scrot -s $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
 
+    -- Volume Control
+    , ((modm .|. shiftMask,  xK_period),  spawn "~/bin/changeVolume plus")
+    , ((modm .|. shiftMask,  xK_comma),  spawn "~/bin/changeVolume minus")
+    , ((modm .|. shiftMask,  xK_m),  spawn "~/bin/changeVolume mute")
+    , ((modm .|. shiftMask,  xK_n),  spawn "~/bin/changeVolume 120")
+
+    -- Control Workspaces
     , ((modm ,              xK_1),         windows (viewOnScreen 0 ws1))
     , ((modm ,              xK_2),         windows (viewOnScreen 0 ws2))
     , ((modm ,              xK_3),         windows (viewOnScreen 0 ws3))
@@ -294,6 +302,7 @@ myManageHook = composeAll
     , resource  =? "kdesktop"       --> doIgnore
     , className =? "stalonetray"    --> doIgnore
     ] <+> namedScratchpadManageHook scratchpads
+    -- @TODO see what this manageDocks does, everyone has it
     -- <+> manageDocks
 
 ------------------------------------------------------------------------
@@ -324,19 +333,20 @@ myEventHook = fullscreenEventHook
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = return ()
-
-
+myStartupHook :: X ()
+myStartupHook = do
+  spawnOnce "dunst &"
 
 xmobarCommand (S s) = unwords ["xmobar", "-x", show s, template s] where
     template 0 = "~/.xmonad/xmobarrc0"
     template _ = "~/.xmonad/xmobarrc1"
 
-pp h s = marshallPP s (namedScratchpadFilterOutWorkspacePP $ defaultPP)
-    { DL.ppOutput            = hPutStrLn h
+pp h s = marshallPP s (namedScratchpadFilterOutWorkspacePP $ xmobarPP)
+    { DL.ppOutput  = hPutStrLn h
     , DL.ppTitle   = DL.xmobarColor "#00CC00" "" . DL.shorten 50
     , DL.ppCurrent = \x -> "[" ++ x ++ "]"
-    , ppLayout  = (\x -> case x of
+    , DL.ppOrder   = \(ws:l:t:_) -> [ws ++ " : " ++ l]
+    , DL.ppLayout  = (\x -> case x of
         "Tall"        -> "[ | ]"
         "Mirror Tall" -> "[ - ]"
         "Full" -> "[ X ]"
@@ -346,12 +356,8 @@ pp h s = marshallPP s (namedScratchpadFilterOutWorkspacePP $ defaultPP)
 
 ------------------------------------------------------------------------
 main = do
-    nScreens <- countScreens
-    -- xmproc0 <- spawnPipe "xmobar -x 0 ~/.xmonad/xmobarrc0"
-    -- xmproc1 <- spawnPipe "xmobar -x 1 ~/.xmonad/xmobarrc1"
-    -- screenNumber <- countScreens
-    -- handles <- mapM (spawnPipe . xmobarCommand) [0 .. screenNumber - 1]
-    hs <- mapM (spawnPipe . xmobarCommand) [0..nScreens-1]
+    nScresens <- countScreens
+    hs <- mapM (spawnOnce . xmobarCommand) [0..nScreens-1]
     xmonad $ docks
            $ ewmh
            $ def { terminal           = myTerminal
@@ -371,18 +377,4 @@ main = do
                  , handleEventHook    = myEventHook
                  , startupHook        = myStartupHook
                  , logHook            = mapM_ (dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP) $ zipWith pp hs [0..nScreens]
-
-
-            --     , logHook            = let log screen handle = dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP . marshallPP screen . pp $ handle
-          --in log 0 hLeft >> log 1 hRight
-                                        -- { DL.ppOutput  = \x-> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
-                                        -- , DL.ppTitle   = DL.xmobarColor "#00CC00" "" . DL.shorten 50
-                                        -- , DL.ppCurrent = \x -> "[" ++ x ++ "]"
-                                        -- , ppLayout  = (\x -> case x of
-                                        --     "Tall"        -> "[ | ]"
-                                        --     "Mirror Tall" -> "[ - ]"
-                                        --     "Full" -> "[ X ]"
-                                        --     )
-                                        -- }
                  }
-------------------------------------------------------------------------
