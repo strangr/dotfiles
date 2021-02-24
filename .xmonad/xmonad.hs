@@ -19,7 +19,10 @@ import System.IO
 import Control.Monad
 
 import XMonad.Layout.NoBorders
+import XMonad.Layout.Spacing
 import XMonad.Layout.IndependentScreens
+import XMonad.Layout.ToggleLayouts
+import XMonad.Layout.PerWorkspace
 
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
@@ -34,11 +37,18 @@ import XMonad.Util.SpawnOnce
 import XMonad.Util.Paste
 import XMonad.Util.NamedScratchpad
 
--- experimental
-import XMonad.Hooks.FadeInactive
-
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+
+-----
+-- https://wiki.haskell.org/Xmonad/General_xmonad.hs_config_tips#Skipping_the_Scratchpad_workspace_while_using_CycleWS
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-LayoutCombinators.html
+-- https://www.reddit.com/r/xmonad/comments/he6ezv/xmonad_xmobar_clickable_workspaces_help/
+-- https://github.com/disconsis/literate-xmonad-config/blob/master/src/config.org#workspace-switch-buttons
+-- https://gist.github.com/tylevad/3146111#file-xmonad-hs-L186 <- see how bindin works, per layout bindings
+-- https://github.com/jaor/xmobar/blob/master/doc/quick-start.org
+-- https://xiangji.me/2018/11/19/my-xmonad-configuration/
+-----
 
 ------------------------------------------------------------------------
 -- Some Defaults
@@ -47,28 +57,21 @@ import qualified Data.Map        as M
 winKey :: KeyMask
 winKey = mod4Mask
 
+myModMask :: KeyMask
 myModMask = winKey
 
 myTerminal :: String
 myTerminal = "urxvt"
 
+-- Floating window sizes XXS XS S M L XL XXL XXXL
+rectXL = (customFloating $ W.RationalRect (1/20) (1/20) (9/10) (9/10))
+rectL  = (customFloating $ W.RationalRect (1/10) (1/10) (8/10) (8/10))
+rectM  = (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
+rectS  = (customFloating $ W.RationalRect (1/4) (1/4) (1/2) (1/2))
+
 ------------------------------------------------------------------------
 -- Named workspaces (@TODO change names to better fit my new workflow)
 ------------------------------------------------------------------------
-
--- Monitor 1
--- ws1 = "1:www"
--- ws2 = "2:work"
--- ws3 = "3:terms"
--- ws4 = "4:mics"
--- ws5 = "5:chat"
-
--- -- Monitor 2
--- wsF1 = "F1:/usr/www"
--- wsF2 = "F2:/usr/terms"
--- wsF3 = "F3:/usr/chat"
--- wsF4 = "F4:/wrk/chat"
--- wsF5 = "F5:f5"
 
 -- Monitor 1
 ws1 = "0_1"
@@ -84,20 +87,26 @@ wsF3 = "1_3"
 wsF4 = "1_4"
 wsF5 = "1_5"
 
-d = M.fromList [ ("0_1", "www")
-               , ("0_2", "dd")
-               , ("0_3", "bb")
-               , ("0_4", "bb")
-               , ("0_5", "bb")
+d = M.fromList [ (ws1, "www")
+               , (ws2, "work")
+               , (ws3, "terms")
+               , (ws4, "mics")
+               , (ws5, "chat")
                ]
 
+b = M.fromList [ (wsF1, "/usr/www")
+               , (wsF2, "/usr/terms")
+               , (wsF3, "/usr/chat")
+               , (wsF4, "/wrk/chat")
+               , (wsF5, "f5")
+               ]
+
+
 ddd = ["www", "dd", "bb"]
--- Workspaces
+
 workspacesLeft  = [ws1, ws2, ws3, ws4, ws5]
 workspacesRight = [wsF1, wsF2, wsF3, wsF4, wsF5]
---myWorkspaces = withScreens 2 (workspacesLeft ++ workspacesRight)
 myWorkspaces    = withScreens 2 ["1","2","3","4","5"]
-
 
 ------------------------------------------------------------------------
 -- KEY BINDINGS
@@ -114,36 +123,55 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
+
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
+
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+
+    -- Set/Unset Full Layout
+    , ((modm, xK_f), sendMessage (Toggle "Full"))
+
     -- Resize viewed windows to the correct size
     , ((modm,               xK_n     ), refresh)
+
     -- Move focus to the next window
     , ((modm,               xK_Tab   ), windows W.focusDown)
+
     -- Move focus to the previous window
     , ((modm .|. shiftMask, xK_Tab   ), windows W.focusUp)
+
     -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
+
     -- Move focus to the previous window
     , ((modm,               xK_k     ), windows W.focusUp)
+
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster)
+
     -- Swap the focused window and the master window
     , ((modm,               xK_Return), windows W.swapMaster)
+
     -- Swap the focused window with the next window
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown)
+
     -- Swap the focused window with the previous window
     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp)
+
     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
+
     -- Expand the master area
     , ((modm,               xK_l     ), sendMessage Expand)
+
     -- Push window back into tiling
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+
     -- Increment the number of windows in the master area
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
@@ -169,8 +197,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Scratchpads
     , ((0                 , xK_F10   ), namedScratchpadAction scratchpads "terminal-scratch")
-    , ((0                 , xK_F8    ), namedScratchpadAction scratchpads "ranger-scratch")
     , ((0                 , xK_F9    ), namedScratchpadAction scratchpads "pavucontrol-scratch")
+    , ((0                 , xK_F8    ), namedScratchpadAction scratchpads "ranger-scratch")
 
     ------------------------------------------------------------------------
     -- Launching Apps
@@ -178,7 +206,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch rofi
     , ((modm              , xK_p     ), spawn "rofi -show run")
-
 
     -- Screenshots
     , ((0                 , xK_Print ), spawn "scrot $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
@@ -190,44 +217,30 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_m     ), spawn "~/bin/changeVolume mute")
     , ((modm .|. shiftMask, xK_n     ), spawn "~/bin/changeVolume 120")
 
-    -- Control Workspaces
-    , ((modm              , xK_1     ), windows (viewOnScreen 0 ws1))
-    , ((modm              , xK_2     ), windows (viewOnScreen 0 ws2))
-    , ((modm              , xK_3     ), windows (viewOnScreen 0 ws3))
-    , ((modm              , xK_4     ), windows (viewOnScreen 0 ws4))
-    , ((modm              , xK_5     ), windows (viewOnScreen 0 ws5))
+    -- redshift -x; redshift -O 4000
+    -- redshift -x
 
-    , ((modm              , xK_F1    ), windows (viewOnScreen 1 wsF1))
-    , ((modm              , xK_F2    ), windows (viewOnScreen 1 wsF2))
-    , ((modm              , xK_F3    ), windows (viewOnScreen 1 wsF3))
-    , ((modm              , xK_F4    ), windows (viewOnScreen 1 wsF4))
-    , ((modm              , xK_F5    ), windows (viewOnScreen 1 wsF5))
-
-    , ((modm .|. shiftMask, xK_1     ), windows $ shiftThenView 0 ws1)
-    , ((modm .|. shiftMask, xK_2     ), windows $ shiftThenView 0 ws2)
-    , ((modm .|. shiftMask, xK_3     ), windows $ shiftThenView 0 ws3)
-    , ((modm .|. shiftMask, xK_4     ), windows $ shiftThenView 0 ws4)
-    , ((modm .|. shiftMask, xK_5     ), windows $ shiftThenView 0 ws5)
-
-    , ((modm .|. shiftMask, xK_F1    ), windows $ shiftThenView 1 wsF1)
-    , ((modm .|. shiftMask, xK_F2    ), windows $ shiftThenView 1 wsF2)
-    , ((modm .|. shiftMask, xK_F3    ), windows $ shiftThenView 1 wsF3)
-    , ((modm .|. shiftMask, xK_F4    ), windows $ shiftThenView 1 wsF4)
-    , ((modm .|. shiftMask, xK_F5    ), windows $ shiftThenView 1 wsF5)
     ]
 
     ++
 
-    --
-    -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-    -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-    --
-    -- @TODO follow shift here
+    [((m .|. modm, k), windows $ f i)
+    | (i, k) <- zip workspacesLeft [xK_1 .. xK_5]
+    , (f, m) <- [(viewOnScreen 0, 0), (shiftThenView 0, shiftMask)]]
+
+    ++
+
+    [((m .|. modm, k), windows $ f i)
+    | (i, k) <- zip workspacesRight [xK_F1 .. xK_F5]
+    , (f, m) <- [(viewOnScreen 1, 0), (shiftThenView 1, shiftMask)]]
+
+    ++
+    
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-    where
-        shiftThenView scrnid wsid = (viewOnScreen scrnid wsid) . (W.shift wsid)
+    | (key, sc) <- zip [xK_w, xK_e] [0,1]
+    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+    
+    where shiftThenView scrnid wsid = (viewOnScreen scrnid wsid) . (W.shift wsid)
 
 ------------------------------------------------------------------------
 -- MOUSE BINDINGS
@@ -244,40 +257,25 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
                                        >> windows W.shiftMaster))
-
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
-
-------------------------------------------------------------------------
--- SCRATCHPADS
-------------------------------------------------------------------------
-
-scratchpads :: [NamedScratchpad]
-scratchpads = [
-    NS "terminal-scratch" (myTerminal ++ " -name term-scratch") findTermScratch manageTermScratch,
-    NS "ranger-scratch" (myTerminal ++ " -name ranger-scratch -e ranger") findRangerScratch manageRangerScratch,
-    NS "pavucontrol-scratch" spawnPavuScratch findPavuScratch managePavuScratch
-  ]
-  where
-  spawnPavuScratch    = "pavucontrol"
-
-  findTermScratch     = resource =? "term-scratch"
-  findRangerScratch   = resource =? "ranger-scratch"
-  findPavuScratch     = resource =? "pavucontrol"
-
-  manageTermScratch   = customFloating $ W.RationalRect 0.25 0.15 0.5 0.5
-  manageRangerScratch = customFloating $ W.RationalRect 0.10 0.10 0.8 0.8
-  managePavuScratch   = customFloating $ W.RationalRect 0.25 0.25 0.5 0.5
 
 ------------------------------------------------------------------------
 -- LAYOUTS
 ------------------------------------------------------------------------
 
-myLayout = avoidStruts $ smartBorders (tiled ||| Mirror tiled ||| Full)
+myLayout = avoidStruts $ smartBorders $ toggleLayouts Full workspaceLayouts
+
+workspaceLayouts =
+  onWorkspace wsF1 layoutTallSpaced $
+  onWorkspace wsF2 layoutTallSpaced $
+  layoutDefaults
   where
-    -- default tiling algorithm partitions the screen into two panes
-    -- tiled   = spacingRaw False (Border 10 0 10 0) True (Border 0 10 0 10) True $ Tall nmaster delta ratio
+    layoutTallSpaced = spaceTiled
+    layoutDefaults   = tiled ||| Mirror tiled
+
     tiled   = Tall nmaster delta ratio
+
+    spaceTiled = spacingR $ Tall nmaster delta ratio
 
     -- The default number of windows in the master pane
     nmaster = 1
@@ -288,37 +286,44 @@ myLayout = avoidStruts $ smartBorders (tiled ||| Mirror tiled ||| Full)
     -- Default proportion of screen occupied by master pane
     ratio   = 1/2
 
-    -- float = named "Float" simpleFloat
+    spacingL = spacing 10
+    spacingR = spacingRaw False (Border 10 0 10 0) True (Border 0 10 0 10) True
 
 ------------------------------------------------------------------------
--- Window rules:
+-- WINDOW RULES
+------------------------------------------------------------------------
 
--- Execute arbitrary actions and WindowSet manipulations when managing
--- a new window. You can use this to, for example, always float a
--- particular program, or have a client always appear on a particular
--- workspace.
---
--- To find the property name associated with a program, use
--- > xprop | grep WM_CLASS
--- and click on the client you're interested in.
---
--- To match on the WM_NAME, you can use 'title' in the same way that
--- 'className' and 'resource' are used below.
---
 myManageHook = composeAll
     [ isFullscreen                  --> doFullFloat
     --, manageDocks
     , isDialog                      --> doCenterFloat
+    , className =? "feh"            --> rectS
     , className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
-    --, className =? "Pavucontrol"    --> doFloat
-    , className =? "vlc"            --> doFloat
+    , className =? "vlc"            --> rectS
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , className =? "stalonetray"    --> doIgnore
-    ] <+> namedScratchpadManageHook scratchpads
-    -- @TODO see what this manageDocks does, everyone has it
-    -- <+> manageDocks
+    , className =? "discord"        --> doShift wsF2
+    ] <+> namedScratchpadManageHook scratchpads <+> manageDocks
+
+------------------------------------------------------------------------
+-- SCRATCHPADS
+------------------------------------------------------------------------
+
+scratchpads :: [NamedScratchpad]
+scratchpads = [
+    NS "terminal-scratch" spawnTerminalScratch findTermScratch rectS,
+    NS "ranger-scratch" spawnRangerScratch findRangerScratch rectL,
+    NS "pavucontrol-scratch" spawnPavuScratch findPavuScratch rectS
+  ] where
+    spawnTerminalScratch = myTerminal ++ " -name term-scratch"
+    spawnRangerScratch   = myTerminal ++ " -name ranger-scratch -e ranger"
+    spawnPavuScratch     = "pavucontrol"
+
+    findTermScratch      = resource =? "term-scratch"
+    findRangerScratch    = resource =? "ranger-scratch"
+    findPavuScratch      = resource =? "pavucontrol"
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -332,39 +337,23 @@ myManageHook = composeAll
 myEventHook = fullscreenEventHook
 
 ------------------------------------------------------------------------
--- Status bars and logging
-
--- Perform an arbitrary action on each internal state change or X event.
--- See the 'XMonad.Hooks.DynamicLog' extension for examples.
---
--- myLogHook = return ()
--- myLogHook = dynamicLog
-
-akaT :: String -> ScreenId -> String
-akaT x s = ddd!!0
-
+-- STARTUP HOOK (RUNS EVERYTIME WITH MOD-Q)
 ------------------------------------------------------------------------
--- Startup hook
 
--- Perform an arbitrary action each time xmonad starts or is restarted
--- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
--- per-workspace layout choices.
---
--- By default, do nothing.
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "dunst &"
 
-xmobarCommand (S s) = unwords ["xmobar", "-x", show s, template s]
-    where template 0 = "~/.xmonad/xmobarrc0"
-          template _ = "~/.xmonad/xmobarrc1"
--- ● ○
+------------------------------------------------------------------------
+-- Status bars and logging -- ● ○
+------------------------------------------------------------------------
+
 pp :: Handle -> ScreenId -> PP
 pp h s = marshallPP s (namedScratchpadFilterOutWorkspacePP $ xmobarPP)
-    { DL.ppCurrent          = \x -> "●"
-    , DL.ppVisible          = \x -> "●"
-    , DL.ppHidden           = \x -> "○"
-    , DL.ppHiddenNoWindows  = \x -> "○"
+    { DL.ppCurrent          = \x -> clickable x "●" s
+    , DL.ppVisible          = \x -> clickable x "●" s
+    , DL.ppHidden           = \x -> clickable x "○" s
+    , DL.ppHiddenNoWindows  = \x -> clickable x "○" s
     -- , DL.ppVisibleNoWindows = \x -> x
     , DL.ppUrgent           = \x -> "<fc=#FF0000>" ++ x ++ "</fc>"
     --, DL.ppSep = " "
@@ -375,11 +364,46 @@ pp h s = marshallPP s (namedScratchpadFilterOutWorkspacePP $ xmobarPP)
         "Tall"        -> "[ | ]"
         "Mirror Tall" -> "[ - ]"
         "Full"        -> "[ X ]"
+        _             -> x
         )
     }
     where color c = xmobarColor c ""
 
+akaT :: String -> ScreenId -> String
+akaT x s = ddd!!0
+
+xmobarEscape :: String -> String
+xmobarEscape = concatMap doubleLts
+  where doubleLts '<' = "<<"
+        doubleLts x   = [x]
+
+-- clickable :: String -> ScreenId -> String
+-- clickable d s = click (xmobarEscape d) s
+--     where
+--         click l@(x:xs) s = ("<action=xdotool key Super_L+1>"++ l ++"</action>")
+
+clickable :: String -> String -> ScreenId -> String
+clickable number symbol screen = click number symbol screen
+    where
+    click l@(x:xs) m s = case s of
+        0 -> ("<action=xdotool key Super_L+"++ l ++">"++ m ++"</action>")
+        _ -> ("<action=xdotool key Super_L+F"++ l ++">"++ m ++"</action>")
+
+        
+-- click l@(x:xs) s = ("<action=xdotool key Super_L+1>"++ l ++"</action>")
+-- myWorkspacesX = clickable $ ["i","ii","iii","iv","v","vi","vii","viii","ix"] ++ ["NSP"]                            -- 4xmobar
+--    where clickable l = ["<action=`xdotool key super+" ++ show (n) ++ "`>" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l, let n = i ]    -- 4xmobar
+--    where clickable l = ["<action=`xdotool key super+" ++ show (n) ++ "`>" ++ ws ++ "</action>" | (i,ws) <- zip nums l, let n = i ]        -- 4xmobar
+
+
+xmobarCommand (S s) = unwords ["xmobar", "-x", show s, template s]
+    where template 0 = "~/.xmonad/xmobarrc0"
+          template _ = "~/.xmonad/xmobarrc1"
+
 ------------------------------------------------------------------------
+-- MAIN
+------------------------------------------------------------------------
+
 main = do
     nScreens <- countScreens
     hs <- mapM (spawnPipe . xmobarCommand) [0..nScreens-1]

@@ -4,8 +4,8 @@ Config { font = "xft:Roboto:size=9:antialias=true:hinting=true:style=Regular,Hac
         , bgColor = "#000000"
         , fgColor = "#00CC00"
         , position = TopP 0 0
-        , commands = [ Run StdinReader ]
+        , commands = [ Run UnsafeStdinReader ]
         , sepChar = "%"
         , alignSep = "}{"
-        , template = "%StdinReader% }{ "
+        , template = "%UnsafeStdinReader% }{ "
         }

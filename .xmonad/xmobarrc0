@@ -17,9 +17,9 @@ Config { font = "xft:Roboto:size=9:antialias=true:hinting=true:style=Regular,Hac
                                  20
                      , Run Kbd [("us", "US"), ("ge", "GE"), ("ru", "RU")]
                      , Run Locks
-                     , Run StdinReader
+                     , Run UnsafeStdinReader
                      ]
         , sepChar = "%"
         , alignSep = "}{"
-        , template = "%StdinReader% }{%locks%  %kbd%  %memory%  %swap%  %disku%  %alsa:default:Master%  <fc=#00CC00>%date%</fc>  %UGTB%"
+        , template = "%UnsafeStdinReader% }{%locks%  %kbd%  %memory%  %swap%  %disku%  %alsa:default:Master%  <fc=#00CC00>%date%</fc>  %UGTB%"
         }
