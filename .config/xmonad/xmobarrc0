@@ -1,4 +1,5 @@
 Config { font = "xft:Roboto:size=9:antialias=true:hinting=true:style=Regular,Hack Nerd Font:size=9:antialias=true:hinting=true:style=Regular"
+--font = "xft:Roboto:size=9:antialias=true:hinting=true:style=Regular,Hack Nerd Font:size=9:antialias=true:hinting=true:style=Regular"
         , borderColor = "black"
         , border = NoBorder
         , bgColor = "#000000"

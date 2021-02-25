@@ -50,6 +50,89 @@ import qualified Data.Map        as M
 -- https://xiangji.me/2018/11/19/my-xmonad-configuration/
 -----
 
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Util-Cursor.html
+-- rn im setting cursor with xinit but that will be unnessesary on other wm-s
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Util-ExclusiveScratchpads.html
+-- so that only one scratchpad can be open (hides the other one)
+
+-- https://hackage.haskell.org/package/xmonad-contrib
+-- naxe propti da rac sheidzleba meti gadaiyvane
+-- magalitad confirmationi exitze amiti shemidzlia
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-DynamicBars.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-EwmhDesktops.html
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-CurrentWorkspaceOnTop.html
+-- es rdpstvis hseidzleba gamomadges
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-UrgencyHook.html
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-ToggleHook.html
+
+-- XMonad.Hooks.DynamicProperty
+-- es sheidzleba gamomadges classebs romelsac matchs vervuketeb (remmina?)
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-XPropManage.html
+-- es meore
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-Navigation2D.html
+-- this could be used for focus/shift while also moving next screen
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-PerWorkspaceKeys.html
+-- keybindings based on current layout
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-AfterDrag.html
+-- es sheidzleba gamoviyeno Copystan ertad stickys asawyobad
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-DynamicWorkspaceGroups.html
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-InsertPosition.html
+-- posiciis shesacvlelad
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-Submap.html
+-- interesting - could be like i3 modes
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-Script.html
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-WindowArranger.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-WindowNavigation.html
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-CycleWS.html
+
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-SimpleDecoration.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-NoBorders.html
+
+-- Fullscreen
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-DraggingVisualizer.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-Fullscreen.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-Drawer.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-PositionStoreFloat.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-StateFull.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-FloatNext.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-Place.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-PositionStoreHooks.html <- THIS ONE IMPORTANT
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Util-PositionStore.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-FlexibleManipulate.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-FlexibleResize.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-FloatKeys.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-FloatSnap.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Actions-MouseResize.html
+
+-- Groups
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-Groups.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-LayoutBuilder.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-LayoutBuilderP.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-SubLayouts.html
+
+-- Try Layout
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-CenteredMaster.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-DecorationMadness.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-Combo.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-ComboP.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-ResizableTile.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-Simplest.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-StackTile.html
+-- https://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Layout-Tabbed.html
+
 ------------------------------------------------------------------------
 -- Some Defaults
 ------------------------------------------------------------------------
@@ -131,7 +214,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
 
     -- Set/Unset Full Layout
-    , ((modm, xK_f), sendMessage (Toggle "Full"))
+    , ((modm,               xK_f     ), sendMessage (Toggle "Full"))
 
     -- Resize viewed windows to the correct size
     , ((modm,               xK_n     ), refresh)
@@ -187,8 +270,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Quit xmonad (@TEMP ASSIGNMENT SINCE I ALWAY PRESS IT OUT OF HABBIT) Make warning with rofi
     , ((modm .|. shiftMask, xK_o     ), io (exitWith ExitSuccess))
+    
     -- Toggle the status bar gap
     , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
@@ -265,9 +350,9 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
 myLayout = avoidStruts $ smartBorders $ toggleLayouts Full workspaceLayouts
 
+-- @TODO organize better and rename better
 workspaceLayouts =
-  onWorkspace wsF1 layoutTallSpaced $
-  onWorkspace wsF2 layoutTallSpaced $
+  onWorkspaces [wsF1, wsF2] layoutTallSpaced $
   layoutDefaults
   where
     layoutTallSpaced = spaceTiled
@@ -275,7 +360,7 @@ workspaceLayouts =
 
     tiled   = Tall nmaster delta ratio
 
-    spaceTiled = spacingR $ Tall nmaster delta ratio
+    spaceTiled = spacingR $ Tall nmaster delta ratio2
 
     -- The default number of windows in the master pane
     nmaster = 1
@@ -285,6 +370,7 @@ workspaceLayouts =
 
     -- Default proportion of screen occupied by master pane
     ratio   = 1/2
+    ratio2  = 2/3
 
     spacingL = spacing 10
     spacingR = spacingRaw False (Border 10 0 10 0) True (Border 0 10 0 10) True
@@ -294,18 +380,22 @@ workspaceLayouts =
 ------------------------------------------------------------------------
 
 myManageHook = composeAll
-    [ isFullscreen                  --> doFullFloat
+    [ isFullscreen                              --> doFullFloat
     --, manageDocks
-    , isDialog                      --> doCenterFloat
-    , className =? "feh"            --> rectS
-    , className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , className =? "vlc"            --> rectS
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore
-    , className =? "stalonetray"    --> doIgnore
-    , className =? "discord"        --> doShift wsF2
+    , isDialog                                  --> doCenterFloat
+    , className =? "feh"                        --> rectS
+    , className =? "MPlayer"                    --> doFloat
+    , className =? "Gimp"                       --> doFloat
+    , className =? "vlc"                        --> rectS
+    , resource  =? "desktop_window"             --> doIgnore
+    , resource  =? "kdesktop"                   --> doIgnore
+    , className =? "stalonetray"                --> doIgnore
+    , className =? "discord"                    --> doShift wsF2
+    , className =? "slack"                      --> doShift wsF3
+    , className =? "microsoft teams - preview"  --> doShift wsF3
     ] <+> namedScratchpadManageHook scratchpads <+> manageDocks
+
+-- HasBorder False <- always remove the border from the specified window
 
 ------------------------------------------------------------------------
 -- SCRATCHPADS
@@ -327,13 +417,8 @@ scratchpads = [
 
 ------------------------------------------------------------------------
 -- Event handling
+------------------------------------------------------------------------
 
--- * EwmhDesktops users should change this to ewmhDesktopsEventHook
---
--- Defines a custom handler function for X Events. The function should
--- return (All True) if the default handler is to be run afterwards. To
--- combine event hooks use mappend or mconcat from Data.Monoid.
---
 myEventHook = fullscreenEventHook
 
 ------------------------------------------------------------------------
@@ -386,19 +471,12 @@ clickable :: String -> String -> ScreenId -> String
 clickable number symbol screen = click number symbol screen
     where
     click l@(x:xs) m s = case s of
-        0 -> ("<action=xdotool key Super_L+"++ l ++">"++ m ++"</action>")
-        _ -> ("<action=xdotool key Super_L+F"++ l ++">"++ m ++"</action>")
-
-        
--- click l@(x:xs) s = ("<action=xdotool key Super_L+1>"++ l ++"</action>")
--- myWorkspacesX = clickable $ ["i","ii","iii","iv","v","vi","vii","viii","ix"] ++ ["NSP"]                            -- 4xmobar
---    where clickable l = ["<action=`xdotool key super+" ++ show (n) ++ "`>" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l, let n = i ]    -- 4xmobar
---    where clickable l = ["<action=`xdotool key super+" ++ show (n) ++ "`>" ++ ws ++ "</action>" | (i,ws) <- zip nums l, let n = i ]        -- 4xmobar
-
+        0 -> ("<action=xdotool key Super_L+"++ l ++"> "++ m ++"</action>")
+        _ -> ("<action=xdotool key Super_L+F"++ l ++"> "++ m ++ " </action>")
 
 xmobarCommand (S s) = unwords ["xmobar", "-x", show s, template s]
-    where template 0 = "~/.xmonad/xmobarrc0"
-          template _ = "~/.xmonad/xmobarrc1"
+    where template 0 = "~/.config/xmonad/xmobarrc0"
+          template _ = "~/.config/xmonad/xmobarrc1"
 
 ------------------------------------------------------------------------
 -- MAIN
