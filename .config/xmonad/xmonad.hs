@@ -296,14 +296,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0                 , xK_Print ), spawn "scrot $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
     , ((shiftMask         , xK_Print ), spawn "scrot -s $HOME/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png")
 
+    -- Redshift
+    , ((modm              , xK_z     ), spawn "redshift -x; redshift -O 4000")
+    , ((modm .|. shiftMask, xK_z     ), spawn "redshift -x")
+
     -- Volume Control
     , ((modm .|. shiftMask, xK_period), spawn "~/bin/changeVolume plus")
     , ((modm .|. shiftMask, xK_comma ), spawn "~/bin/changeVolume minus")
     , ((modm .|. shiftMask, xK_m     ), spawn "~/bin/changeVolume mute")
     , ((modm .|. shiftMask, xK_n     ), spawn "~/bin/changeVolume 120")
-
-    -- redshift -x; redshift -O 4000
-    -- redshift -x
 
     ]
 
@@ -348,11 +349,16 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- LAYOUTS
 ------------------------------------------------------------------------
 
-myLayout = avoidStruts $ smartBorders $ toggleLayouts Full workspaceLayouts
+myLayout = avoidStruts $ lessBorders OnlyScreenFloat $ toggleLayouts fulli workspaceLayouts
+    where
+    fulli = (noBorders Full)
+
+    -- fulli = (noBorders Full)
+    --(layoutHints $ noBorders Full)
 
 -- @TODO organize better and rename better
 workspaceLayouts =
-  onWorkspaces [wsF1, wsF2] layoutTallSpaced $
+  onWorkspaces [wsF1, wsF2, wsF2] layoutTallSpaced $
   layoutDefaults
   where
     layoutTallSpaced = spaceTiled
@@ -370,7 +376,7 @@ workspaceLayouts =
 
     -- Default proportion of screen occupied by master pane
     ratio   = 1/2
-    ratio2  = 2/3
+    ratio2  = 3/5
 
     spacingL = spacing 10
     spacingR = spacingRaw False (Border 10 0 10 0) True (Border 0 10 0 10) True
@@ -380,7 +386,8 @@ workspaceLayouts =
 ------------------------------------------------------------------------
 
 myManageHook = composeAll
-    [ isFullscreen                              --> doFullFloat
+    [ isFullscreen --> (doF W.focusDown <+> doFullFloat)
+    --isFullscreen                              --> doFullFloat
     --, manageDocks
     , isDialog                                  --> doCenterFloat
     , className =? "feh"                        --> rectS
@@ -391,9 +398,12 @@ myManageHook = composeAll
     , resource  =? "kdesktop"                   --> doIgnore
     , className =? "stalonetray"                --> doIgnore
     , className =? "discord"                    --> doShift wsF2
-    , className =? "slack"                      --> doShift wsF3
-    , className =? "microsoft teams - preview"  --> doShift wsF3
+    , resource  =? "slack"                      --> doShift wsF3
+    , resource  =? "microsoft teams - preview"  --> doShift wsF3
     ] <+> namedScratchpadManageHook scratchpads <+> manageDocks
+
+--     , className =? "microsoft teams - preview"  --> doShift wsF3
+-- aq incoming calli unda iyos float, an doIgnore
 
 -- HasBorder False <- always remove the border from the specified window
 
@@ -419,7 +429,7 @@ scratchpads = [
 -- Event handling
 ------------------------------------------------------------------------
 
-myEventHook = fullscreenEventHook
+myEventHook = docksEventHook <+> fullscreenEventHook
 
 ------------------------------------------------------------------------
 -- STARTUP HOOK (RUNS EVERYTIME WITH MOD-Q)
@@ -435,20 +445,20 @@ myStartupHook = do
 
 pp :: Handle -> ScreenId -> PP
 pp h s = marshallPP s (namedScratchpadFilterOutWorkspacePP $ xmobarPP)
-    { DL.ppCurrent          = \x -> clickable x "●" s
-    , DL.ppVisible          = \x -> clickable x "●" s
-    , DL.ppHidden           = \x -> clickable x "○" s
-    , DL.ppHiddenNoWindows  = \x -> clickable x "○" s
+    { DL.ppCurrent          = \x -> clickable x "<fc=#29c940>●</fc>" s
+    , DL.ppVisible          = \x -> clickable x "<fc=#29c940>●</fc>" s
+    , DL.ppHidden           = \x -> clickable x "<fc=#888888>●</fc>" s
+    , DL.ppHiddenNoWindows  = \x -> clickable x "<fc=#888888>○</fc>" s
     -- , DL.ppVisibleNoWindows = \x -> x
     , DL.ppUrgent           = \x -> "<fc=#FF0000>" ++ x ++ "</fc>"
     --, DL.ppSep = " "
     , DL.ppTitle            = DL.xmobarColor "#00CC00" "" . DL.shorten 50
-    , DL.ppOrder            = \(ws:l:t:_) -> [ws ++ " : " ++ l]
+    , DL.ppOrder            = \(ws:l:t:_) -> [ws ++ "<fc=#303030>|</fc>   " ++ l ++ "    <fc=#303030>|</fc>"]
     , DL.ppOutput           = hPutStrLn h
     , DL.ppLayout           = (\x -> case x of
-        "Tall"        -> "[ | ]"
-        "Mirror Tall" -> "[ - ]"
-        "Full"        -> "[ X ]"
+        "Tall"        -> "頻"
+        "Mirror Tall" -> "響"
+        "Full"        -> "ﴂ"
         _             -> x
         )
     }
@@ -461,11 +471,6 @@ xmobarEscape :: String -> String
 xmobarEscape = concatMap doubleLts
   where doubleLts '<' = "<<"
         doubleLts x   = [x]
-
--- clickable :: String -> ScreenId -> String
--- clickable d s = click (xmobarEscape d) s
---     where
---         click l@(x:xs) s = ("<action=xdotool key Super_L+1>"++ l ++"</action>")
 
 clickable :: String -> String -> ScreenId -> String
 clickable number symbol screen = click number symbol screen
@@ -491,8 +496,8 @@ main = do
                  , focusFollowsMouse  = False
                  , clickJustFocuses   = False
                  , borderWidth        = 1
-                 , normalBorderColor  = "#333333"
-                 , focusedBorderColor = "#00CC00"
+                 , normalBorderColor  = "#25333c"
+                 , focusedBorderColor = "#f3825a"
                  , modMask            = myModMask
                  , workspaces         = myWorkspaces
 

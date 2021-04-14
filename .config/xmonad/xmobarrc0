@@ -1,26 +1,28 @@
-Config { font = "xft:Roboto:size=9:antialias=true:hinting=true:style=Regular,Hack Nerd Font:size=9:antialias=true:hinting=true:style=Regular"
---font = "xft:Roboto:size=9:antialias=true:hinting=true:style=Regular,Hack Nerd Font:size=9:antialias=true:hinting=true:style=Regular"
-        , borderColor = "black"
-        , border = NoBorder
-        , bgColor = "#000000"
-        , fgColor = "#00CC00"
+Config { font = "xft:Roboto:size=9:antialias=true:hinting=true:style=Regular,Hack Nerd Font:size=12:antialias=true:hinting=true:style=Regular"
+        , borderColor = "#303030"
+        , border = BottomB
+        , bgColor = "#25333c"
+        -- , bgColor = "#25333c"
+        , fgColor = "#b2ab65"
         , position = TopP 0 0
-        , commands = [ Run Weather "UGTB" ["-t","<tempC>C"] 36000
-                     , Run Memory ["-t","MEM <usedratio>%"] 10
-                     , Run Swap ["-t","SWAP <usedratio>%"] 10
-                     , Run Date "%a  %d%m  %H%M" "date" 10
-                     , Run Alsa "default" "Master" ["-t", "VOL <volume>%"
-                                                   , "-H", "70", "-h", "#00CC00"
-                                                   , "-L", "21", "-l", "#00CC00"
+        , commands = [ Run Memory ["-t","MEM <fc=#303030>|</fc> <fc=#b9d7d7><usedratio>%</fc> "] 10
+                     , Run Swap ["-t","<fc=#b9d7d7><usedratio><usedratio>%</fc>"] 10
+                     , Run Date "%H:%M <fc=#303030>|</fc> %d <fc=#303030>|</fc> %a" "date" 10
+                     , Run Alsa "default" "Master" ["-t", "VOL <volume><fc=#b9d7d7>%</fc>"
+                                                   , "-H", "70", "-h", "#b9d7d7"
+                                                   , "-L", "21", "-l", "#b9d7d7"
                                                    ]
-                     , Run DiskU [("/", "ROOT <free>")]
+                     , Run DiskU [("/", "ROOT <fc=#b9d7d7><free></fc>")]
                                  ["-L", "20", "-H", "50", "-m", "1", "-p", "3"]
                                  20
-                     , Run Kbd [("us", "US"), ("ge", "GE"), ("ru", "RU")]
+                     , Run Kbd [("us", "<fc=#b9d7d7>US</fc>"), ("ge", "GE"), ("ru", "RU")]
                      , Run Locks
                      , Run UnsafeStdinReader
                      ]
         , sepChar = "%"
         , alignSep = "}{"
-        , template = "%UnsafeStdinReader% }{%locks%  %kbd%  %memory%  %swap%  %disku%  %alsa:default:Master%  <fc=#00CC00>%date%</fc>  %UGTB%"
+        , template = "%UnsafeStdinReader%<fc=#b9d7d7,#282828>   %locks%   </fc><fc=#303030>|</fc>}{<fc=#303030>|</fc>   %kbd%   <fc=#303030>|</fc>   %memory%<fc=#303030>|</fc> %swap%   <fc=#303030>|</fc>   %disku%   <fc=#303030>|</fc>   %alsa:default:Master%   <fc=#303030>|</fc>   %date%   <fc=#303030>|</fc> "
         }
+        
+        -- <fc=#303030></fc>
+        --  %UGTB%
