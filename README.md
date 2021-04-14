@@ -66,3 +66,12 @@ https://www.reddit.com/r/unixporn/comments/dlxtlg/gnome_dynamic_wallpaper/
 https://i.redd.it/y6ggh8x53yb61.png
 
 10. Try Qtile after Xmonad
+
+
+
+
+11. To Install Xmonad, xinitrc must contain
+# Xmonad Variables
+export XMONAD_CONFIG_DIR=$HOME/.config/xmonad/
+export XMONAD_DATA_DIR=$HOME/.config/xmonad/
+export XMONAD_CACHE_DIR=$HOME/.config/xmonad/
