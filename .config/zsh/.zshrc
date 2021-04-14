@@ -20,6 +20,7 @@ export VISUAL=subl
 export EDITOR=nano
 export BROWSER=google-chrome-stable
 
+# Keychain
 eval $(keychain --eval --quiet ~/.ssh/id_ed25519)
 
 

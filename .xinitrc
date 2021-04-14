@@ -33,8 +33,9 @@ picom -b
 ~/bin/fehbg &
 
 # System Tray
-stalonetray -c ~/.config/stalonetrayrc &
+# stalonetray -c ~/.config/stalonetrayrc &
 
 # Start Desktop
 #exec i3
-exec xmonad
+#exec xmonad
+exec qtile
