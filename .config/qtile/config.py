@@ -1,18 +1,15 @@
 #from typing import List  # noqa: F401
-
 from libqtile import layout, hook
 from libqtile.config import Match
 
-# @TODO es ro ar davaimporto errrors ar madzlevs mainc erroria?
 import os
 import subprocess
 
 from groups import groups
-from keys import keys, mouse
 from screens import screens
+from keys import keys, mouse
 
 homeDir = os.path.expanduser('~')
-
 
 layouts = [
     layout.Columns(border_focus_stack='#d75f5f'),
@@ -34,6 +31,7 @@ widget_defaults = dict(
     font='sans',
     fontsize=12,
     padding=3,
+    foreground = "#E1D1AF",
 )
 extension_defaults = widget_defaults.copy()
 
@@ -63,8 +61,6 @@ auto_fullscreen = True
 focus_on_window_activation = "smart"
 
 wmname = "LG3D"
-
-#home = os.path.expanduser('~/.config/qtile/autostart.sh')
 
 
 @hook.subscribe.startup_once

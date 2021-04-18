@@ -14,7 +14,8 @@ xrandr --output VGA-0 --right-of DVI-I-1
 # Keyboard
 #setxkbmap -option caps:escape
 #setxkbmap -option "grp:alt_shift_toggle"
-setxkbmap -layout "us,ge,ru"
+# TODO ru-s rame calke mapperi
+setxkbmap -layout "us,ge"
 setxkbmap -option "grp:caps_toggle"
 # https://faq.i3wm.org/question/2569/set-mod-key-only-as-left-mod-key.1.html
 # 1. cpslck shd toggle between us,ge and alt+cpslck between us,ru
