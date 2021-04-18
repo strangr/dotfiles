@@ -16,19 +16,14 @@ powerlevel10k
 git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 
-     ______    ________  ______   _______    ______  
-   _/      \_ /        |/      \ /       \  /      \ 
-  / $$$$$$   \$$$$$$$$//$$$$$$  |$$$$$$$  |/$$$$$$  |
- /$$$ ___$$$  \  $$ |  $$ |  $$ |$$ |  $$ |$$ |  $$ |
-/$$/ /     $$  | $$ |  $$ |  $$ |$$ |  $$ |$$ |  $$ |
-$$ |/$$$$$ |$$ | $$ |  $$ |  $$ |$$ |  $$ |$$ |  $$ |
-$$ |$$  $$ |$$ | $$ |  $$ \__$$ |$$ |__$$ |$$ \__$$ |
-$$ |$$  $$  $$/  $$ |  $$    $$/ $$    $$/ $$    $$/ 
-$$  \$$$$$$$$/   $$/    $$$$$$/  $$$$$$$/   $$$$$$/  
- $$   \__/   |                                       
-  $$$    $$$/                                        
-    $$$$$$/                                          
+11. To Install Xmonad, xinitrc must contain
+# Xmonad Variables
+export XMONAD_CONFIG_DIR=$HOME/.config/xmonad/
+export XMONAD_DATA_DIR=$HOME/.config/xmonad/
+export XMONAD_CACHE_DIR=$HOME/.config/xmonad/
 
+
+@TODO
 
 1 . move .android inside config or something
 The emulator searches the avd directory in the order of the values
@@ -65,13 +60,4 @@ https://www.reddit.com/r/unixporn/comments/fvyix5/oc_blurry_discord_is_for_every
 https://www.reddit.com/r/unixporn/comments/dlxtlg/gnome_dynamic_wallpaper/
 https://i.redd.it/y6ggh8x53yb61.png
 
-10. Try Qtile after Xmonad
-
-
-
-
-11. To Install Xmonad, xinitrc must contain
-# Xmonad Variables
-export XMONAD_CONFIG_DIR=$HOME/.config/xmonad/
-export XMONAD_DATA_DIR=$HOME/.config/xmonad/
-export XMONAD_CACHE_DIR=$HOME/.config/xmonad/
+12. move bin into .local/bin and move kbd_layout inside
