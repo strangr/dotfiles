@@ -11,9 +11,32 @@ from keys import keys, mouse
 
 homeDir = os.path.expanduser('~')
 
+#
+#
+#
+#
+# 僧
+#
+#
+#
+#
+#
+#
+#
+#
+#ﮑ
+#ﲣ
+#
+#麗
+#ﳶ
+#僧
+#类
+#響頻恵𤋮舘﵁﩮﩯並况全ﰦ侀ﰧ充冀ﳼﰪ
+
 layouts = [
-    layout.Columns(border_focus_stack='#d75f5f'),
-    layout.Max(),
+    layout.Columns(name="",border_focus_stack='#d75f5f'),
+    layout.MonadTall(name=""),
+    layout.Max(name=""),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -31,8 +54,7 @@ widget_defaults = dict(
     font='sans',
     fontsize=12,
     padding=3,
-    foreground = "#E1D1AF",
-)
+    foreground = "#d8c9aa")
 extension_defaults = widget_defaults.copy()
 
 

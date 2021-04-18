@@ -21,14 +21,11 @@ def go_to_screen(num):
     return f
 
 keys = [
-    
-    #Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
-    #Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    
+
+    # Window Controls
+    Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle Fullscreen"),
     Key([mod, shift], "f", lazy.window.toggle_floating(), desc="Toggle Floating"),
-
-
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displtayed
@@ -37,29 +34,18 @@ keys = [
     Key([mod, shift], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
-
-
-
-
-    # Toggle between different layouts as defined below
+    # Qtile Controls
     Key([mod, shift], "c", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod, control], "r", lazy.restart(), desc="Restart Qtile"),
-    Key([mod, control], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-
-
-
-
-
-
-
+    Key([mod, shift], "r", lazy.restart(), desc="Restart Qtile"),
+    Key([mod, shift], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    #Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-
+    Key([mod], "Tab", lazy.layout.next(), desc="Move focus next"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
@@ -78,23 +64,27 @@ keys = [
 
 
 
-    #Key(['lock'], null, lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
-
-    #EzKey("M-m", lazy.function(go_to_screen(0))),
-    #Key([], "n", lazy.function(go_to_screen(0))),
-    #Key([], "Escape", lazy.function(go_to_screen(0))),
-
-    #Key([mod], “space”, lazy.widget[“keyboardlayout”].next_keyboard(), desc=”Next keyboard layout.”),
 
 
+# xmonad layout keys
+# Key([modkey, "shift"], "h", lazy.layout.swap_left()),
+# Key([modkey, "shift"], "l", lazy.layout.swap_right()),
+# Key([modkey, "shift"], "j", lazy.layout.shuffle_down()),
+# Key([modkey, "shift"], "k", lazy.layout.shuffle_up()),
+# Key([modkey], "i", lazy.layout.grow()),
+# Key([modkey], "m", lazy.layout.shrink()),
+# Key([modkey], "n", lazy.layout.normalize()),
+# Key([modkey], "o", lazy.layout.maximize()),
+# Key([modkey, "shift"], "space", lazy.layout.flip()),
 
 
-    #AKA COMMENT THIS PART LATER
 
+
+
+
+    # Screen Navigation
     Key([mod], "s", lazy.function(go_to_screen(0))),
     Key([mod], "d", lazy.function(go_to_screen(1))),
-
-
 
     # Utils
     Key([mod, shift], "period", lazy.spawn("changeVolume plus"), desc="Increase Sound"),

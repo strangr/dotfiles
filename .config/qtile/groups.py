@@ -1,4 +1,4 @@
-from libqtile.config import Group, Key, ScratchPad, DropDown
+from libqtile.config import Group, Key, Match, ScratchPad, DropDown
 from libqtile.lazy import lazy
 
 from keys import keys, mod
@@ -23,17 +23,31 @@ left_groups = ["1", "2", "3", "4", "grave"]
 right_groups = ["q", "w", "e", "r", "t"]
 all_groups = left_groups + right_groups
 
+group_matches = [
+    None, None, None, None, None, None,
+    [Match(wm_class=[
+        "discord",
+    ]), ],
+    [Match(wm_class=[
+        "slack", "microsoft teams - preview",
+    ]), ],
+    None,None,
+]
+
 groups = []
 for i in range(len(all_groups)):
     groups.append(
         Group(
             name=all_groups[i],
-            #matches=group_matches[i],
+            matches=group_matches[i],
             #exclusive=group_exclusives[i],
             #layout=group_layouts[i].lower(),
             init=True,
             persist=True,
-            label="●",
+            label="",
+            #●雷綠祿
+            #
+            #ﱤﱣ
         ))
 
 groups.append(
