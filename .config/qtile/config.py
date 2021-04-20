@@ -1,89 +1,75 @@
-#from typing import List  # noqa: F401
+from QScreens import QScreens
+from QGroups import QGroups
+
+from keys import keys, mouse
+
+from typing import List  # noqa: F401
 from libqtile import layout, hook
 from libqtile.config import Match
+
+from libqtile.config import Group, Key
+from libqtile.lazy import lazy
+
 
 import os
 import subprocess
 
-from groups import groups
-from screens import screens
-from keys import keys, mouse
+#@TODO try catch
+if __name__ in ["config", "__main__"]:
 
-homeDir = os.path.expanduser('~')
+    homeDir = os.path.expanduser('~')
 
-#
-#
-#
-#
-# 僧
-#
-#
-#
-#
-#
-#
-#
-#
-#ﮑ
-#ﲣ
-#
-#麗
-#ﳶ
-#僧
-#类
-#響頻恵𤋮舘﵁﩮﩯並况全ﰦ侀ﰧ充冀ﳼﰪ
+    #groupsPerPage = 5
+    #TODO make them into dicts with basic configs
+    # ex: name,
+    #     label,
+    #       layout_style=spacer
+    #       layout_match=chat
 
-layouts = [
-    layout.Columns(name="",border_focus_stack='#d75f5f'),
-    layout.MonadTall(name=""),
-    layout.Max(name=""),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadTall(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
-]
-
-widget_defaults = dict(
-    font='sans',
-    fontsize=12,
-    padding=3,
-    foreground = "#d8c9aa")
-extension_defaults = widget_defaults.copy()
+    left_groups = ["1","2","3","4","grave"]
+    right_groups = ["q","w","e","r","t"]
 
 
+    qScreens = QScreens()
+    qGroups = QGroups(left_groups, right_groups)
+    
+    groups = []
+    groups += qGroups.init_left_groups()
+    groups += qGroups.init_right_groups()
 
 
+    screens = qScreens.init_dual_screen_bar()
+
+    keys += qGroups.init_keys2()
 
 
+    widget_defaults = dict(
+        font='sans',
+        fontsize=12,
+        padding=3,
+        foreground = "#d8c9aa")
+    extension_defaults = widget_defaults.copy()
 
-dgroups_key_binder = None
-dgroups_app_rules = []  # type: List
-main = None  # WARNING: this is deprecated and will be removed soon
-follow_mouse_focus = False
-bring_front_click = False
-cursor_warp = False
-floating_layout = layout.Floating(float_rules=[
-    # Run the utility of `xprop` to see the wm class and name of an X client.
-    *layout.Floating.default_float_rules,
-    Match(wm_class='confirmreset'),  # gitk
-    Match(wm_class='makebranch'),  # gitk
-    Match(wm_class='maketag'),  # gitk
-    Match(wm_class='ssh-askpass'),  # ssh-askpass
-    Match(title='branchdialog'),  # gitk
-    Match(title='pinentry'),  # GPG key password entry
-])
-auto_fullscreen = True
-focus_on_window_activation = "smart"
+    dgroups_key_binder = None
+    dgroups_app_rules = []  # type: List
+    main = None  # WARNING: this is deprecated and will be removed soon
+    follow_mouse_focus = False
+    bring_front_click = False
+    cursor_warp = False
+    floating_layout = layout.Floating(float_rules=[
+        # Run the utility of `xprop` to see the wm class and name of an X client.
+        *layout.Floating.default_float_rules,
+        Match(wm_class='confirmreset'),  # gitk
+        Match(wm_class='makebranch'),  # gitk
+        Match(wm_class='maketag'),  # gitk
+        Match(wm_class='ssh-askpass'),  # ssh-askpass
+        Match(title='branchdialog'),  # gitk
+        Match(title='pinentry'),  # GPG key password entry
+    ])
+    auto_fullscreen = True
+    focus_on_window_activation = "smart"
 
-wmname = "LG3D"
-
+    wmname = "LG3D"
 
 @hook.subscribe.startup_once
 def autostart():

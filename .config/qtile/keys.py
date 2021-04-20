@@ -1,5 +1,9 @@
+from Helpers import Helpers
+
 from libqtile.config import Click, Drag, Key
 from libqtile.lazy import lazy
+
+#from widgets import update_kbd_layout
 
 import os
 
@@ -10,10 +14,10 @@ shift = "shift"
 control = "control"
 caps = "mod3"
 
-
 homeDir = os.path.expanduser('~')
 
 #@lazy.function
+# TODO move inside helpers
 def go_to_screen(num):
     def f(qtile):
         qtile.cmd_to_screen(num)
@@ -36,8 +40,8 @@ keys = [
 
     # Qtile Controls
     Key([mod, shift], "c", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod, shift], "r", lazy.restart(), desc="Restart Qtile"),
-    Key([mod, shift], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    Key([mod, control], "r", lazy.restart(), desc="Restart Qtile"),
+    Key([mod, control], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     #Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 
     # Switch between windows
@@ -62,25 +66,8 @@ keys = [
     Key([mod, control], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
 
-
-
-
-
-# xmonad layout keys
-# Key([modkey, "shift"], "h", lazy.layout.swap_left()),
-# Key([modkey, "shift"], "l", lazy.layout.swap_right()),
-# Key([modkey, "shift"], "j", lazy.layout.shuffle_down()),
-# Key([modkey, "shift"], "k", lazy.layout.shuffle_up()),
-# Key([modkey], "i", lazy.layout.grow()),
-# Key([modkey], "m", lazy.layout.shrink()),
-# Key([modkey], "n", lazy.layout.normalize()),
-# Key([modkey], "o", lazy.layout.maximize()),
-# Key([modkey, "shift"], "space", lazy.layout.flip()),
-
-
-
-
-
+    #
+    Key([], "ISO_Next_Group", lazy.function(Helpers.update_kbd_layout())),
 
     # Screen Navigation
     Key([mod], "s", lazy.function(go_to_screen(0))),
@@ -95,7 +82,7 @@ keys = [
 
     # ROFI
     Key([mod], "p", lazy.spawn("rofi -show run"), desc="Application Launcher"),
-    # @TODO rofimoji
+    Key([mod], "g", lazy.spawn("rofimoji --prompt=Type"), desc="Insert Emoji"),
 
     # Screenshots
     Key([], "Print", lazy.spawn("scrot " + homeDir + "/Pictures/screens/'%Y-%m-%d-%H-%M-%s'.png"), desc="Screenshot"),
