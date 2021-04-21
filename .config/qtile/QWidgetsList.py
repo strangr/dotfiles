@@ -1,5 +1,4 @@
 from QWidgets import QWidgets
-from libqtile import widget
 
 class QWidgetsList:
 
@@ -12,7 +11,6 @@ class QWidgetsList:
             self.widgets.current_screen(),
             self.widgets.spacer(),
             #widget.Chord
-
             self.widgets.kbd_layout(),
             self.widgets.separator(),
             self.widgets.memory(),
@@ -22,10 +20,8 @@ class QWidgetsList:
             self.widgets.volume(),
             self.widgets.separator(),
             self.widgets.datetime_poll(),
-            #self.widgets.datetimePoll(),
+            self.widgets.datetimePoll(),
             self.widgets.separator(),
-
-            #widget.Sep(linewidth=0, foreground='#282425'),
             self.widgets.system_tray(),
         ]
 
@@ -35,7 +31,7 @@ class QWidgetsList:
         widgets_list = [
             self.widgets.group_box(groups),
             self.widgets.current_layout_did(),
-            widget.WindowName(),
+            self.widgets.window_name(),
         ]
 
         return widgets_list

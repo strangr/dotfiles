@@ -1,14 +1,16 @@
 from QWidgetsList import QWidgetsList
+from QTheme import Colors
 
-from libqtile import widget
 from libqtile.bar import Bar
 from libqtile.config import Screen
 
 class QBars:
 
     widgets_list = QWidgetsList()
+    colors = Colors()
+
     bar_config = dict(
-        background = '282425',
+        background = colors.black[0],
         margin = [0,0,0,0],
         opacity = 1,
         size=26

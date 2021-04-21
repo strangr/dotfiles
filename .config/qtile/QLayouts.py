@@ -1,7 +1,11 @@
+from QTheme import Colors
+
 from libqtile.layout.max import Max
 from libqtile.layout.columns import Columns
 
 class QLayouts(object):
+
+    colors = Colors()
 
     def max(self):
         return Max(name="")
@@ -9,10 +13,10 @@ class QLayouts(object):
     def two_stack_new(self):
         return Columns(
             name="舘",
-            border_focus='#881111', #‘Border colour for the focused window.’
-            border_normal='#220000', #‘Border colour for un-focused windows.’
-            border_focus_stack='#d75f5f', #‘Border colour for the focused window in stacked columns.’
-            border_normal_stack='#220000', #‘Border colour for un-focused windows in stacked columns.’
+            border_focus=self.colors.green[0], #‘Border colour for the focused window.’
+            border_normal=self.colors.grey[0], #‘Border colour for un-focused windows.’
+            border_focus_stack=self.colors.green[0], #‘Border colour for the focused window in stacked columns.’
+            border_normal_stack=self.colors.grey[0], #‘Border colour for un-focused windows in stacked columns.’
             border_width=1,
             #insert_position=0,
             #split=True, #‘New columns presentation mode.’
