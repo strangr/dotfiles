@@ -99,5 +99,6 @@ def main(qtile):
 
     @hook.subscribe.client_managed
     def func(window):
-    
-    #qtile.cmd_to_screen(1)
+        update_group_labels()
+
+#     qtile.cmd_to_screen(1)
