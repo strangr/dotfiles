@@ -31,6 +31,7 @@ if __name__ in ["config", "__main__"]:
     #     label,
     #       layout_style=spacer
     #       layout_match=chat
+
     left_groups = ["1","2","3","4","grave"]
     right_groups = ["q","w","e","r","t"]
 

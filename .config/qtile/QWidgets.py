@@ -70,17 +70,13 @@ class QWidgets:
     def volume(self):
         return widget.Volume(fmt=Helpers.format_text("VOL") + " {}")
     
-    def datetime_poll(self):
-        return widget.TextBox(text=Helpers.get_time())
-
     def spacer(self):
         return widget.Spacer()
 
-    def datetimePoll(self):
+    def datetime_poll(self):
         return widget.GenPollText(
-            func=Helpers.get_time(),
-            update_interval=20,
-            foreground=self.colors.green[0])
+            func=lambda: Helpers.get_time(),
+            update_interval=60)
 
     def system_tray(self):
         return widget.Systray()

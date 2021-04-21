@@ -20,7 +20,6 @@ class QWidgetsList:
             self.widgets.volume(),
             self.widgets.separator(),
             self.widgets.datetime_poll(),
-            self.widgets.datetimePoll(),
             self.widgets.separator(),
             self.widgets.system_tray(),
         ]
