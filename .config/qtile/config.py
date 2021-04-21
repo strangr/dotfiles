@@ -13,9 +13,6 @@ from libqtile import hook
 import os
 import subprocess
 
-homeDir = os.path.expanduser('~')
-
-
 #●雷綠祿
 #僧
 #类﩯舘麗
@@ -26,6 +23,9 @@ homeDir = os.path.expanduser('~')
 # @TODO try catch
 if __name__ in ["config", "__main__"]:
 
+    mod = "mod4"
+    terminal = "urxvt"
+    
     #TODO make them into dicts with basic configs
     # ex: name,
     #     label,
@@ -50,13 +50,13 @@ if __name__ in ["config", "__main__"]:
     
     groups += qGroups.init_left_groups()
     groups += qGroups.init_right_groups()
-    groups += qScratchPad.init_scratchpads()
+    groups += qScratchPad.init_scratchpads(terminal)
 
-    keys += qKeys.init_keys()
-    keys += qGroups.init_keys()
-    keys += qScratchPad.init_keys()
+    keys += qKeys.init_keys(mod, terminal)
+    keys += qGroups.init_keys(mod)
+    keys += qScratchPad.init_keys(mod)
 
-    mouse += qMouse.init_mouse()
+    mouse += qMouse.init_mouse(mod)
 
     widget_defaults = QDefaults.widget_defaults
     extension_defaults = QDefaults.extension_defaults
@@ -75,4 +75,5 @@ if __name__ in ["config", "__main__"]:
 
 @hook.subscribe.startup_once
 def autostart():
-    subprocess.call([homeDir + '/.config/qtile/autostart.sh'])
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/autostart.sh'])

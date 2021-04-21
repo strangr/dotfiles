@@ -3,7 +3,7 @@ from QTheme import Colors
 from libqtile.layout.max import Max
 from libqtile.layout.columns import Columns
 
-class QLayouts(object):
+class QLayouts:
 
     colors = Colors()
 

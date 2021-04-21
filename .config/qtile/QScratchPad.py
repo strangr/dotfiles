@@ -19,16 +19,16 @@ class QScratchPad:
         y=0.1
     )
 
-    def init_scratchpads(self):
+    def init_scratchpads(self, terminal):
         return [
             ScratchPad("scratchpad", [
                 DropDown("terminal-scratch",
-                    "urxvt -name term-scratch",
+                    terminal + " -name term-scratch",
                     **self.rect_small,
                     on_focus_lost_hide=False),
 
                 DropDown("ranger-scratch",
-                    "urxvt -name ranger-scratch -e ranger",
+                    terminal + " -name ranger-scratch -e ranger",
                     **self.rect_large,
                     on_focus_lost_hide=False),
 
@@ -39,7 +39,7 @@ class QScratchPad:
             ])
         ]
 
-    def init_keys(self):
+    def init_keys(self, mod):
         return [
             Key([], 'F8', lazy.group['scratchpad'].dropdown_toggle('ranger-scratch')),
             Key([], 'F9', lazy.group['scratchpad'].dropdown_toggle('pavucontrol-scratch')),

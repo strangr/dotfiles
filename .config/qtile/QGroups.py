@@ -5,8 +5,6 @@ from libqtile.lazy import lazy
 
 class QGroups:
 
-    mod = "mod4"
-
     left_groups = []
     right_groups = []
 
@@ -71,25 +69,25 @@ class QGroups:
         return result
 
     #TODO if already on that group in that screen, dont switch group or else it moves to prev group
-    def init_keys(self):
+    def init_keys(self, mod):
         keys = []
 
         for i in self.left_groups:
             keys.extend([
-                Key([self.mod], i, lazy.to_screen(0), lazy.group[str(i)].toscreen(), desc="Switch to group {} on screen 1".format(str(i))),
-                Key([self.mod, 'shift'], i, lazy.window.togroup(i), lazy.to_screen(0), lazy.group[str(i)].toscreen(), desc="Shift to group {} on screen 1".format(str(i))),
+                Key([mod], i, lazy.to_screen(0), lazy.group[str(i)].toscreen(), desc="Switch to group {} on screen 1".format(str(i))),
+                Key([mod, 'shift'], i, lazy.window.togroup(i), lazy.to_screen(0), lazy.group[str(i)].toscreen(), desc="Shift to group {} on screen 1".format(str(i))),
             ])
 
         for i in self.right_groups:
             keys.extend([
-                Key([self.mod], i, lazy.to_screen(1), lazy.group[str(i)].toscreen(), desc="Switch to group {} on screen 2".format(str(i))),
-                Key([self.mod, 'shift'], i, lazy.window.togroup(i), lazy.to_screen(1), lazy.group[str(i)].toscreen(), desc="Shift to group {} on screen 2".format(str(i))),
+                Key([mod], i, lazy.to_screen(1), lazy.group[str(i)].toscreen(), desc="Switch to group {} on screen 2".format(str(i))),
+                Key([mod, 'shift'], i, lazy.window.togroup(i), lazy.to_screen(1), lazy.group[str(i)].toscreen(), desc="Shift to group {} on screen 2".format(str(i))),
             ])
 
         # Screen Navigation
         keys.extend([
-            Key([self.mod], "s", lazy.function(self.go_to_screen(0))),
-            Key([self.mod], "d", lazy.function(self.go_to_screen(1))),
+            Key([mod], "s", lazy.function(self.go_to_screen(0))),
+            Key([mod], "d", lazy.function(self.go_to_screen(1))),
         ])
         
 

@@ -5,8 +5,6 @@ from datetime import datetime
 
 import os
 
-homeDir = os.path.expanduser('~')
-
 class Helpers:
 
     @staticmethod
@@ -18,8 +16,9 @@ class Helpers:
 
     @staticmethod
     def get_kbd_layout():
-        out = check_output(['sh', homeDir + '/.config/qtile/blocks/key_layout.sh']).decode("utf-8").replace('\n', '')
-
+        home = os.path.expanduser('~')
+        out = check_output(['sh', 'getKeyLayout']).decode("utf-8").replace('\n', '')
+        #out = check_output(['sh', 'getKeyLayout']).decode("utf-8").replace('\n', '')
         if out != "US":
           out = Helpers.format_text(out)
 

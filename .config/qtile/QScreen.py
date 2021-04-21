@@ -28,7 +28,7 @@ class QBars:
             **self.bar_config
         )
 
-class QScreen(object):
+class QScreen:
 
     left_groups = []
     right_groups = []
