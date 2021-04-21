@@ -5,6 +5,9 @@ from QScratchPad import QScratchPad
 from QTheme import QDefaults
 from QRules import QRules
 
+#from libqtile import qtile
+
+
 from typing import List  # noqa: F401
 
 from libqtile.layout import Floating
@@ -13,7 +16,7 @@ from libqtile import hook
 import os
 import subprocess
 
-#●雷綠祿
+#●雷綠祿
 #僧
 #类﩯舘麗
 #ﰧﳶ
@@ -78,3 +81,23 @@ if __name__ in ["config", "__main__"]:
 def autostart():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/autostart.sh'])
+
+def main(qtile):
+    
+    def update_group_labels():
+        for group in qtile.groups:
+            number_of_windows = len(group.windows)
+            current_groups = [screen.group.name for screen in qtile.screens if screen.group]
+            if number_of_windows > 0 or group.name in current_groups:
+                group.cmd_set_label("")
+            else:
+                group.cmd_set_label("")
+
+    @hook.subscribe.setgroup
+    def group_change():
+        update_group_labels()
+
+    @hook.subscribe.client_managed
+    def func(window):
+    
+    #qtile.cmd_to_screen(1)

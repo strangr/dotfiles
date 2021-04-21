@@ -48,12 +48,12 @@ class QWidgets:
     def current_screen(self):
         return widget.CurrentScreen(
             padding=0,
-            #font='hack',
             fontsize='22',
             active_color=self.colors.yellow[0],
             active_text='',
             inactive_color=self.colors.grey[0],
-            inactive_text='')
+            inactive_text=''
+        )
 
     def window_name(self):
         return widget.WindowName()
@@ -76,7 +76,8 @@ class QWidgets:
     def datetime_poll(self):
         return widget.GenPollText(
             func=lambda: Helpers.get_time(),
-            update_interval=60)
+            update_interval=60
+        )
 
     def system_tray(self):
         return widget.Systray()
