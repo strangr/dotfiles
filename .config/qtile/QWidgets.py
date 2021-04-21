@@ -46,12 +46,8 @@ class QWidgets:
     def separator(self):
         return widget.Sep(**sep_defaults)
     
-    # TODO merge
-    def left_group_box(self, left_groups):
-        return widget.GroupBox(visible_groups=left_groups, **groupbox_defaults)
-
-    def right_group_box(self, right_groups):
-        return widget.GroupBox(visible_groups=right_groups, **groupbox_defaults)
+    def group_box(self, groups):
+        return widget.GroupBox(visible_groups=groups, **groupbox_defaults)
 
     def current_layout_did(self):
         return widget.CurrentLayout(fontsize='22')

@@ -1,75 +1,77 @@
-from QScreens import QScreens
+from QBindings import QKeys, QMouse
+from QScreen import QScreen
 from QGroups import QGroups
-
-from keys import keys, mouse
+from QScratchPad import QScratchPad
+from QTheme import QDefaults
+from QRules import QRules
 
 from typing import List  # noqa: F401
-from libqtile import layout, hook
-from libqtile.config import Match
 
-from libqtile.config import Group, Key
-from libqtile.lazy import lazy
-
+from libqtile.layout import Floating
+from libqtile import hook
 
 import os
 import subprocess
 
-#@TODO try catch
+homeDir = os.path.expanduser('~')
+
+
+#●雷綠祿
+#僧
+#类﩯舘麗
+#ﰧﳶ
+#﵁恵頻侀𤋮全充
+
+# @TODO groups w,e will have gaps
+# @TODO try catch
 if __name__ in ["config", "__main__"]:
 
-    homeDir = os.path.expanduser('~')
-
-    #groupsPerPage = 5
     #TODO make them into dicts with basic configs
     # ex: name,
     #     label,
     #       layout_style=spacer
     #       layout_match=chat
-
     left_groups = ["1","2","3","4","grave"]
     right_groups = ["q","w","e","r","t"]
 
-
-    qScreens = QScreens()
-    qGroups = QGroups(left_groups, right_groups)
-    
+    keys = []
+    screens = []
     groups = []
+    mouse = []
+
+    qScreen = QScreen(left_groups, right_groups)
+    qGroups = QGroups(left_groups, right_groups)
+    qScratchPad = QScratchPad()
+    qKeys = QKeys()
+    qMouse = QMouse()
+    qRules = QRules()
+
+    screens += qScreen.init_dual_screen_bar()
+    
     groups += qGroups.init_left_groups()
     groups += qGroups.init_right_groups()
+    groups += qScratchPad.init_scratchpads()
 
+    keys += qKeys.init_keys()
+    keys += qGroups.init_keys()
+    keys += qScratchPad.init_keys()
 
-    screens = qScreens.init_dual_screen_bar()
+    mouse += qMouse.init_mouse()
 
-    keys += qGroups.init_keys2()
+    widget_defaults = QDefaults.widget_defaults
+    extension_defaults = QDefaults.extension_defaults
+    floating_layout = Floating(
+        float_rules=qRules.init_floating_rules(),
+        **QDefaults.floating_layout
+    )
 
-
-    widget_defaults = dict(
-        font='sans',
-        fontsize=12,
-        padding=3,
-        foreground = "#d8c9aa")
-    extension_defaults = widget_defaults.copy()
-
-    dgroups_key_binder = None
-    dgroups_app_rules = []  # type: List
-    main = None  # WARNING: this is deprecated and will be removed soon
-    follow_mouse_focus = False
-    bring_front_click = False
-    cursor_warp = False
-    floating_layout = layout.Floating(float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
-        *layout.Floating.default_float_rules,
-        Match(wm_class='confirmreset'),  # gitk
-        Match(wm_class='makebranch'),  # gitk
-        Match(wm_class='maketag'),  # gitk
-        Match(wm_class='ssh-askpass'),  # ssh-askpass
-        Match(title='branchdialog'),  # gitk
-        Match(title='pinentry'),  # GPG key password entry
-    ])
-    auto_fullscreen = True
-    focus_on_window_activation = "smart"
-
-    wmname = "LG3D"
+    auto_fullscreen     = True
+    cursor_warp         = False
+    follow_mouse_focus  = False
+    reconfigure_screens = False
+    auto_minimize       = False
+    bring_front_click   = "floating_only"
+    wmname              = "LG3D"
 
 @hook.subscribe.startup_once
 def autostart():
