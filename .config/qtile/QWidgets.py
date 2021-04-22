@@ -42,7 +42,7 @@ class QWidgets:
             inactive=self.colors.grey[0] #empty group
         )
 
-    def current_layout_did(self):
+    def current_layout(self):
         return widget.CurrentLayout(fontsize='22')
 
     def current_screen(self):

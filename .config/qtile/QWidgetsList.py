@@ -7,7 +7,7 @@ class QWidgetsList:
     def left_widgets_list(self, groups):
         widgets_list = [
             self.widgets.group_box(groups),
-            self.widgets.current_layout_did(),
+            self.widgets.current_layout(),
             self.widgets.current_screen(),
             self.widgets.spacer(),
             #widget.Chord
@@ -29,7 +29,7 @@ class QWidgetsList:
     def right_widgets_list(self, groups):
         widgets_list = [
             self.widgets.group_box(groups),
-            self.widgets.current_layout_did(),
+            self.widgets.current_layout(),
             self.widgets.window_name(),
         ]
 

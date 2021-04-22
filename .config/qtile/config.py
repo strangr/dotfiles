@@ -5,9 +5,6 @@ from QScratchPad import QScratchPad
 from QTheme import QDefaults
 from QRules import QRules
 
-#from libqtile import qtile
-
-
 from typing import List  # noqa: F401
 
 from libqtile.layout import Floating
@@ -16,7 +13,6 @@ from libqtile import hook
 import os
 import subprocess
 
-#●雷綠祿
 #僧
 #类﩯舘麗
 #ﰧﳶ
@@ -83,6 +79,7 @@ def autostart():
     subprocess.call([home + '/.config/qtile/autostart.sh'])
 
 def main(qtile):
+    #●雷綠祿
     
     def update_group_labels():
         for group in qtile.groups:
@@ -101,4 +98,4 @@ def main(qtile):
     def func(window):
         update_group_labels()
 
-#     qtile.cmd_to_screen(1)
+    # qtile.cmd_to_screen(1)

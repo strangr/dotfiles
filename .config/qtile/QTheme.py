@@ -14,11 +14,12 @@ class Fonts:
 
 class QDefaults:
 
+    # @TODO use this as defaults for layouts
     layout_theme = {
-        "margin":           2,
-        "border_width":     2,
+        "margin":           0,
+        "border_width":     1,
         "border_focus":     Colors.green[0],
-        "border_normal":    Colors.black[0],
+        "border_normal":    Colors.grey[0],
     }
 
     floating_layout = dict(

@@ -18,7 +18,6 @@ class Helpers:
     def get_kbd_layout():
         home = os.path.expanduser('~')
         out = check_output(['sh', 'getKeyLayout']).decode("utf-8").replace('\n', '')
-        #out = check_output(['sh', 'getKeyLayout']).decode("utf-8").replace('\n', '')
         if out != "US":
           out = Helpers.format_text(out)
 

@@ -8,17 +8,6 @@ class QGroups:
     left_groups = []
     right_groups = []
 
-    group_matches = [
-        None, None, None, None, None, None,
-        [Match(wm_class=[
-            "discord",
-        ]), ],
-        [Match(wm_class=[
-            "slack", "microsoft teams - preview",
-        ]), ],
-        None,None,
-    ]
-
     right_group_matches = [
         None,
         [Match(wm_class=[
@@ -47,7 +36,7 @@ class QGroups:
                     layouts=self.layouts.get_defaults(),
                     init=True,
                     persist=True,
-                    label=""
+                    #label=""
                 ))
 
         return result
@@ -68,40 +57,58 @@ class QGroups:
 
         return result
 
-    #TODO if already on that group in that screen, dont switch group or else it moves to prev group
     def init_keys(self, mod):
+        #TODO divide key inits into two
         keys = []
 
         for i in self.left_groups:
             keys.extend([
-                Key([mod], i, lazy.to_screen(0), lazy.group[str(i)].toscreen(), desc="Switch to group {} on screen 1".format(str(i))),
-                Key([mod, 'shift'], i, lazy.window.togroup(i), lazy.to_screen(0), lazy.group[str(i)].toscreen(), desc="Shift to group {} on screen 1".format(str(i))),
+                Key([mod], i, self.go_to_group_on_screen(i, 0), desc="Switch to Group {} on Monitor 1".format(str(i))),
+                Key([mod, 'shift'], i, self.shift_to_group(i,0), desc="Shift to Group {} on Monitor 1".format(str(i))),
             ])
 
         for i in self.right_groups:
             keys.extend([
-                Key([mod], i, lazy.to_screen(1), lazy.group[str(i)].toscreen(), desc="Switch to group {} on screen 2".format(str(i))),
-                Key([mod, 'shift'], i, lazy.window.togroup(i), lazy.to_screen(1), lazy.group[str(i)].toscreen(), desc="Shift to group {} on screen 2".format(str(i))),
+                Key([mod], i, self.go_to_group_on_screen(i, 1), desc="Switch to Group {} on Monitor 2".format(str(i))),
+                Key([mod, 'shift'], i, self.shift_to_group(i,1), desc="Shift to Group {} on Monitor 2".format(str(i))),
             ])
 
         # Screen Navigation
         keys.extend([
-            Key([mod], "s", lazy.function(self.go_to_screen(0))),
-            Key([mod], "d", lazy.function(self.go_to_screen(1))),
+            Key([mod], "s", self.go_to_screen(0), desc="Shift to Monitor 1"),
+            Key([mod], "d", self.go_to_screen(1), desc="Shift to Monitor 2"),
         ])
         
 
         return keys
 
-    #@lazy.function
-    # TODO move inside helpers
-    def go_to_screen(self, num):
+    def go_to_group(self, qtile, group, screen):
+        # if current group not visible - switch
+        current_groups = [screen.group.name for screen in qtile.screens if screen.group]
+        if group not in current_groups:
+            qtile.groups_map.get(group).cmd_toscreen()
+
+    def go_to_screen(self, screen):
+        @lazy.function
         def f(qtile):
-            qtile.cmd_to_screen(num)
+            qtile.cmd_to_screen(screen)
 
         return f
 
-# keys.extend([
-#     Key([], 'F6', lazy.group['2'].set_label('D')),
-# ])
+    def go_to_group_on_screen(self, group, screen):
+        @lazy.function
+        def f(qtile):
+            qtile.cmd_to_screen(screen)
+            self.go_to_group(qtile, group, screen)
 
+        return f
+
+    def shift_to_group(self, group, screen):
+        @lazy.function
+        def f(qtile):
+            # bug: if two windows on target group, sometimes both get displaced (displace only window that we want)
+            qtile.current_window.togroup(group)
+            qtile.cmd_to_screen(screen)
+            self.go_to_group(qtile, group, screen)
+
+        return f
