@@ -79,6 +79,12 @@ class QWidgets:
             update_interval=60
         )
 
+    def vpn_status(self):
+        return widget.GenPollText(
+            func=lambda: Helpers.get_vpn_status(),
+            update_interval=5
+        )
+
     def system_tray(self):
         return widget.Systray()
 

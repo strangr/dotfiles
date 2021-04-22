@@ -79,8 +79,8 @@ def autostart():
     subprocess.call([home + '/.config/qtile/autostart.sh'])
 
 def main(qtile):
-    #●雷綠祿
     
+    #●雷綠祿
     def update_group_labels():
         for group in qtile.groups:
             number_of_windows = len(group.windows)
@@ -97,5 +97,3 @@ def main(qtile):
     @hook.subscribe.client_managed
     def func(window):
         update_group_labels()
-
-    # qtile.cmd_to_screen(1)

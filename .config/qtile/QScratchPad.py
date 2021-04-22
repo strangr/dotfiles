@@ -25,23 +25,26 @@ class QScratchPad:
                 DropDown("terminal-scratch",
                     terminal + " -name term-scratch",
                     **self.rect_small,
-                    on_focus_lost_hide=False),
+                    on_focus_lost_hide=False
+                ),
 
                 DropDown("ranger-scratch",
                     terminal + " -name ranger-scratch -e ranger",
                     **self.rect_large,
-                    on_focus_lost_hide=False),
+                    on_focus_lost_hide=False
+                ),
 
                 DropDown("pavucontrol-scratch",
                     "pavucontrol",
                     **self.rect_small,
-                    on_focus_lost_hide=True),
+                    on_focus_lost_hide=True
+                )
             ])
         ]
 
     def init_keys(self, mod):
         return [
-            Key([], 'F8', lazy.group['scratchpad'].dropdown_toggle('ranger-scratch')),
-            Key([], 'F9', lazy.group['scratchpad'].dropdown_toggle('pavucontrol-scratch')),
-            Key([], 'F10', lazy.group['scratchpad'].dropdown_toggle('terminal-scratch')),
+            Key([], 'F8', lazy.group['scratchpad'].dropdown_toggle('ranger-scratch'), desc="Toggle Ranger"),
+            Key([], 'F9', lazy.group['scratchpad'].dropdown_toggle('pavucontrol-scratch'), desc="Toggle PavuControl"),
+            Key([], 'F10', lazy.group['scratchpad'].dropdown_toggle('terminal-scratch'), desc="Toggle Terminal")
         ]

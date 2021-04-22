@@ -52,8 +52,8 @@ class QKeys:
             Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
             Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
 
-            #
-            Key([], "ISO_Next_Group", lazy.function(Helpers.update_kbd_layout())),
+            # System
+            Key([], "ISO_Next_Group", lazy.function(Helpers.update_kbd_layout()), desc="Switch Language Layout"),
 
             # Utils
             Key([mod, "shift"], "period", lazy.spawn("changeVolume plus"), desc="Increase Sound"),

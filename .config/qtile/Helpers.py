@@ -33,6 +33,19 @@ class Helpers:
         return out3
 
     @staticmethod
+    def get_vpn_status():
+        home = os.path.expanduser('~')
+        out = check_output(['sh', 'checkNetworkLink', 'tun0']).decode("utf-8").replace('\n', '')
+        out2 = Helpers.format_text("VPN")
+
+        if out == 'up':
+            out = out2 + " UP"
+        else:
+            out = out2 + " DOWN"
+
+        return out
+
+    @staticmethod
     def format_text(text):
         out = "<span color='"+ Colors.grey[0] +"'>"+ text +"</span>"
 

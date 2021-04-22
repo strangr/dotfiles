@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# checks if link is up
+
+LINKNAME="$1"
+
+MOREF=`ip link | grep $LINKNAME`
+
+if ! [[ $MOREF == "" ]]
+then
+	echo 'up'
+else
+	echo 'down'
+fi

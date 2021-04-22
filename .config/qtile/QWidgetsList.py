@@ -13,6 +13,8 @@ class QWidgetsList:
             #widget.Chord
             self.widgets.kbd_layout(),
             self.widgets.separator(),
+            self.widgets.vpn_status(),
+            self.widgets.separator(),
             self.widgets.memory(),
             self.widgets.separator(),
             self.widgets.disk(),
