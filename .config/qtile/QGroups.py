@@ -1,84 +1,36 @@
 from QLayouts import QLayouts
+from QRules import QRules
 
 from libqtile.config import Group, Key, Match
 from libqtile.lazy import lazy
 
 class QGroups:
 
-    left_groups = []
-    right_groups = []
-
-    right_group_matches = [
-        None,
-        [Match(wm_class=[
-            "discord",
-        ]), ],
-        [Match(wm_class=[
-            "slack", "microsoft teams - preview",
-        ]), ],
-        None,None,
-    ]
-
     layouts = QLayouts()
-    
-    def __init__(self, l, r):
-        self.left_groups = l
-        self.right_groups = r
+    rules = QRules()
 
-    def init_left_groups(self):
+    def init_group(self, groups):
         result = []
-        for i in range(len(self.left_groups)):
+        for i in range(len(groups)):
             result.append(
                 Group(
-                    name=self.left_groups[i],
-                    #matches=group_matches[i],
-                    #exclusive=group_exclusives[i],
-                    layouts=self.layouts.get_defaults(),
+                    name=groups[i].name,
+                    matches=self.rules.get_match(groups[i].match_type),
+                    layouts=self.layouts.get_layout(groups[i].layout_type),
                     init=True,
-                    persist=True,
-                    #label=""
+                    persist=True
                 ))
 
         return result
 
-    def init_right_groups(self):
-        result = []
-        for i in range(len(self.right_groups)):
-            result.append(
-                Group(
-                    name=self.right_groups[i],
-                    #matches=self.right_group_matches[i],
-                    #exclusive=group_exclusives[i],
-                    layouts=self.layouts.get_defaults(),
-                    init=True,
-                    persist=True,
-                    label=""
-                ))
-
-        return result
-
-    def init_keys(self, mod):
-        #TODO divide key inits into two
+    def init_keys(self, mod, groups, screen):
         keys = []
 
-        for i in self.left_groups:
+        for i in groups:
             keys.extend([
-                Key([mod], i, self.go_to_group_on_screen(i, 0), desc="Switch to Group {} on Monitor 1".format(str(i))),
-                Key([mod, 'shift'], i, self.shift_to_group(i,0), desc="Shift to Group {} on Monitor 1".format(str(i))),
+                Key([mod], i.name, self.go_to_group_on_screen(i.name, screen), desc="Switch to Group {} on Monitor {}".format(str(i.name), screen)),
+                Key([mod, 'shift'], i.name, self.shift_to_group(i.name, screen), desc="Shift to Group {} on Monitor {}".format(str(i.name), screen)),
             ])
-
-        for i in self.right_groups:
-            keys.extend([
-                Key([mod], i, self.go_to_group_on_screen(i, 1), desc="Switch to Group {} on Monitor 2".format(str(i))),
-                Key([mod, 'shift'], i, self.shift_to_group(i,1), desc="Shift to Group {} on Monitor 2".format(str(i))),
-            ])
-
-        # Screen Navigation
-        keys.extend([
-            Key([mod], "s", self.go_to_screen(0), desc="Shift to Monitor 1"),
-            Key([mod], "d", self.go_to_screen(1), desc="Shift to Monitor 2"),
-        ])
-        
 
         return keys
 
@@ -87,13 +39,6 @@ class QGroups:
         current_groups = [screen.group.name for screen in qtile.screens if screen.group]
         if group not in current_groups:
             qtile.groups_map.get(group).cmd_toscreen()
-
-    def go_to_screen(self, screen):
-        @lazy.function
-        def f(qtile):
-            qtile.cmd_to_screen(screen)
-
-        return f
 
     def go_to_group_on_screen(self, group, screen):
         @lazy.function

@@ -1,6 +1,7 @@
 from QBindings import QKeys, QMouse
 from QScreen import QScreen
 from QGroups import QGroups
+from QGroup import QGroup, LayoutType, MatchType
 from QScratchPad import QScratchPad
 from QTheme import QDefaults
 from QRules import QRules
@@ -25,36 +26,45 @@ if __name__ in ["config", "__main__"]:
     mod = "mod4"
     terminal = "urxvt"
     
-    #TODO make them into dicts with basic configs
-    # ex: name,
-    #     label,
-    #       layout_style=spacer
-    #       layout_match=chat
+    left_groups = [
+        QGroup("1"),
+        QGroup("2", layout=LayoutType.FULLSCREEN),
+        QGroup("3"),
+        QGroup("4"),
+        QGroup("grave")
+    ]
 
-    left_groups = ["1","2","3","4","grave"]
-    right_groups = ["q","w","e","r","t"]
+    right_groups = [
+        QGroup("q"),
+        QGroup("w", match=MatchType.CHAT),
+        QGroup("e", match=MatchType.WORKCHAT),
+        QGroup("r"),
+        QGroup("Tab")
+    ]
 
     keys = []
     screens = []
     groups = []
     mouse = []
 
-    qScreen = QScreen(left_groups, right_groups)
-    qGroups = QGroups(left_groups, right_groups)
+    qScreen = QScreen()
+    qGroups = QGroups()
     qScratchPad = QScratchPad()
     qKeys = QKeys()
     qMouse = QMouse()
     qRules = QRules()
 
-    screens += qScreen.init_dual_screen_bar()
-    
-    groups += qGroups.init_left_groups()
-    groups += qGroups.init_right_groups()
+    screens += qScreen.init_dual_screen_bar(left_groups, right_groups)
+
+    groups += qGroups.init_group(left_groups)
+    groups += qGroups.init_group(right_groups)
     groups += qScratchPad.init_scratchpads(terminal)
 
     keys += qKeys.init_keys(mod, terminal)
-    keys += qGroups.init_keys(mod)
+    keys += qGroups.init_keys(mod, left_groups, 0)
+    keys += qGroups.init_keys(mod, right_groups, 1)
     keys += qScratchPad.init_keys(mod)
+    keys += qScreen.init_keys(mod)
 
     mouse += qMouse.init_mouse(mod)
 
@@ -73,13 +83,15 @@ if __name__ in ["config", "__main__"]:
     bring_front_click   = "floating_only"
     wmname              = "LG3D"
 
-@hook.subscribe.startup_once
-def autostart():
-    home = os.path.expanduser('~')
-    subprocess.call([home + '/.config/qtile/autostart.sh'])
-
 def main(qtile):
-    
+
+    # dont like bash for init
+    # make startuponce my own method
+    @hook.subscribe.startup_once
+    def autostart():
+        home = os.path.expanduser('~')
+        subprocess.call([home + '/.config/qtile/autostart.sh'])
+
     #●雷綠祿
     def update_group_labels():
         for group in qtile.groups:
@@ -94,6 +106,10 @@ def main(qtile):
     def group_change():
         update_group_labels()
 
+    #subscribe.client_urgent_hint_changed(func)
+    #this should help me with teams
+
+    # @todo group_window_add - maybe this hook is better
     @hook.subscribe.client_managed
     def func(window):
         update_group_labels()

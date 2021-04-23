@@ -55,6 +55,10 @@ class QWidgets:
             inactive_text=''
         )
 
+    # @TODO current window icon
+    # subscribe.net_wm_icon_change(func)
+
+
     def window_name(self):
         return widget.WindowName()
 

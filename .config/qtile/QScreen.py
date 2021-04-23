@@ -3,6 +3,8 @@ from QTheme import Colors
 
 from libqtile.bar import Bar
 from libqtile.config import Screen
+from libqtile.config import Key
+from libqtile.lazy import lazy
 
 class QBars:
 
@@ -30,22 +32,36 @@ class QBars:
 
 class QScreen:
 
-    left_groups = []
-    right_groups = []
-
     bars = QBars()
 
-    def __init__(self, l, r):
-        self.left_groups = l
-        self.right_groups = r
+    def init_dual_screen_bar(self, l, r):
+        
+        left_groups = [group.name for group in l if group]
+        right_groups = [group.name for group in r if group]
 
-
-    def init_dual_screen_bar(self):
         return [
             Screen(
-                top = self.bars.init_left_bar(self.left_groups)
+                top = self.bars.init_left_bar(left_groups)
             ),
             Screen(
-                top = self.bars.init_right_bar(self.right_groups)
+                top = self.bars.init_right_bar(right_groups)
             )
         ]
+
+    def init_keys(self, mod):
+        keys = []
+
+        # Screen Navigation
+        keys.extend([
+            Key([mod], "s", self.go_to_screen(0), desc="Shift to Monitor 1"),
+            Key([mod], "d", self.go_to_screen(1), desc="Shift to Monitor 2"),
+        ])
+
+        return keys
+
+    def go_to_screen(self, screen):
+        @lazy.function
+        def f(qtile):
+            qtile.cmd_to_screen(screen)
+
+        return f
