@@ -1,12 +1,14 @@
 from QTheme import Colors
 
+import subprocess
 from subprocess import check_output
 from datetime import datetime
 
 import os
+import re
 
 class Helpers:
-    
+
     home = os.path.expanduser('~')
 
     @staticmethod
@@ -23,6 +25,20 @@ class Helpers:
           out = Helpers.format_text(out)
 
         return out
+
+    @staticmethod
+    def get_num_lock():
+        try:
+            output = subprocess.check_output(['xset', 'q']).decode("utf-8")
+        except subprocess.CalledProcessError as err:
+            output = err.output.decode()
+        if output.startswith("Keyboard"):
+            indicators = re.findall(r"Num\sLock:\s+(\w*)", output)
+
+            if len(indicators) > 0 and indicators[0] == "on":
+                return ""
+
+        return ""
 
     @staticmethod
     def get_time():

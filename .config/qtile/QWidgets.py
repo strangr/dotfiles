@@ -48,7 +48,7 @@ class QWidgets:
     def current_screen(self):
         return widget.CurrentScreen(
             padding=0,
-            fontsize='22',
+            fontsize='22.3',
             active_color=self.colors.yellow[0],
             active_text='',
             inactive_color=self.colors.grey[0],
@@ -64,6 +64,14 @@ class QWidgets:
 
     def kbd_layout(self):
         return widget.TextBox(text=Helpers.get_kbd_layout())
+
+    def num_lock(self):
+        return widget.GenPollText(
+            func=lambda: Helpers.get_num_lock(),
+            update_interval=0.5,
+            fontsize='21.7',
+            padding=3
+        )
 
     def memory(self):
         return widget.Memory(format=Helpers.format_text("MEM") + " {MemPercent: .0f}% {SwapPercent: .0f}%")

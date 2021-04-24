@@ -4,7 +4,6 @@ class LayoutType(Enum):
     DEFAULT = 1
     SPACER = 2
     FULLSCREEN = 3
-    TESTING = 4
 
 class MatchType(Enum):
     DEFAULT = 1

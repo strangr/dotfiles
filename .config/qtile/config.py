@@ -25,7 +25,7 @@ if __name__ in ["config", "__main__"]:
         QGroup("2", layout=LayoutType.FULLSCREEN),
         QGroup("3"),
         QGroup("4"),
-        QGroup("grave", layout=LayoutType.TESTING)
+        QGroup("grave")
     ]
 
     right_groups = [

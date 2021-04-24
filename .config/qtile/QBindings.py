@@ -28,6 +28,10 @@ class QKeys:
             Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
             Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
 
+            # @TODO new method to swith between floating and stacked
+            # @TODO write new next method, when reached the end of the screen, move to next
+            #Key([mod], 'Tab', lazy.layout.next()),
+
             # Move windows
             Key([mod, "shift"], "h", lazy.layout.swap_left()),
             Key([mod, "shift"], "l", lazy.layout.swap_right()),
@@ -49,6 +53,7 @@ class QKeys:
             Key([], "ISO_Next_Group", lazy.function(Helpers.update_kbd_layout()), desc="Switch Language Layout"),
 
             # Utils
+            # @TODO maybe make them into chords (<> vol, m -> <> mute vol/mic)
             Key([mod, "shift"], "period", lazy.spawn("changeVolume plus"), desc="Increase Sound"),
             Key([mod, "shift"], "comma", lazy.spawn("changeVolume minus"), desc="Decrease Sound"),
             Key([mod, "shift"], "m", lazy.spawn("changeVolume mute"), desc="Mute"),
