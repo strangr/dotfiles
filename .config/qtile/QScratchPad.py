@@ -20,6 +20,7 @@ class QScratchPad:
     )
 
     def init_scratchpads(self, terminal):
+
         return [
             ScratchPad("scratchpad", [
                 DropDown("terminal-scratch",

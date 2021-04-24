@@ -28,8 +28,10 @@ class QGroups:
 
         for i in groups:
             keys.extend([
-                Key([mod], i.name, self.go_to_group_on_screen(i.name, screen), desc="Switch to Group {} on Monitor {}".format(str(i.name), screen)),
-                Key([mod, 'shift'], i.name, self.shift_to_group(i.name, screen), desc="Shift to Group {} on Monitor {}".format(str(i.name), screen)),
+                Key([mod], i.name, self.go_to_group_on_screen(i.name, screen),
+                    desc="Switch to Group {} on Monitor {}".format(str(i.name), screen)),
+                Key([mod, 'shift'], i.name, self.shift_to_group(i.name, screen),
+                    desc="Shift to Group {} on Monitor {}".format(str(i.name), screen)),
             ])
 
         return keys

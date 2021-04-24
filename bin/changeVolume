@@ -12,12 +12,16 @@ then
 elif [ $1 = minus ]
 then
 	#amixer set Master 5%- unmute > /dev/null
-		pactl set-sink-mute @DEFAULT_SINK@ false > /dev/null
+	pactl set-sink-mute @DEFAULT_SINK@ false > /dev/null
 	pactl -- set-sink-volume @DEFAULT_SINK@ -5% > /dev/null
 elif [ $1 = mute ]
 then
 #	amixer set Master toggle > /dev/null
 	pactl set-sink-mute @DEFAULT_SINK@ toggle > /dev/null
+elif [ $1 = mutemic ]
+then
+#	amixer set Master toggle > /dev/null
+	pactl set-source-mute 1 toggle > /dev/null
 elif [ $1 = 120 ]
 then
 	#pactl -- set-sink-volume 0 120% > /dev/null
@@ -27,8 +31,15 @@ fi
 # Query amixer for the current volume and whether or not the speaker is muted
 volume="$(amixer sget Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g')"
 mute="$(amixer sget Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
+micmute="$(amixer sget Capture | tail -1 | awk '{print $5}' | sed 's/[^a-z]*//g')"
 
-if [[ $volume == 0 || "$mute" == "off" ]]; then
+if [[ $1 = mutemic && "$micmute" == "off" ]]; then
+	# Show the sound muted notification
+	dunstify -a "changeVolume" -u low -i audio-volume-muted -r "$msgId" "Microphone muted" 
+elif [[ $1 = mutemic ]]; then
+	# Show the sound muted notification
+	dunstify -a "changeVolume" -u low -i audio-volume-high-symbolic.symbolic -r "$msgId" "Microphone unmuted"
+elif [[ $volume == 0 || "$mute" == "off" ]]; then
 	# Show the sound muted notification
 	dunstify -a "changeVolume" -u low -i audio-volume-muted -r "$msgId" "Volume muted" 
 else

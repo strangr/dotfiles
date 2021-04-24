@@ -14,12 +14,6 @@ from libqtile import hook
 import os
 import subprocess
 
-#僧
-#类﩯舘麗
-#ﰧﳶ
-#﵁恵頻侀𤋮全充
-
-# @TODO groups w,e will have gaps
 # @TODO try catch
 if __name__ in ["config", "__main__"]:
 
@@ -31,13 +25,13 @@ if __name__ in ["config", "__main__"]:
         QGroup("2", layout=LayoutType.FULLSCREEN),
         QGroup("3"),
         QGroup("4"),
-        QGroup("grave")
+        QGroup("grave", layout=LayoutType.TESTING)
     ]
 
     right_groups = [
         QGroup("q"),
-        QGroup("w", match=MatchType.CHAT),
-        QGroup("e", match=MatchType.WORKCHAT),
+        QGroup("w", layout=LayoutType.SPACER, match=MatchType.CHAT),
+        QGroup("e", layout=LayoutType.SPACER, match=MatchType.WORKCHAT),
         QGroup("r"),
         QGroup("Tab")
     ]
@@ -89,6 +83,7 @@ def main(qtile):
     # make startuponce my own method
     @hook.subscribe.startup_once
     def autostart():
+
         home = os.path.expanduser('~')
         subprocess.call([home + '/.config/qtile/autostart.sh'])
 
@@ -104,6 +99,7 @@ def main(qtile):
 
     @hook.subscribe.setgroup
     def group_change():
+
         update_group_labels()
 
     #subscribe.client_urgent_hint_changed(func)
@@ -112,4 +108,5 @@ def main(qtile):
     # @todo group_window_add - maybe this hook is better
     @hook.subscribe.client_managed
     def func(window):
+
         update_group_labels()

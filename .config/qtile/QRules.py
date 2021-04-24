@@ -20,7 +20,7 @@ class QRules:
     def get_match(self, matchType):
 
         switcher = {
-            MatchType.NORMAL: self.get_default(),
+            MatchType.DEFAULT: self.get_default(),
             MatchType.CHAT: self.get_chat_match(),
             MatchType.WORKCHAT: self.get_work_chat_match(),
         }

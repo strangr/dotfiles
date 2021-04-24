@@ -92,8 +92,6 @@ class QWidgets:
     def system_tray(self):
         return widget.Systray()
 
-# vpn on/off
-# widget.Notify(),
 # widget.Wallpaper(),
 # widget.CheckUpdates(distro='Arch'),
 # widget.Prompt(),

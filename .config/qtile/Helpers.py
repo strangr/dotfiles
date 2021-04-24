@@ -6,6 +6,8 @@ from datetime import datetime
 import os
 
 class Helpers:
+    
+    home = os.path.expanduser('~')
 
     @staticmethod
     def update_kbd_layout():
@@ -16,7 +18,6 @@ class Helpers:
 
     @staticmethod
     def get_kbd_layout():
-        home = os.path.expanduser('~')
         out = check_output(['sh', 'getKeyLayout']).decode("utf-8").replace('\n', '')
         if out != "US":
           out = Helpers.format_text(out)
@@ -34,7 +35,6 @@ class Helpers:
 
     @staticmethod
     def get_vpn_status():
-        home = os.path.expanduser('~')
         out = check_output(['sh', 'checkNetworkLink', 'tun0']).decode("utf-8").replace('\n', '')
         out2 = Helpers.format_text("VPN")
 
