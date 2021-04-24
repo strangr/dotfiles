@@ -23,7 +23,7 @@ class QWidgetsList:
             self.widgets.separator(),
             self.widgets.datetime_poll(),
             self.widgets.separator(),
-            self.widgets.system_tray(),
+            self.widgets.system_tray()
         ]
 
         return widgets_list
@@ -32,7 +32,14 @@ class QWidgetsList:
         widgets_list = [
             self.widgets.group_box(groups),
             self.widgets.current_layout(),
+            self.widgets.current_screen(),
             self.widgets.window_name(),
+            self.widgets.spacer(),
+            self.widgets.vpn_status(),
+            self.widgets.separator(),
+            self.widgets.volume(),
+            self.widgets.separator(),
+            self.widgets.datetime_poll()
         ]
 
         return widgets_list
