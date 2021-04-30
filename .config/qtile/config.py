@@ -1,3 +1,6 @@
+# Qtile config
+# for rangr
+
 from QBindings import QKeys, QMouse
 from QScreen import QScreen
 from QGroups import QGroups

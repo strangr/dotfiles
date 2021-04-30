@@ -4,6 +4,7 @@ from QRules import QRules
 from libqtile.config import Group, Key, Match
 from libqtile.lazy import lazy
 
+# maybe rename into GroupController
 class QGroups:
 
     layouts = QLayouts()

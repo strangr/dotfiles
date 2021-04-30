@@ -48,7 +48,7 @@ class QLayouts:
     def master_pane_spacer(self):
 
         return MonadTall(
-            name=self.icon_monad,
+            name="Spacer",
             align=MonadTall._left,
             margin=8,
             single_margin=8,

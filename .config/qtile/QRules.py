@@ -35,7 +35,8 @@ class QRules:
 
         return [
             Match(wm_class = [
-                "discord"
+                "discord",
+                "signal"
             ])
         ]
 
