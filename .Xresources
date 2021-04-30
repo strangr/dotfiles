@@ -6,45 +6,47 @@ Xft.antialias: 1
 Xft.rgba: rgb
 
 ! special
-*.foreground: #93a1a1
-*.background: #25333c
+*.foreground:   #5e5d5c
+*.background:   #baae9e
+*.cursorColor:  #5e5d5c
 
 !Most Xorg terminals, including xterm and urxvt, support at least 16 basic colors.
 !The colors 0-7 are the 'normal' colors. Colors 8-15 are their 'bright' counterparts, used for highlighting.
-! Black + DarkGrey
-*color0:        #000000
-*color8:        #555753
-! DarkRed + Red
-*color1:        #ff6565
-*color9:        #ff8d8d
-! Green + LightGreen (@TODO compliment is yellowish)
-*color2:        #00CC00
-*color10:       #003200
-!*color10:       #c8e7a8
-! DarkYellow + Yellow
-*color3:        #eab93d
-*color11:       #ffc123
-! DarkBlue + Blue
-*color4:        #204a87
-*color12:       #3465a4
-! DarkMagenta + Magenta
-*color5:        #ce5c00
-*color13:       #f57900
-!DarkCyan + Cyan (both not tango)
-*color6:        #89b6e2 
-*color14:       #46a4ff
-! LightGrey + White
-*color7:        #cccccc
-*color15:       #00FF00
+! black
+*.color0:       #28211c
+*.color8:       #666666
+
+! red
+*.color1:       #cf6a4c
+*.color9:       #cf6a4c
+
+! green
+*.color2:       #54be0d
+*.color10:      #54be0d
+
+! yellow
+*.color3:       #f9ee98
+*.color11:      #f9ee98
+
+! blue
+*.color4:       #99b9ac
+*.color12:      #99b9ac
+
+! magenta
+*.color5:       #9b859d
+*.color13:      #9b859d
+
+! cyan
+*.color6:       #afc4db
+*.color14:      #afc4db
+
+! white
+*.color7:       #8a8986
+*.color15:      #baae9e
 
 !Background
-!URxvt.transparent: true
-!URxvt.shading: 10
-!URxvt.depth: 32
-!URxvt.background: [50]#000000
 URxvt.foreground: #FFFFFF
 URxvt.background: #282828
-!URxvt.foreground: 2
 
 !Fonts
 URxvt.font:             xft:Hack Nerd Font Mono:size=10:antialias=true:hinting=true:style=Regular,xft:Noto Color Emoji
