@@ -55,6 +55,8 @@ class QScreen:
         keys.extend([
             Key([mod], "s", self.go_to_screen(0), desc="Shift to Monitor 1"),
             Key([mod], "d", self.go_to_screen(1), desc="Shift to Monitor 2"),
+
+            Key([mod, "control"], "s", self.toggle_sticky()),
         ])
 
         return keys
@@ -63,5 +65,18 @@ class QScreen:
         @lazy.function
         def f(qtile):
             qtile.cmd_to_screen(screen)
+
+        return f
+
+    def toggle_sticky(self):
+        @lazy.function
+        def f(qtile):
+            if 'sticky' in qtile.current_window.cmd_hints():
+                qtile.current_window.cmd_disable_floating()
+                qtile.current_window.hints.pop("sticky", None)
+            else:
+                qtile.current_window.cmd_bring_to_front()
+                qtile.current_window.cmd_enable_floating()
+                qtile.current_window.hints["sticky"] = qtile.current_screen.index
 
         return f

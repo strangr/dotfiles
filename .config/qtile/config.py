@@ -9,10 +9,10 @@ from QScratchPad import QScratchPad
 from QTheme import QDefaults
 from QRules import QRules
 
-from typing import List  # noqa: F401
-
 from libqtile.layout import Floating
 from libqtile import hook
+
+from typing import List  # noqa: F401
 
 import os
 import subprocess
@@ -81,35 +81,61 @@ if __name__ in ["config", "__main__"]:
     wmname              = "LG3D"
 
 def main(qtile):
+    #subscribe.client_urgent_hint_changed(func)
+    #this should help me with teams
+
+    def update_sticky_group():
+        # for grupo in qtile.groups:
+        #     for window in grupo.windows:
+        windows = qtile.windows_map.values()
+        for window in windows:
+            if 'sticky' not in window.cmd_hints():
+                continue
+
+            screen_id = window.hints["sticky"]
+            if qtile.current_screen.index != screen_id:
+                continue
+
+            cw = qtile.groups.index(qtile.current_group)
+            window.togroup(qtile.groups[cw].name)
+
+    def update_sticky_focus():
+        # for grupo in qtile.groups:
+        #     for window in grupo.windows:
+        windows = qtile.windows_map.values()
+        for window in windows:
+            if 'sticky' in window.cmd_hints():
+                window.cmd_bring_to_front()
+
+    def update_group_labels():
+        #●雷綠祿
+        for group in qtile.groups:
+            number_of_windows = len(group.windows)
+            current_groups = [screen.group.name for screen in qtile.screens if screen.group]
+            label = ""
+            if number_of_windows > 0 or group.name in current_groups:
+                label = ""
+
+            if group.label != label:
+                group.cmd_set_label(label)
 
     # dont like bash for init
     # make startuponce my own method
     @hook.subscribe.startup_once
-    def autostart():
-
+    def startup_once():
         home = os.path.expanduser('~')
         subprocess.call([home + '/.config/qtile/autostart.sh'])
 
-    #●雷綠祿
-    def update_group_labels():
-        for group in qtile.groups:
-            number_of_windows = len(group.windows)
-            current_groups = [screen.group.name for screen in qtile.screens if screen.group]
-            if number_of_windows > 0 or group.name in current_groups:
-                group.cmd_set_label("")
-            else:
-                group.cmd_set_label("")
-
     @hook.subscribe.setgroup
-    def group_change():
-
+    def setgroup():
+        update_sticky_group()
         update_group_labels()
-
-    #subscribe.client_urgent_hint_changed(func)
-    #this should help me with teams
 
     # @todo group_window_add - maybe this hook is better
     @hook.subscribe.client_managed
-    def func(window):
-
+    def client_managed(window):
         update_group_labels()
+
+    @hook.subscribe.focus_change
+    def focus_change():
+        update_sticky_focus()
