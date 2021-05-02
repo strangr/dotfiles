@@ -5,10 +5,10 @@ class QScratchPad:
 
     rect_small = dict(
         opacity=0.9,
-        height=0.5,
-        width=0.5,
-        x=0.25,
-        y=0.25
+        height=0.6,
+        width=0.7,
+        x=0.15,
+        y=0.01
     )
 
     rect_large = dict(
@@ -20,7 +20,6 @@ class QScratchPad:
     )
 
     def init_scratchpads(self, terminal):
-
         return [
             ScratchPad("scratchpad", [
                 DropDown("terminal-scratch",
@@ -45,6 +44,7 @@ class QScratchPad:
 
     def init_keys(self, mod):
         return [
+            # @TODO if already displayed on this screen, focus it
             Key([], 'F8', lazy.group['scratchpad'].dropdown_toggle('ranger-scratch'), desc="Toggle Ranger"),
             Key([], 'F9', lazy.group['scratchpad'].dropdown_toggle('pavucontrol-scratch'), desc="Toggle PavuControl"),
             Key([], 'F10', lazy.group['scratchpad'].dropdown_toggle('terminal-scratch'), desc="Toggle Terminal")

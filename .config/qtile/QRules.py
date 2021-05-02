@@ -13,6 +13,7 @@ class QRules:
             Match(wm_class='makebranch'),
             Match(wm_class='maketag'),
             Match(wm_class='ssh-askpass'),
+            Match(wm_class='vlc'),
             Match(title='branchdialog'),
             Match(title='pinentry'),
         ]

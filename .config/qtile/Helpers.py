@@ -66,3 +66,10 @@ class Helpers:
         out = "<span color='"+ Colors.grey[0] +"'>"+ text +"</span>"
 
         return out
+
+    @staticmethod
+    def log_text(text):
+        fh = open(home + "/.config/qtile/log.txt", "a")
+        log = str(datetime.now()) + "|" + text + "\n"
+        fh.write(log)
+        fh.close()
