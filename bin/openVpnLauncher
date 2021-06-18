@@ -8,4 +8,4 @@ CHOSEN="$(echo -e "$(ls -A $FOLDER | grep '.*ovpn')" | rofi -dmenu -no-custom -p
 [ -f "$FOLDER$CHOSEN" ] && dunstify "Starting VPN" || dunstify "No such file"
 
 clear
-sudo openvpn --cd "$FOLDER" --config "$CHOSEN" --verb 1 --auth-user-pass "$AUTHFILE" --auth-nocache
+sudo -b openvpn --cd "$FOLDER" --config "$CHOSEN" --verb 1 --auth-user-pass "$AUTHFILE" --auth-nocache
