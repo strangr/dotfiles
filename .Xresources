@@ -54,6 +54,8 @@ URxvt*boldFont:         xft:Hack Nerd Font Mono:size=10:antialias=true:hinting=t
 URxvt*italicFont:       xft:Hack Nerd Font Mono:size=10:antialias=true:hinting=true:style=Italic
 URxvt*boldItalicFont:   xft:Hack Nerd Font Mono:size=10:antialias=true:hinting=true:style=Bold Italic
 
+!'Hack Nerd Font', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'
+
 !scrollbar styles
 URxvt*scrollBar:        false
 
@@ -86,10 +88,10 @@ URxvt.perl-ext-common: default,tabbedex,matcher,url-select,keyboard-select
 ! add tabs
 URxvt.tabbedex.title:           false
 URxvt.tabbedex.new-button:      false
-URxvt.tabbedex.tabbar-fg:       2
-URxvt.tabbedex.tabbar-bg:       0
-URxvt.tabbedex.tab-fg:          bold 2
-URxvt.tabbedex.tab-bg:          0
+URxvt.tabbedex.tabbar-fg:       0
+URxvt.tabbedex.tabbar-bg:       4
+URxvt.tabbedex.tab-fg:          bold 0
+URxvt.tabbedex.tab-bg:          4
 URxvt.tabbedex.tabbar-timeouts: 0:*:20:{}:120:<>
 
 ! add clickable urls

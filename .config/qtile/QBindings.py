@@ -11,7 +11,7 @@ class QKeys:
 
     def init_keys(self, mod, terminal):
         return [
-
+            
             # Window Controls
             Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
             Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle Fullscreen"),
@@ -59,6 +59,9 @@ class QKeys:
             Key([mod, "shift"], "m", lazy.spawn("changeVolume mute"), desc="Mute"),
             Key([mod, "shift"], "n", lazy.spawn("changeVolume 120"), desc="120"),
             Key([mod, "shift"], "b", lazy.spawn("changeVolume mutemic"), desc="Mute Mic"),
+
+            Key([mod], "n", lazy.spawn("dunstPause"), desc="Pause Dunst"),
+
 
             # ROFI
             Key([mod], "p", lazy.spawn("rofi -show run"), desc="Application Launcher"),

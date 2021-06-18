@@ -1,0 +1,17 @@
+#!/bin/bash
+# dunstPause
+
+# Arbitrary but unique message id
+msgId="991050"
+
+status=$(dunstctl is-paused)
+
+if [ $status = true ]
+then
+  dunstify -a "changeVolume" -u low -i preferences-system-notifications -r "$msgId" "Enable Notificaitons" 
+  dunstctl set-paused false
+else
+  dunstify -a "changeVolume" -u low -i preferences-system-notifications -r "$msgId" "Pausing Notificaitons" 
+  sleep 1
+  dunstctl set-paused true
+fi
