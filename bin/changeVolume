@@ -31,7 +31,7 @@ fi
 # Query amixer for the current volume and whether or not the speaker is muted
 volume="$(amixer sget Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g')"
 mute="$(amixer sget Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
-micmute="$(amixer sget Capture | tail -1 | awk '{print $5}' | sed 's/[^a-z]*//g')"
+micmute="$(amixer sget Capture | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
 
 if [[ $1 = mutemic && "$micmute" == "off" ]]; then
 	# Show the sound muted notification
