@@ -46,6 +46,6 @@ class QScratchPad:
         return [
             # @TODO if already displayed on this screen, focus it
             Key([], 'F8', lazy.group['scratchpad'].dropdown_toggle('ranger-scratch'), desc="Toggle Ranger"),
-            Key([], 'F9', lazy.group['scratchpad'].dropdown_toggle('pavucontrol-scratch'), desc="Toggle PavuControl"),
+            Key([], 'F7', lazy.group['scratchpad'].dropdown_toggle('pavucontrol-scratch'), desc="Toggle PavuControl"),
             Key([], 'F10', lazy.group['scratchpad'].dropdown_toggle('terminal-scratch'), desc="Toggle Terminal")
         ]

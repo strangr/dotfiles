@@ -14,6 +14,7 @@ class QRules:
             Match(wm_class='maketag'),
             Match(wm_class='ssh-askpass'),
             Match(wm_class='vlc'),
+            Match(wm_class='org.remmina.Remmina'),
             Match(title='branchdialog'),
             Match(title='pinentry'),
         ]
@@ -35,17 +36,13 @@ class QRules:
     def get_chat_match(self):
 
         return [
-            Match(wm_class = [
-                "discord",
-                "signal"
-            ])
+            Match(wm_class = ["discord"]),
+            Match(wm_class = ["signal"]),
         ]
 
     def get_work_chat_match(self):
 
         return [
-            Match(wm_class = [
-                "slack",
-                "microsoft teams - preview"
-            ])
+            Match(wm_class = ["slack"]),
+            Match(wm_class = ["microsoft teams - preview"])
         ]

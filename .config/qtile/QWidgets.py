@@ -1,5 +1,6 @@
 from Helpers import Helpers
 from QTheme import Colors
+# @TODO import each widget separatly instead of whole widget
 from libqtile import widget
 
 class QWidgets:
@@ -9,7 +10,7 @@ class QWidgets:
     def separator(self):
         return widget.Sep(
             linewidth=5,
-            foreground=self.colors.black[0]
+            foreground=self.colors.transparent[0]
         )
     
     def group_box(self, groups):

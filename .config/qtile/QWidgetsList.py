@@ -11,6 +11,7 @@ class QWidgetsList:
             self.widgets.current_layout(),
             self.widgets.current_screen(),
             self.widgets.num_lock(),
+            # caps indicator here, if off do not display anything
             self.widgets.spacer(),
             #widget.Chord
             self.widgets.kbd_layout(),

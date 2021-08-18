@@ -1,11 +1,12 @@
 class Colors:
 
-    black   = ["#282425"]
-    white   = ["#C0C5CE"]
-    red     = ["#BF616A"]
-    green   = ["#99b9ac"]
-    yellow  = ["#d8c9aa"]
-    grey    = ["#766a5a"]
+    black       = ["#282425"]
+    white       = ["#C0C5CE"]
+    red         = ["#BF616A"]
+    green       = ["#99b9ac"]
+    yellow      = ["#d8c9aa"]
+    grey        = ["#766a5a"]
+    transparent = ["#00000000"]
 
 class Fonts:
 

@@ -8,9 +8,10 @@ from QGroup import QGroup, LayoutType, MatchType
 from QScratchPad import QScratchPad
 from QTheme import QDefaults
 from QRules import QRules
+from Helpers import Helpers
 
 from libqtile.layout import Floating
-from libqtile import hook
+from libqtile import hook, qtile
 
 from typing import List  # noqa: F401
 
@@ -53,13 +54,18 @@ if __name__ in ["config", "__main__"]:
 
     screens += qScreen.init_dual_screen_bar(left_groups, right_groups)
 
-    groups += qGroups.init_group(left_groups)
     groups += qGroups.init_group(right_groups)
+    groups += qGroups.init_group(left_groups)
+
     groups += qScratchPad.init_scratchpads(terminal)
 
+    #print(groups)
+
     keys += qKeys.init_keys(mod, terminal)
-    keys += qGroups.init_keys(mod, left_groups, 0)
+
     keys += qGroups.init_keys(mod, right_groups, 1)
+    keys += qGroups.init_keys(mod, left_groups, 0)
+
     keys += qScratchPad.init_keys(mod)
     keys += qScreen.init_keys(mod)
 
@@ -80,62 +86,71 @@ if __name__ in ["config", "__main__"]:
     bring_front_click   = "floating_only"
     wmname              = "LG3D"
 
-def main(qtile):
-    #subscribe.client_urgent_hint_changed(func)
-    #this should help me with teams
+#subscribe.client_urgent_hint_changed(func)
+#this should help me with teams
 
-    def update_sticky_group():
-        # for grupo in qtile.groups:
-        #     for window in grupo.windows:
-        windows = qtile.windows_map.values()
-        for window in windows:
-            if 'sticky' not in window.cmd_hints():
-                continue
+def update_sticky_group():
+    pass
+    # Helpers.log_text("update_sticky_group")
+    # windows = qtile.windows_map.values()
+    # for window in windows:
+    #     if 'sticky' not in window.cmd_hints():
+    #         continue
 
-            screen_id = window.hints["sticky"]
-            if qtile.current_screen.index != screen_id:
-                continue
+    #     screen_id = window.hints["sticky"]
+    #     if qtile.current_screen.index != screen_id:
+    #         continue
 
-            cw = qtile.groups.index(qtile.current_group)
-            window.togroup(qtile.groups[cw].name)
+    #     cw = qtile.groups.index(qtile.current_group)
+    #     window.togroup(qtile.groups[cw].name)
 
-    def update_sticky_focus():
-        # for grupo in qtile.groups:
-        #     for window in grupo.windows:
-        windows = qtile.windows_map.values()
-        for window in windows:
-            if 'sticky' in window.cmd_hints():
-                window.cmd_bring_to_front()
+def update_sticky_focus():
+    pass
+    # Helpers.log_text("update_sticky_focus")
+    # windows = qtile.windows_map.values()
+    # for window in windows:
+    #     if 'sticky' not in window.cmd_hints():
+    #         continue
 
-    def update_group_labels():
-        #●雷綠祿
-        for group in qtile.groups:
-            number_of_windows = len(group.windows)
-            current_groups = [screen.group.name for screen in qtile.screens if screen.group]
-            label = ""
-            if number_of_windows > 0 or group.name in current_groups:
-                label = ""
+    #     screen_id = window.hints["sticky"]
+    #     if qtile.current_screen.index != screen_id:
+    #         continue
 
-            if group.label != label:
-                group.cmd_set_label(label)
+    #     window.cmd_bring_to_front()
 
-    # dont like bash for init
-    # make startuponce my own method
-    @hook.subscribe.startup_once
-    def startup_once():
-        home = os.path.expanduser('~')
-        subprocess.call([home + '/.config/qtile/autostart.sh'])
+def update_group_labels():
+    #●雷綠祿
+    #Helpers.log_text("update_group_labels")
 
-    @hook.subscribe.setgroup
-    def setgroup():
-        update_sticky_group()
-        update_group_labels()
+    for group in qtile.groups:
+        number_of_windows = len(group.windows)
+        current_groups = [screen.group.name for screen in qtile.screens if screen.group]
+        label = ""
+        if number_of_windows > 0 or group.name in current_groups:
+            label = ""
 
-    # @todo group_window_add - maybe this hook is better
-    @hook.subscribe.client_managed
-    def client_managed(window):
-        update_group_labels()
+        if group.label != label:
+            group.cmd_set_label(label)
 
-    @hook.subscribe.focus_change
-    def focus_change():
-        update_sticky_focus()
+# dont like bash for init
+# make startuponce my own method
+@hook.subscribe.startup_once
+def startup_once():
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/autostart.sh'])
+
+@hook.subscribe.setgroup
+def setgroup():
+    #Helpers.log_text("subscribe.setgroup")
+    update_sticky_group()
+    update_group_labels()
+
+# @todo group_window_add - maybe this hook is better
+@hook.subscribe.client_managed
+def client_managed(window):
+    #Helpers.log_text("subscribe.setgroup")
+    update_group_labels()
+
+@hook.subscribe.focus_change
+def focus_change():
+    update_sticky_focus()
