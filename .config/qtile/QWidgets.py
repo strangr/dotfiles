@@ -10,7 +10,7 @@ class QWidgets:
     def separator(self):
         return widget.Sep(
             linewidth=5,
-            foreground=self.colors.transparent[0]
+            foreground=self.colors.black[0]
         )
     
     def group_box(self, groups):
