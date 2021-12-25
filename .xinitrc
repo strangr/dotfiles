@@ -7,10 +7,14 @@
 xset -dpms; xset s off
 
 # Monitor
-xrandr --output HDMI-0 --primary
+xrandr --output DVI-D-0 --primary
+xrandr --output DVI-D-0 --mode 2560x1440 --rate 75
+
 xrandr --output HDMI-0 --mode 2560x1440 --rate 75
-xrandr --output DVI-D-0 --mode 1920x1080 --rate 60
-xrandr --output DVI-D-0 --right-of HDMI-0
+xrandr --output HDMI-0 --right-of DVI-D-0
+
+xrandr --output DP-1 --mode 1920x1080 --rate 60
+xrandr --output DP-1 --left-of DVI-D-0
 
 # Keyboard
 setxkbmap -layout "us,ge"
