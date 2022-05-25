@@ -1,0 +1,20 @@
+
+
+***
+* Bluetooth
+***
+
+etc/bluetooth/main.conf
+# To power on by default
+AutoEnable=true 
+# To faster connect to device
+FastConnectable = true
+
+*
+* Keychron K14
+***
+
+To make fn2 button work, edit
+/etc/modprobe.d/hid_apple.conf
+and write
+options hid_apple fnmode=2

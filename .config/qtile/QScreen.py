@@ -30,9 +30,27 @@ class QBars:
             **self.bar_config
         )
 
+    def init_proj_bar(self, groups):
+        return Bar(
+            widgets=self.widgets_list.project_widgets_list(groups),
+            **self.bar_config
+        )
+
 class QScreen:
 
     bars = QBars()
+
+    def init_single_screen_bar(self, l):
+        
+        left_groups = [group.name for group in l if group]
+
+        return [
+            Screen(
+                top = self.bars.init_left_bar(left_groups),
+                wallpaper='~/Pictures/system/wallpaper16.jpg',
+                wallpaper_mode='stretch'
+            )
+        ]
 
     def init_dual_screen_bar(self, l, r):
         
@@ -41,10 +59,38 @@ class QScreen:
 
         return [
             Screen(
-                top = self.bars.init_left_bar(left_groups)
+                top = self.bars.init_left_bar(left_groups),
+                wallpaper='~/Pictures/system/wallpaper17.jpg',
+                wallpaper_mode='stretch'
             ),
             Screen(
-                top = self.bars.init_right_bar(right_groups)
+                top = self.bars.init_right_bar(right_groups),
+                wallpaper='~/Pictures/system/wallpaper18.jpg',
+                wallpaper_mode='stretch'
+            )
+        ]
+
+    def init_triple_screen_bar(self, l, r, p):
+        
+        left_groups = [group.name for group in l if group]
+        right_groups = [group.name for group in r if group]
+        project_groups = [group.name for group in p if group]
+
+        return [
+            Screen(
+                top = self.bars.init_left_bar(left_groups),
+                wallpaper='~/Pictures/system/wallpaper17.jpg',
+                wallpaper_mode='fill'
+            ),
+            Screen(
+                top = self.bars.init_right_bar(right_groups),
+                wallpaper='~/Pictures/system/wallpaper18.jpg',
+                wallpaper_mode='fill'
+            ),
+            Screen(
+                top = self.bars.init_proj_bar(project_groups),
+                wallpaper='~/Pictures/system/wallpaper16.jpg',
+                wallpaper_mode='fill'
             )
         ]
 
@@ -53,8 +99,9 @@ class QScreen:
 
         # Screen Navigation
         keys.extend([
-            Key([mod], "s", self.go_to_screen(0), desc="Shift to Monitor 1"),
-            Key([mod], "d", self.go_to_screen(1), desc="Shift to Monitor 2"),
+            # Key([mod], "s", self.go_to_screen(0), desc="Shift to Monitor 1"),
+            # Key([mod], "d", self.go_to_screen(1), desc="Shift to Monitor 2"),
+            # Key([mod], "a", self.go_to_screen(2), desc="Shift to Monitor 3"),
 
             Key([mod, "control"], "s", self.toggle_sticky()),
         ])

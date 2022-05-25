@@ -7,17 +7,18 @@ from libqtile.lazy import lazy
 # maybe rename into GroupController
 class QGroups:
 
-    layouts = QLayouts()
-    rules = QRules()
-
     def init_group(self, groups):
+        layouts = QLayouts()
+        rules = QRules()
+
         result = []
+
         for i in range(len(groups)):
             result.append(
                 Group(
                     name=groups[i].name,
-                    matches=self.rules.get_match(groups[i].match_type),
-                    layouts=self.layouts.get_layout(groups[i].layout_type),
+                    matches=rules.get_match(groups[i].match_type),
+                    layouts=layouts.get_layout(groups[i].layout_type),
                     init=True,
                     persist=True
                 ))
@@ -42,6 +43,8 @@ class QGroups:
         current_groups = [screen.group.name for screen in qtile.screens if screen.group]
         if group not in current_groups:
             qtile.groups_map.get(group).cmd_toscreen()
+
+        return 0
 
     def go_to_group_on_screen(self, group, screen):
         @lazy.function

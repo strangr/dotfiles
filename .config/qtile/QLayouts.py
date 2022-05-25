@@ -5,6 +5,7 @@ from libqtile.layout.max import Max
 from libqtile.layout.columns import Columns
 from libqtile.layout.bsp import Bsp
 from libqtile.layout.xmonad import MonadTall
+from libqtile.layout.xmonad import MonadWide
 
 #僧
 #类﩯舘麗
@@ -28,6 +29,45 @@ class QLayouts:
     def master_pane(self):
 
         return MonadTall(
+            name=self.icon_monad,
+            align=MonadTall._left,
+            margin=0,
+            single_margin=0,
+            new_client_position='after_current',
+            border_focus=self.colors.green[0],
+            border_normal=self.colors.grey[0],
+            border_width=1,
+            single_border_width=1,
+            ratio=0.60,
+            max_ratio=0.75,
+            min_ratio=0.25,
+            change_ratio=0.05,
+            change_size=20,
+            min_secondary_size=85
+        )
+
+    def master_pane2(self):
+        return Bsp(
+            name=self.icon_monad,
+            margin=0,
+            single_margin=0,
+            border_focus=self.colors.green[0],
+            border_normal=self.colors.grey[0],
+            border_width=1,
+            fair=True,
+            grow_amount=10,
+            lower_right=True,
+            ratio=1.6
+            # ratio=0.60,
+            # max_ratio=0.75,
+            # min_ratio=0.25,
+            # change_ratio=0.05,
+            # change_size=20,
+            # min_secondary_size=85
+        )
+
+    def master_pane3(self):
+        return MonadWide(
             name=self.icon_monad,
             align=MonadTall._left,
             margin=0,
@@ -80,6 +120,8 @@ class QLayouts:
 
         return [
             self.master_pane(),
+            self.master_pane2(),
+            self.master_pane3(),
             self.max(),
         ]
 

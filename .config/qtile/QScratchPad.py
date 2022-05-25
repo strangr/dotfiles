@@ -37,15 +37,17 @@ class QScratchPad:
                 DropDown("pavucontrol-scratch",
                     "pavucontrol",
                     **self.rect_small,
-                    on_focus_lost_hide=True
+                    on_focus_lost_hide=False
                 )
             ])
         ]
 
+    # @TODO only one scratchpad at a time. so first check if any visible.
     def init_keys(self, mod):
         return [
             # @TODO if already displayed on this screen, focus it
-            Key([], 'F8', lazy.group['scratchpad'].dropdown_toggle('ranger-scratch'), desc="Toggle Ranger"),
-            Key([], 'F7', lazy.group['scratchpad'].dropdown_toggle('pavucontrol-scratch'), desc="Toggle PavuControl"),
-            Key([], 'F10', lazy.group['scratchpad'].dropdown_toggle('terminal-scratch'), desc="Toggle Terminal")
+            Key([mod], 'Tab', lazy.group['scratchpad'].dropdown_toggle('terminal-scratch'), desc="Toggle Terminal"),
+            # @TODO func if pavu somewhere open and not inside scratch, close it first          
+            Key([mod, "shift"], 'Tab', lazy.group['scratchpad'].dropdown_toggle('pavucontrol-scratch'), desc="Toggle PavuControl"),
+            Key([mod, "control"], 'Tab', lazy.group['scratchpad'].dropdown_toggle('ranger-scratch'), desc="Toggle Ranger")
         ]

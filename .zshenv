@@ -1,3 +1,4 @@
+# user config dir
+XDG_CONFIG_HOME=$HOME/.config
 # move configuration files to config dir
-ZDOTDIR=$HOME/.config/zsh
-. $ZDOTDIR/.zshenv
+ZDOTDIR=$XDG_CONFIG_HOME/zsh

@@ -1,7 +1,7 @@
 # Qtile config
 # for rangr
 
-from QBindings import QKeys, QMouse
+from QBindings import QKeys, QChords, QMouse
 from QScreen import QScreen
 from QGroups import QGroups
 from QGroup import QGroup, LayoutType, MatchType
@@ -13,31 +13,77 @@ from Helpers import Helpers
 from libqtile.layout import Floating
 from libqtile import hook, qtile
 
+from Xlib import display as xdisplay
 from typing import List  # noqa: F401
 
 import os
 import subprocess
+import logging
+
+logging.basicConfig(filename='/home/st/qtile.log',
+                    format='%(levelname)s %(asctime)s :: %(message)s',
+                    level=logging.DEBUG)
+
+def get_num_monitors():
+    num_monitors = 0
+    try:
+        display = xdisplay.Display()
+        screen = display.screen()
+        resources = screen.root.xrandr_get_screen_resources()
+
+        logging.debug(resources.outputs)
+
+        for output in resources.outputs:
+            monitor = display.xrandr_get_output_info(output, resources.config_timestamp)
+            logging.debug(monitor)
+            preferred = False
+            if hasattr(monitor, "preferred"):
+                preferred = monitor.preferred
+            elif hasattr(monitor, "num_preferred"):
+                preferred = monitor.num_preferred
+            if preferred and monitor.crtc > 0:
+                num_monitors += 1
+    except Exception as e:
+        # always setup at least one monitor
+        return 1
+    else:
+        return num_monitors
 
 # @TODO try catch
 if __name__ in ["config", "__main__"]:
 
     mod = "mod4"
     terminal = "urxvt"
+
+    num_monitors = get_num_monitors()
+
+    logging.debug(num_monitors)
+    # @TODO next
+    left_monitor_index = 0
+    right_monitor_index = 1 # if numofmons is >= 2 then 1 else 0
+    extra_monitor_index = 2 #if numofmons is >= 3 then 2 else 0
     
-    left_groups = [
+    extra_groups = [
         QGroup("1"),
-        QGroup("2", layout=LayoutType.FULLSCREEN),
+        QGroup("2"),
         QGroup("3"),
         QGroup("4"),
         QGroup("grave")
     ]
 
-    right_groups = [
+    left_groups = [
         QGroup("q"),
-        QGroup("w", layout=LayoutType.SPACER, match=MatchType.CHAT),
-        QGroup("e", layout=LayoutType.SPACER, match=MatchType.WORKCHAT),
+        QGroup("w"),
+        QGroup("e"),
         QGroup("r"),
-        QGroup("Tab")
+        QGroup("t")
+    ]
+
+    right_groups = [
+        QGroup("a"),
+        QGroup("s", layout=LayoutType.SPACER, match=MatchType.CHAT),
+        QGroup("d", layout=LayoutType.SPACER, match=MatchType.WORKCHAT),
+        QGroup("ISO_Next_Group")
     ]
 
     keys = []
@@ -49,22 +95,31 @@ if __name__ in ["config", "__main__"]:
     qGroups = QGroups()
     qScratchPad = QScratchPad()
     qKeys = QKeys()
+    qChords = QChords()
     qMouse = QMouse()
     qRules = QRules()
 
-    screens += qScreen.init_dual_screen_bar(left_groups, right_groups)
+    #qtile.cmd_screens()
 
-    groups += qGroups.init_group(right_groups)
-    groups += qGroups.init_group(left_groups)
+    if num_monitors == 3 :
+        screens += qScreen.init_triple_screen_bar(left_groups, right_groups, extra_groups)
+    elif num_monitors == 2 :
+        screens += qScreen.init_dual_screen_bar(left_groups + extra_groups, right_groups)
+        extra_monitor_index = 0
+    else:
+        screens += qScreen.init_single_screen_bar(left_groups + right_groups + extra_groups)
+        right_monitor_index = 0
+        extra_monitor_index = 0
 
+    groups += qGroups.init_group(right_groups + left_groups + extra_groups)
     groups += qScratchPad.init_scratchpads(terminal)
 
-    #print(groups)
-
     keys += qKeys.init_keys(mod, terminal)
+    keys += qChords.init_cords(mod)
 
-    keys += qGroups.init_keys(mod, right_groups, 1)
-    keys += qGroups.init_keys(mod, left_groups, 0)
+    keys += qGroups.init_keys(mod, left_groups, left_monitor_index)
+    keys += qGroups.init_keys(mod, right_groups, right_monitor_index)
+    keys += qGroups.init_keys(mod, extra_groups, extra_monitor_index)
 
     keys += qScratchPad.init_keys(mod)
     keys += qScreen.init_keys(mod)
@@ -79,9 +134,9 @@ if __name__ in ["config", "__main__"]:
     )
 
     auto_fullscreen     = True
-    cursor_warp         = False
-    follow_mouse_focus  = False
-    reconfigure_screens = False
+    cursor_warp         = True
+    follow_mouse_focus  = False 
+    reconfigure_screens = True
     auto_minimize       = False
     bring_front_click   = "floating_only"
     wmname              = "LG3D"
@@ -153,4 +208,10 @@ def client_managed(window):
 
 @hook.subscribe.focus_change
 def focus_change():
+
     update_sticky_focus()
+
+@hook.subscribe.screens_reconfigured
+def screens_reconfigured():
+    logging.debug("Screens Reconfigured")
+    qtile.cmd_reload_config();

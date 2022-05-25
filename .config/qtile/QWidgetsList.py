@@ -43,3 +43,18 @@ class QWidgetsList:
             self.widgets.separator(),
             self.widgets.datetime_poll()
         ]
+        
+    def project_widgets_list(self, groups):
+
+        return [
+            self.widgets.group_box(groups),
+            self.widgets.current_layout(),
+            self.widgets.current_screen(),
+            self.widgets.window_name(),
+            self.widgets.spacer(),
+            self.widgets.vpn_status(),
+            self.widgets.separator(),
+            self.widgets.volume(),
+            self.widgets.separator(),
+            self.widgets.datetime_poll()
+        ]
