@@ -17,20 +17,6 @@ export VISUAL=subl
 export EDITOR=nano
 export BROWSER=google-chrome-stable
 
-
-
-
-
-#Export the variable using your shell of use:
-
-#.bash_profile
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-# ~/.config/fish/config.fish
-#set -x SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
-
-
-
-
 # Keychain @TODO temp disabled
 # eval $(keychain --eval --quiet ~/.ssh/id_ed25519)
 
@@ -65,14 +51,6 @@ alias yarem='yay -Rns'
 # bindkey "^[k" dirhistory_zle_dirhistory_up
 # bindkey "^[j" dirhistory_zle_dirhistory_down
 
-# basic key navigations
-bindkey "\e[7~" 	beginning-of-line	# home
-bindkey "\e[8~" 	end-of-line			# end
-bindkey "^[[3~" 	delete-char			# delete
-bindkey '^[[1;5D'   backward-word       # ctrl+left
-bindkey '^[[1;5C'   forward-word        # ctrl+right
-bindkey '^H' 		backward-kill-word 	# ctrl+backsapce
-bindkey '^[[3^' 	kill-word			#ctrl+delete
 
 # +--------+
 # | PROMPT |

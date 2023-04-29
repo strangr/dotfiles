@@ -37,9 +37,8 @@ xsetroot -cursor_name left_ptr -solid '#CCCC00' &
 # Wallpaper
 #~/bin/fehbg &
 
-# @TODO reactivate back
 # Start compositioning
-# picom -b
+picom -b
 
 
 # @TODO temp before zsh

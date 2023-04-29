@@ -56,6 +56,14 @@ URxvt*boldItalicFont:   xft:Hack Nerd Font Mono:size=10:antialias=true:hinting=t
 
 !'Hack Nerd Font', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'
 
+! This should fix home/end keys
+!XTerm*termName: xterm-256color
+!URxvt*termName: rxvt-unicode
+!URxvt.keysym.Home: \033[1~
+!URxvt.keysym.End: \033[4~
+!URxvt.keysym.KP_Home: \033[1~
+!URxvt.keysym.KP_End:  \033[4~
+
 !scrollbar styles
 URxvt*scrollBar:        false
 
@@ -95,7 +103,8 @@ URxvt.tabbedex.tab-bg:          4
 URxvt.tabbedex.tabbar-timeouts: 0:*:20:{}:120:<>
 
 ! add clickable urls
-URxvt.keysym.C-Delete:      perl:matcher:last
+!URxvt.keysym.C-Delete:      perl:matcher:last
+! commented first line to use in zsh (remap if Ill ever need it)
 URxvt.keysym.M-Delete:      perl:matcher:list
 URxvt.url-launcher:         /usr/bin/xdg-open
 URxvt.matcher.rend.0:       Uline Bold fg3
