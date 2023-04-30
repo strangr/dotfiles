@@ -7,14 +7,7 @@ Top secret text files that make my world a better place. :')
 super confidential dotfiles
 
 Fish To Zsh
-
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-
-powerlevel10k
-git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-
+.zshenv and zsh packages are enough
 
 11. To Install Xmonad, xinitrc must contain
 # Xmonad Variables
@@ -53,6 +46,7 @@ https://home-assistant-guide.com/2020/09/26/adguard-home-vs-pi-hole-2020-two-ad-
 7. https://searx.github.io/searx/
 
 8. write out all my keybindings (that Im using) inside README
+   for now this includes navigation in zsh, ranger and qtile
 
 9. pron for insp
 https://www.reddit.com/r/unixporn/comments/glbl4v/oc_its_not_normal_to_want_my_firefox_to_sit_on_my/
@@ -60,4 +54,4 @@ https://www.reddit.com/r/unixporn/comments/fvyix5/oc_blurry_discord_is_for_every
 https://www.reddit.com/r/unixporn/comments/dlxtlg/gnome_dynamic_wallpaper/
 https://i.redd.it/y6ggh8x53yb61.png
 
-12. move bin into .local/bin and move kbd_layout inside
+12. move kbd_layout into .local/bin

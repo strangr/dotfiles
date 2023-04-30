@@ -40,11 +40,6 @@ xsetroot -cursor_name left_ptr -solid '#CCCC00' &
 # Start compositioning
 picom -b
 
-
-# @TODO temp before zsh
-
-
-
 # Start Desktop
 #exec i3
 exec qtile start

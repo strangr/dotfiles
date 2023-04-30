@@ -15,7 +15,7 @@ export PATH
 # Default Variables
 export VISUAL=subl
 export EDITOR=nano
-export BROWSER=google-chrome-stable
+export BROWSER=firefox
 
 
 
@@ -57,13 +57,9 @@ alias yarem='yay -Rns'
 # EXPERIMENTAL! (read moar)
 # bindkey -v
 
+# @TODO revive fzf
 # [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 # [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
-
-# bindkey "^[h" dirhistory_zle_dirhistory_back
-# bindkey "^[l" dirhistory_zle_dirhistory_future
-# bindkey "^[k" dirhistory_zle_dirhistory_up
-# bindkey "^[j" dirhistory_zle_dirhistory_down
 
 # basic key navigations
 bindkey "\e[7~" 	beginning-of-line	# home
@@ -73,6 +69,8 @@ bindkey '^[[1;5D'   backward-word       # ctrl+left
 bindkey '^[[1;5C'   forward-word        # ctrl+right
 bindkey '^H' 		backward-kill-word 	# ctrl+backsapce
 bindkey '^[[3^' 	kill-word			#ctrl+delete
+
+
 
 # +--------+
 # | PROMPT |
@@ -84,7 +82,7 @@ autoload -Uz simple_prompt_setup; simple_prompt_setup
 
 # Dir Stack
 setopt AUTO_PUSHD           # Push the current directory visited on the stack.
-setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
+#setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
 setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
 
 alias d='dirs -v'
@@ -120,3 +118,19 @@ SAVEHIST=10000
 setopt autocd notify
 bindkey -e
 # End of lines configured by zsh-newuser-install
+
+# plugin to quick navigate history
+source ~/.config/zsh/plugins/dirhistory.plugin.zsh
+
+bindkey "^[[1;6D" dirhistory_zle_dirhistory_back
+bindkey "^[[1;6C" dirhistory_zle_dirhistory_future
+bindkey "^[[1;6A" dirhistory_zle_dirhistory_up
+
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+# zsh-history-substring-search binding
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
