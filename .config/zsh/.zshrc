@@ -47,15 +47,15 @@ alias ls='ls --color=auto'
 
 alias calc='bc -l'
 
+alias stt='subl .'
+
 alias pacrem='pacman -Rns'
 alias yarem='yay -Rns'
+alias parem='pacaur -Rns'
 
 ###############
 # keybindings # @TODO move to a different file
 ###############
-
-# EXPERIMENTAL! (read moar)
-# bindkey -v
 
 # @TODO revive fzf
 # [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
@@ -133,4 +133,3 @@ source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring
 # zsh-history-substring-search binding
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-
