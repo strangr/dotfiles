@@ -28,7 +28,10 @@ aur/rofi-greenclip 3.4-5 (+23 0.60)
 #aur/rofi-emoji 2.1.2-2 (+6 1.48) 
 #aur/rofi-emoji 2.1.2-2 (+6 1.48) 
 
-
-
 redshift
 scrot
+
+# for zsh
+community/zsh-autosuggestions
+community/zsh-syntax-highlighting
+community/zsh-history-substring-search

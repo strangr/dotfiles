@@ -75,11 +75,12 @@ class QWidgets:
         )
 
     def memory(self):
-        return widget.DF(format=Helpers.format_text("ROOT") + " {f}{m}", visible_on_warn=False)
-        #return widget.Memory(format=Helpers.format_text("MEM") + " {MemPercent: .0f}% {SwapPercent: .0f}%")
+        return widget.Memory(
+            measure_mem='G',
+            format=Helpers.format_text("MEM") + " {MemFree: .0f}G")
 
     def disk(self):
-        return widget.DF(format=Helpers.format_text("ROOT") + " {f}{m}", visible_on_warn=False)
+        return widget.DF(format=Helpers.format_text("ROOT") + " {uf}{m}", visible_on_warn=False)
 
     def volume(self):
         return widget.Volume(fmt=Helpers.format_text("VOL") + " {}")

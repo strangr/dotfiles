@@ -1,6 +1,6 @@
 # ZSH @TODO
 
-# 1. Directory Stuck - so I can move back with ctrl-shift+<
+# 1. review omz pugings at https://github.com/janeczku/oh-my-zsh/tree/master/plugins
 
 ###########################
 # Personal Configurations #
@@ -39,6 +39,7 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 # Aliases #
 ###########
 # @TODO move this part to aliases and source /path/to/my/aliases
+alias please='sudo $(fc -ln -1)'
 
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
