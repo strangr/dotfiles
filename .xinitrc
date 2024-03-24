@@ -4,7 +4,7 @@
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 
 # disable screensaver and blank screen
-xset -dpms; xset s off
+# xset -dpms; xset s off
 
 # @TODO instead of this, call aka-update-screens 3
 

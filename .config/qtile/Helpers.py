@@ -63,7 +63,7 @@ class Helpers:
 
     @staticmethod
     def format_text(text):
-        out = "<span color='"+ Colors.grey[0] +"'>"+ text +"</span>"
+        out = "<span color='"+ Colors.grey +"'>"+ text +"</span>"
 
         return out
 

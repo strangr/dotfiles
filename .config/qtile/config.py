@@ -31,11 +31,8 @@ def get_num_monitors():
         screen = display.screen()
         resources = screen.root.xrandr_get_screen_resources()
 
-        logging.debug(resources.outputs)
-
         for output in resources.outputs:
             monitor = display.xrandr_get_output_info(output, resources.config_timestamp)
-            logging.debug(monitor)
             preferred = False
             if hasattr(monitor, "preferred"):
                 preferred = monitor.preferred
@@ -57,11 +54,10 @@ if __name__ in ["config", "__main__"]:
 
     num_monitors = get_num_monitors()
 
-    logging.debug(num_monitors)
     # @TODO next
     left_monitor_index = 0
     right_monitor_index = 1 # if numofmons is >= 2 then 1 else 0
-    extra_monitor_index = 2 #if numofmons is >= 3 then 2 else 0
+    extra_monitor_index = 2 # if numofmons is >= 3 then 2 else 0
     
     extra_groups = [
         QGroup("1"),
@@ -83,7 +79,7 @@ if __name__ in ["config", "__main__"]:
         QGroup("a"),
         QGroup("s", layout=LayoutType.SPACER, match=MatchType.CHAT),
         QGroup("d", layout=LayoutType.SPACER, match=MatchType.WORKCHAT),
-        QGroup("ISO_Next_Group")
+#        QGroup("ISO_Next_Group")
     ]
 
     keys = []
@@ -185,7 +181,7 @@ def update_group_labels():
             label = ""
 
         if group.label != label:
-            group.cmd_set_label(label)
+            group.set_label(label)
 
 # dont like bash for init
 # make startuponce my own method
@@ -193,6 +189,11 @@ def update_group_labels():
 def startup_once():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/autostart.sh'])
+
+@hook.subscribe.startup
+def startup():
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/everystart.sh'])
 
 @hook.subscribe.setgroup
 def setgroup():

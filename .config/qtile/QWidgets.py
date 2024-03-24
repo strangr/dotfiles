@@ -10,7 +10,7 @@ class QWidgets:
     def separator(self):
         return widget.Sep(
             linewidth=5,
-            foreground=self.colors.black[0]
+            foreground=self.colors.black
         )
     
     def group_box(self, groups):
@@ -36,11 +36,11 @@ class QWidgets:
             urgent_alert_method='text',
             rounded=False,
 
-            urgent_text=self.colors.red[0],
-            foreground=self.colors.yellow[0],
-            this_current_screen_border=self.colors.green[0], #focused group
-            active=self.colors.yellow[0], #unfocused gorup
-            inactive=self.colors.grey[0] #empty group
+            urgent_text=self.colors.red,
+            foreground=self.colors.yellow,
+            this_current_screen_border=self.colors.green, #focused group
+            active=self.colors.yellow, #unfocused gorup
+            inactive=self.colors.grey #empty group
         )
 
     def current_layout(self):
@@ -50,9 +50,9 @@ class QWidgets:
         return widget.CurrentScreen(
             padding=0,
             fontsize='22.3',
-            active_color=self.colors.yellow[0],
+            active_color=self.colors.yellow,
             active_text='',
-            inactive_color=self.colors.grey[0],
+            inactive_color=self.colors.grey,
             inactive_text=''
         )
 

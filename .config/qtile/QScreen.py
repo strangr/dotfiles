@@ -12,7 +12,7 @@ class QBars:
     colors = Colors()
 
     bar_config = dict(
-        background = colors.black[0],
+        background = colors.black,
         margin = [0,0,0,0],
         opacity = 1,
         size=26
@@ -111,7 +111,7 @@ class QScreen:
     def go_to_screen(self, screen):
         @lazy.function
         def f(qtile):
-            qtile.cmd_to_screen(screen)
+            qtile.to_screen(screen)
 
         return f
 

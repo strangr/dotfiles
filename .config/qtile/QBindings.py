@@ -3,12 +3,6 @@ from Helpers import Helpers
 from libqtile.config import Click, Drag, Key, KeyChord
 from libqtile.lazy import lazy
 
-import logging
-
-logging.basicConfig(filename='/home/st/qtile.log',
-                    format='%(levelname)s %(asctime)s :: %(message)s',
-                    level=logging.DEBUG)
-
 import os
 
 class QKeys:
@@ -83,7 +77,7 @@ class QKeys:
             Key([mod], "o", lazy.layout.maximize()),
             Key([mod, "shift"], "space", lazy.layout.flip()),
             # @TODO (bug) this resets to default ration instead of one set by me
-            #Key([mod, "shift"], "x", lazy.layout.reset()),
+            Key([mod, "shift"], "x", lazy.layout.reset()),
 
             # System
             Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
@@ -127,19 +121,18 @@ class QKeys:
             # @TODO when max layout dont have cmd_left()
             # @TODO if fullscreem should count as clients = 1
             if qtile.current_window == qtile.current_layout.clients[0]:
-                logging.debug("First window")
                 #@TODO test method qtile.cmd_next_screen() (and prev)
                 if qtile.current_screen.index == 0 :
-                    qtile.cmd_to_screen(len(qtile.screens) - 1)
+                    qtile.to_screen(len(qtile.screens) - 1)
                 else:
-                    qtile.cmd_to_screen(qtile.current_screen.index - 1)
+                    qtile.to_screen(qtile.current_screen.index - 1)
 
                 if(len(qtile.current_group.windows) > 0):
                     nxt = qtile.current_group.windows[-1]
                     nxt.group.focus(nxt)
 
             else:
-                qtile.current_layout.cmd_left()
+                qtile.current_layout.left()
 
         return f
 
@@ -148,13 +141,12 @@ class QKeys:
         def f(qtile):
             # @TODO check what if current_window is null
             if len(qtile.current_layout.clients) > 1 and qtile.current_window == qtile.current_layout.clients[0]:
-                logging.debug("First window")
-                qtile.current_layout.cmd_right()
+                qtile.current_layout.right()
             else:
                 if len(qtile.screens) - 1 == qtile.current_screen.index :
-                    qtile.cmd_to_screen(0)
+                    qtile.to_screen(0)
                 else:
-                    qtile.cmd_to_screen(qtile.current_screen.index + 1)
+                    qtile.to_screen(qtile.current_screen.index + 1)
  
                 if(len(qtile.current_group.windows) > 0):
                     nxt = qtile.current_group.windows[0]
@@ -173,12 +165,12 @@ class QKeys:
                 if qtile.current_screen.index == 0 :
                     screen = qtile.screens[len(qtile.screens) - 1]
                     qtile.current_window.togroup(screen.group.name)
-                    qtile.cmd_to_screen(len(qtile.screens) - 1)
+                    qtile.to_screen(len(qtile.screens) - 1)
                 else:
                     # @TODO make this into func
                     screen = qtile.screens[qtile.current_screen.index - 1]
                     qtile.current_window.togroup(screen.group.name)
-                    qtile.cmd_to_screen(qtile.current_screen.index - 1)
+                    qtile.to_screen(qtile.current_screen.index - 1)
 
                 #qtile.current_window.group.focus(qtile.current_window)
             else:
@@ -192,19 +184,18 @@ class QKeys:
             # @TODO check what if current_window is null
             # @TODO if new screen, always insert as master pane in group
             if len(qtile.current_layout.clients) > 1 and qtile.current_window == qtile.current_layout.clients[0]:
-                logging.debug("First window")
                 qtile.current_layout.cmd_swap_right()
             else:
                 # current window sometimes null?
                 if len(qtile.screens) - 1 == qtile.current_screen.index :
-                    # qtile.cmd_to_screen(0)
+                    # qtile.to_screen(0)
                     screen = qtile.screens[0]
                     qtile.current_window.togroup(screen.group.name)
-                    qtile.cmd_to_screen(0)
+                    qtile.to_screen(0)
                 else:
                     screen = qtile.screens[qtile.current_screen.index + 1]
                     qtile.current_window.togroup(screen.group.name)
-                    qtile.cmd_to_screen(qtile.current_screen.index + 1)
+                    qtile.to_screen(qtile.current_screen.index + 1)
 
                 #qtile.current_window.group.focus(qtile.current_window)
 

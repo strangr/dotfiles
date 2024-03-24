@@ -34,8 +34,8 @@ class QLayouts:
             margin=0,
             single_margin=0,
             new_client_position='after_current',
-            border_focus=self.colors.green[0],
-            border_normal=self.colors.grey[0],
+            border_focus=self.colors.green,
+            border_normal=self.colors.grey,
             border_width=1,
             single_border_width=1,
             ratio=0.60,
@@ -51,8 +51,8 @@ class QLayouts:
             name=self.icon_monad,
             margin=0,
             single_margin=0,
-            border_focus=self.colors.green[0],
-            border_normal=self.colors.grey[0],
+            border_focus=self.colors.green,
+            border_normal=self.colors.grey,
             border_width=1,
             fair=True,
             grow_amount=10,
@@ -73,8 +73,8 @@ class QLayouts:
             margin=0,
             single_margin=0,
             new_client_position='after_current',
-            border_focus=self.colors.green[0],
-            border_normal=self.colors.grey[0],
+            border_focus=self.colors.green,
+            border_normal=self.colors.grey,
             border_width=1,
             single_border_width=1,
             ratio=0.60,
@@ -93,8 +93,8 @@ class QLayouts:
             margin=8,
             single_margin=8,
             new_client_position='after_current',
-            border_focus=self.colors.green[0],
-            border_normal=self.colors.grey[0],
+            border_focus=self.colors.green,
+            border_normal=self.colors.grey,
             border_width=1,
             single_border_width=1,
             ratio=0.58
@@ -104,10 +104,10 @@ class QLayouts:
 
         return Columns(
             name="舘",
-            border_focus=self.colors.green[0], #‘Border colour for the focused window.’
-            border_normal=self.colors.grey[0], #‘Border colour for un-focused windows.’
-            border_focus_stack=self.colors.green[0], #‘Border colour for the focused window in stacked columns.’
-            border_normal_stack=self.colors.grey[0], #‘Border colour for un-focused windows in stacked columns.’
+            border_focus=self.colors.green, #‘Border colour for the focused window.’
+            border_normal=self.colors.grey, #‘Border colour for un-focused windows.’
+            border_focus_stack=self.colors.green, #‘Border colour for the focused window in stacked columns.’
+            border_normal_stack=self.colors.grey, #‘Border colour for un-focused windows in stacked columns.’
             border_width=1,
             #insert_position=0,
             #split=True, #‘New columns presentation mode.’

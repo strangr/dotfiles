@@ -42,14 +42,14 @@ class QGroups:
         # if current group not visible - switch
         current_groups = [screen.group.name for screen in qtile.screens if screen.group]
         if group not in current_groups:
-            qtile.groups_map.get(group).cmd_toscreen()
+            qtile.groups_map.get(group).toscreen()
 
         return 0
 
     def go_to_group_on_screen(self, group, screen):
         @lazy.function
         def f(qtile):
-            qtile.cmd_to_screen(screen)
+            qtile.to_screen(screen)
             self.go_to_group(qtile, group, screen)
 
         return f
@@ -59,7 +59,7 @@ class QGroups:
         def f(qtile):
             # bug: if two windows on target group, sometimes both get displaced (displace only window that we want)
             qtile.current_window.togroup(group)
-            qtile.cmd_to_screen(screen)
+            qtile.to_screen(screen)
             self.go_to_group(qtile, group, screen)
 
         return f
